@@ -4,15 +4,29 @@
 ;; Genéricos
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-(defun exitep (no lista algoritmo)
-  	"Definir o predicado existep que permite verificar se um nó existe numa lista .
+(defun existep (no lista f-algoritmo)
+ 	"Definir o predicado existep que permite verificar se um nó existe numa lista .
 O predicado recebe três parâmetros; um nó, uma lista de nós e o nome do algoritmo.
 Retorna verdadeiro se o nó existir na lista. Deve ter em atenção que para o algoritmo dfs,
-o conceito de nó repetido é particular"
+o conceito de nó repetido é particular-
+No algoritmo dfs um nó só é considerado igual se a sua profundidade for inferior às profundidades existentes na lista"
+  (let*
+      (
+        (is-dfs (eql f-algoritmo 'dfs))
+        (proximo-no-lista (first lista))
+        (estados-iguais (equal (no-estado no) (no-estado proximo-no-lista)))
+        (profundidade-superior (> (no-profundidade no) (no-profundidade proximo-no-lista)) )
+        (dfs-exitep (and is-dfs estados-iguais))
+        (else-existep (and (not is-dfs) estados-iguais))
+      )
 
-
-
+    (cond
+      ( (null lista) nil )
+      ( (and dfs-exitep profundidade-superior) t)
+      ( else-existep t )
+      ( t (existep no (rest lista) f-algoritmo) )
+    )
+  )
 
 )
 
@@ -26,9 +40,28 @@ o conceito de nó repetido é particular"
 	)
 )
 
+(defun procura-generica (no-inicial prof-max f-solucao f-sucessores f-algoritmo lista-operadores &optional (abertos (list no-inicial)) (fechados nil))
+"Permite procurar a solucao de um problema usando a procura no espaço de estados. A partir de um estado inicial,
+ de uma funcao que gera os sucessores e de um dado algoritmo. De acordo com o algoritmo pode ser usada um limite
+ de profundidade, uma heuristica e um algoritmo de ordenacao"
 
+ 	(cond
+  		((null abertos) nil); nao existe solucao ao problema
+  		((funcall f-solucao (car abertos)) (car abertos)); se o primeiro dos abertos e solucao este no e devolvido
+  		((existep (first abertos) fechados f-algoritmo) (procura-generica no-inicial prof-max f-solucao f-sucessores f-algoritmo lista-operadores (cdr abertos) fechados)); se o no ja existe nos fechados e ignorado
+  		(T
+         (let* ((lista-sucessores (funcall f-sucessores (first abertos)  lista-operadores f-algoritmo prof-max));lista dos sucessores do primeiro dos abertos
+                 (solucao (existe-solucao lista-sucessores f-solucao f-algoritmo)));verifica se existe uma solucao nos sucessores para o dfs
+               (cond
+                   (solucao solucao); devolve a solucao
+      					   (T (procura-generica no-inicial prof-max f-solucao f-sucessores f-algoritmo lista-operadores (funcall f-algoritmo (rest abertos) lista-sucessores) (cons (car abertos) fechados))); expande a arvore se o primeiro dos abertos nao for solucao
+      	       )
+         )
+   		)
+   	)
+  )
 
-(defun procura-generica (no-inicial prof-max f-solucao f-sucessores f-algoritmo lista-operadores f-heuristica &optional (abertos (list no-inicial)) (fechados nil) (tempo-inicial (get-universal-time)))
+(defun procura-generica-2 (no-inicial prof-max f-solucao f-sucessores f-algoritmo lista-operadores f-heuristica &optional (abertos (list no-inicial)) (fechados nil) (tempo-inicial (get-universal-time)))
 "Permite procurar a solucao de um problema usando a procura no espaÃ§o de estados. A partir de um estado inicial,
  de uma funcao que gera os sucessores e de um dado algoritmo. De acordo com o algoritmo pode ser usada um limite
  de profundidade, uma heuristica e um algoritmo de ordenacao
@@ -36,23 +69,18 @@ o conceito de nó repetido é particular"
 	(cond
 		((null abertos) nil); nao existe solucao ao problema
 		((funcall f-solucao (car abertos))  (list (car abertos) (- (get-universal-time) tempo-inicial))); se o primeiro dos abertos e solucao este no e devolvido com o tempo de exe
-		((existep (first abertos) fechados f-algoritmo) (procura-generica no-inicial prof-max f-solucao f-sucessores f-algoritmo lista-operadores (cdr abertos) fechados)); se o no ja existe nos fechados e ignorado
+		((existep (first abertos) fechados f-algoritmo) (procura-generica-2 no-inicial prof-max f-solucao f-sucessores f-algoritmo lista-operadores (cdr abertos) fechados)); se o no ja existe nos fechados e ignorado
 		(T
 			(let* ((lista-sucessores (funcall f-sucessores (first abertos)  lista-operadores f-algoritmo prof-max f-heuristica))
 			      (solucao (existe-solucao lista-sucessores f-solucao f-algoritmo)));verifica se existe uma solucao nos sucessores para o dfs
 		          (cond
 		            (solucao (list solucao (- (get-universal-time) tempo-inicial))); devolve a solucao, com o tempo de execucao
-					(T (procura-generica no-inicial prof-max f-solucao f-sucessores f-algoritmo lista-operadores f-heuristica (funcall f-algoritmo (rest abertos) lista-sucessores) (cons (car abertos) fechados))); expande a arvore se o primeiro dos abertos nao for solucao
+					(T (procura-generica-2 no-inicial prof-max f-solucao f-sucessores f-algoritmo lista-operadores f-heuristica (funcall f-algoritmo (rest abertos) lista-sucessores) (cons (car abertos) fechados))); expande a arvore se o primeiro dos abertos nao for solucao
 					)
 			)
 		)
 	)
 )
-
-
-
-
-
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -402,7 +430,7 @@ o conceito de nó repetido é particular"
 	"Gera os sucessores"
 	(cond
 		( (and (eql f-algoritmo 'dfs) (>= (no-profundidade no) prof-max)) nil)
-		( t (let
+		( t (let*
 				(
 					(nova-profundidade (1+ (no-profundidade no)))
 					(funcao (lambda (op) (no-criar (funcall op no) no nova-profundidade)))
@@ -417,8 +445,8 @@ o conceito de nó repetido é particular"
 ;; Heurísticas
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun f-solucao (o no)
-	(= (numero-caixas-fechadas no) o)
+(defun f-solucao (o)
+  (lambda (no) (= (numero-caixas-fechadas no) o))
 )
 
 
@@ -426,340 +454,13 @@ o conceito de nó repetido é particular"
 ;; Heurísticas
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun heuristica (tabuleiro o)
+(defun a (tabuleiro o)
 	(- o (numero-caixas-fechadas tabuleiro) 1)
 )
 
-
-
-
-
-
-
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Deprecated
+;; Testes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;;; Exercicios complementares
-
-;; tabuleiro-vazio
-
-;; "constroi um tabuleiro vazio de dimensao n x m a partir de dois valores inteiros recebidos por parametro"
-
-;; (tabuleiro-vazio 3 3)
-
-;; (((NIL NIL NIL) (NIL NIL NIL) (NIL NIL NIL) (NIL NIL NIL)) ((NIL NIL NIL) (NIL NIL NIL) (NIL NIL NIL) (NIL NIL NIL)))
-
-(defun eval-horizontal (horizontals)
-
-)
-
-;;generic algoritms
-(defun clear-nils (l)
-   (apply #'append (mapcar (lambda (e) (cond ( (eq e nil) nil) (t (list e)))) l))
-)
-
-
-
-
-
-;;tenho que analisar os algoritmos para ver o que têm em comum eu lembro-me que consegues tranformr um A* em um breath-first
-;com H* = 0, podemos pensar nisso
-
-
-;;Notes: Operators must either change the estado of a node and return it or in case of failure to do so return nil
-
-(defun generic-estado-space-search(select-next-node operators final-estado-check openned closed)
-  (cond
-    ( (null openned) nil )
-    ( t (let
-          (
-            ( expanded (funcall select-next-node openned) )
-          )
-          (cond
-            ( (funcall final-estado-check expanded) expanded )
-            ( t  (let*
-                  (
-                    ( raw-successors (clear-nils (mapcar (lambda (operator) (funcall operator expanded)) operators)) )
-                    ( filtered-successors
-                    ;;Requires refactoring
-                            (clear-nils
-                                  (mapcar (lambda (s)
-                                                 (cond
-                                                    (
-                                                       (eval
-                                                              (cons 'or
-                                                                    (mapcar (lambda (c)
-                                                                                       (equal (no-estado s) (no-estado c))
-                                                                            )
-                                                                            closed
-                                                                    )
-                                                               )
-                                                        )
-                                                        nil
-                                                     )
-                                                     (t s)
-                                                  )
-                                          )
-                                          raw-successors
-                                 )
-                            )
-                    )
-                    ( successors (mapcar (lambda (node) (set-node-pai node expanded)) filtered-successors))
-                    ( new-openned (append (rest openned) successors) )
-                    ( new-closed (cons expanded closed) )
-                  )
-                  (generic-estado-space-search select-next-node operators final-estado-check new-openned new-closed)
-                )
-            )
-          )
-        )
-    )
-  )
-)
-
-
-
-
-(defun breadth-first (estado operators final-estado-check)
-  (generic-estado-space-search (lambda (l) (first l)) operators final-estado-check (list (no-criar estado)) nil)
-)
-
-(defun less-g-cost-node (l)
-
-;;TODO
-)
-
-
-(defun uniform-cost (estado operators final-estado-check)
-    (let
-       (
-         ( select-next-node (lambda (l) (first l)) )
-         ( openned (list (no-criar estado nil '(0))) )
-         ( closed nil )
-         ( operators-with-cost (mapcar #'(lambda (operator)
-                                              (lambda (node)
-                                                      (set-node-g (funcall operator node) (+ 1 (no-controlo-g node)))
-                                              )
-                                      )
-                                      operators
-                              )
-         )
-       )
-       (generic-estado-space-search select-next-node operators-with-cost final-estado-check openned closed)
-    )
-
-)
-
-(defun matriz2d-transposta (m)
- "Transposes the m matrix"
-  (apply  #'mapcar (cons #'list m))
-)
-
-(defun shift-left (x y l)
-  (let
-    (
-      (row (elemento-por-indice x l))
-    )
-    (cond
-      ( (= y 0) nil )
-      ( t (let
-            (
-              (element-a (elemento-por-indice y row))
-              (element-b (elemento-por-indice (1- y) row))
-            )
-            (list x (1- y) (substituir x (substituir y element-b (substituir (1- y) element-a row)) l))
-          )
-      )
-    )
-  )
-)
-
-(defun shift-right (x y l)
-  (let
-    (
-      (row (elemento-por-indice x l))
-    )
-    (cond
-      ( (= y (1- (length row))) nil )
-      ( t (let
-            (
-              (element-a (elemento-por-indice y row))
-              (element-b (elemento-por-indice (1+ y) row))
-            )
-            (list x (1+ y) (substituir x (substituir y element-b (substituir (1+ y) element-a row)) l))
-          )
-      )
-    )
-  )
-)
-
-(defun shift-up (x y l)
-  (let
-      (
-        (value (shift-left y x (matriz2d-transposta l)));;Inverting x and y  and traposing the matrix to be used in a shift-left operation
-      )
-      (cond
-        ((eq nil value) nil)
-        (t (let*
-              (
-               (result-x (elemento-por-indice 1 value));;Inverting the y to x
-               (result-y (elemento-por-indice 0 value));;Inverting the x to y
-               (result-matrix (matriz2d-transposta (elemento-por-indice 2 value)))
-              )
-              (list result-x result-y result-matrix)
-           )
-        )
-      )
-   )
-)
-
-
-(defun shift-down (x y l)
-  (let
-    (
-     (value (shift-right y x (matriz2d-transposta l)));;Inverting x and y  and traposing the matrix to be used in a shift-right operation
-                                                   )
-    (cond
-      ((eq nil value) nil)
-      (t (let*
-           (
-            (result-x (elemento-por-indice 1 value));;Inverting the y to x
-                                             (result-y (elemento-por-indice 0 value));;Inverting the x to y
-                                             (result-matrix (matriz2d-transposta (elemento-por-indice 2 value)))
-                                             )
-           (list result-x result-y result-matrix)
-           )
-         )
-      )
-    )
-)
-
-(defun 8-puzzle-test-breadth-first()
-  (let*
-    (
-       ( final-estado-check (lambda (node) (equal (no-estado node) '(1 1 ((1 2 3) (8 0 4) (7 6 5))))) ) ;; format (i j ((c1 c2 c3)(c4 c5 c6)(c7 c8 c9)))
-       ( start-estado '(0 0 ((0 2 3) (1 8 4) (7 6 5))) )
-       ( operators (list
-                          (lambda (node)
-                                  (let
-                                     (
-                                       ( shifted-estado (apply #'shift-up (no-estado node)) )
-                                     )
-                                     (cond
-                                       ( (eq nil shifted-estado) nil )
-                                       ( t (no-alterar-estado node shifted-estado))
-                                     )
-                                  )
-                          )
-                          (lambda (node)
-                                  (let
-                                     (
-                                       ( shifted-estado (apply #'shift-down (no-estado node)) )
-                                     )
-                                     (cond
-                                       ( (eq nil shifted-estado) nil )
-                                       ( t (no-alterar-estado node shifted-estado))
-                                     )
-                                  )
-                          )
-
-                          (lambda (node)
-                                  (let
-                                     (
-                                       ( shifted-estado (apply #'shift-left (no-estado node)) )
-                                     )
-                                     (cond
-                                       ( (eq nil shifted-estado) nil )
-                                       ( t (no-alterar-estado node shifted-estado))
-                                     )
-                                  )
-                          )
-
-                          (lambda (node)
-                                  (let
-                                     (
-                                       ( shifted-estado (apply #'shift-right (no-estado node)) )
-                                     )
-                                     (cond
-                                       ( (eq nil shifted-estado) nil )
-                                       ( t (no-alterar-estado node shifted-estado))
-                                     )
-                                  )
-                          )
-
-
-                    )
-       )
-    )
-    (breadth-first start-estado operators final-estado-check)
-  )
-)
-
-(defun 8-puzzle-test-depth-first()
-
-)
-
-(defun 8-puzzle-test-uniform-cost()
-    (let*
-      (
-         ( final-estado-check (lambda (node) (equal (no-estado node) '(1 1 ((1 2 3) (8 0 4) (7 6 5))))) ) ;; format (i j ((c1 c2 c3)(c4 c5 c6)(c7 c8 c9)))
-         ( start-estado '(0 1 ((2 0 3) (1 8 4) (7 6 5))) )
-         ( operators (list
-                            (lambda (node)
-                                    (let
-                                       (
-                                         ( shifted-estado (apply #'shift-up (no-estado node)) )
-                                       )
-                                       (cond
-                                         ( (eq nil shifted-estado) nil )
-                                         ( t (no-alterar-estado node shifted-estado))
-                                       )
-                                    )
-                            )
-                            (lambda (node)
-                                    (let
-                                       (
-                                         ( shifted-estado (apply #'shift-down (no-estado node)) )
-                                       )
-                                       (cond
-                                         ( (eq nil shifted-estado) nil )
-                                         ( t (no-alterar-estado node shifted-estado))
-                                       )
-                                    )
-                            )
-
-                            (lambda (node)
-                                    (let
-                                       (
-                                         ( shifted-estado (apply #'shift-left (no-estado node)) )
-                                       )
-                                       (cond
-                                         ( (eq nil shifted-estado) nil )
-                                         ( t (no-alterar-estado node shifted-estado))
-                                       )
-                                    )
-                            )
-
-                            (lambda (node)
-                                    (let
-                                       (
-                                         ( shifted-estado (apply #'shift-right (no-estado node)) )
-                                       )
-                                       (cond
-                                         ( (eq nil shifted-estado) nil )
-                                         ( t (no-alterar-estado node shifted-estado))
-                                       )
-                                    )
-                            )
-
-
-                      )
-         )
-      )
-      (uniform-cost start-estado operators final-estado-check)
-    )
+(defun teste-bfs (n m o)
+   (procura-generica (no-criar (criar-tabuleiro-vazio n m)) nil (f-solucao o) 'sucessores 'bfs (criar-operacoes n m))
 )
