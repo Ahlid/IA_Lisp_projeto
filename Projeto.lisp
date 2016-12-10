@@ -45,25 +45,23 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 	)
 )
 
-(defun procura-generica (no-inicial prof-max f-solucao f-sucessores f-algoritmo lista-operadores &optional (abertos (list no-inicial)) (fechados nil))
+(defun procura-generica (no-inicial f-solucao f-sucessores f-algoritmo lista-operadores &optional (prof-max  nil) (heuristica nil) (abertos (list no-inicial)) (fechados nil) (tempo-inicial (get-universal-time)))
   "Permite procurar a solucao de um problema usando a procura no espaço de estados. A partir de um estado inicial,
  de uma funcao que gera os sucessores e de um dado algoritmo. De acordo com o algoritmo pode ser usada um limite
  de profundidade, uma heuristica e um algoritmo de ordenacao"
  	(cond
 		((null abertos) nil); nao existe solucao ao problema
-		((funcall f-solucao (car abertos)) (car abertos)); se o primeiro dos abertos e solucao este no e devolvido
-		((existep (first abertos) fechados f-algoritmo) (procura-generica no-inicial prof-max f-solucao f-sucessores f-algoritmo lista-operadores (cdr abertos) fechados)); se o no ja existe nos fechados e ignorado
+		((funcall f-solucao (car abertos)) (list (car abertos) (- (get-universal-time) tempo-inicial))); se o primeiro dos abertos e solucao este no e devolvido
+		((existep (first abertos) fechados f-algoritmo) (procura-generica no-inicial f-solucao f-sucessores f-algoritmo lista-operadores prof-max heuristica (cdr abertos) fechados tempo-inicial) ); se o no ja existe nos fechados e ignorado
 		(T 
-			
-				
 			(let*
 				(
-					(lista-sucessores (funcall f-sucessores (first abertos)  lista-operadores f-algoritmo prof-max));lista dos sucessores do primeiro dos abertos
+					(lista-sucessores (funcall f-sucessores (first abertos)  lista-operadores f-algoritmo prof-max heuristica));lista dos sucessores do primeiro dos abertos
 					(solucao (existe-solucao lista-sucessores f-solucao f-algoritmo));verifica se existe uma solucao nos sucessores para o dfs
 				)
 				(cond
-					(solucao solucao); devolve a solucao
-					(T (procura-generica no-inicial prof-max f-solucao f-sucessores f-algoritmo lista-operadores (funcall f-algoritmo (rest abertos) lista-sucessores) (cons (car abertos) fechados))); expande a arvore se o primeiro dos abertos nao for solucao
+					(solucao (list solucao (- (get-universal-time) tempo-inicial))); devolve a solucao
+					(T (procura-generica no-inicial f-solucao f-sucessores f-algoritmo lista-operadores prof-max heuristica (funcall f-algoritmo (rest abertos) lista-sucessores) (cons (car abertos) fechados)tempo-inicial)); expande a arvore se o primeiro dos abertos nao for solucao
 				)
 				
 			)
@@ -71,26 +69,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
    	)
 )
 
-(defun procura-generica-2 (no-inicial prof-max f-solucao f-sucessores f-algoritmo lista-operadores f-heuristica &optional (abertos (list no-inicial)) (fechados nil) (tempo-inicial (get-universal-time)))
-"Permite procurar a solucao de um problema usando a procura no espaÃ§o de estados. A partir de um estado inicial,
- de uma funcao que gera os sucessores e de um dado algoritmo. De acordo com o algoritmo pode ser usada um limite
- de profundidade, uma heuristica e um algoritmo de ordenacao
-"
-	(cond
-		((null abertos) nil); nao existe solucao ao problema
-		((funcall f-solucao (car abertos))  (list (car abertos) (- (get-universal-time) tempo-inicial))); se o primeiro dos abertos e solucao este no e devolvido com o tempo de exe
-		((existep (first abertos) fechados f-algoritmo) (procura-generica-2 no-inicial prof-max f-solucao f-sucessores f-algoritmo lista-operadores (cdr abertos) fechados)); se o no ja existe nos fechados e ignorado
-		(T
-			(let* ((lista-sucessores (funcall f-sucessores (first abertos)  lista-operadores f-algoritmo prof-max f-heuristica))
-			      (solucao (existe-solucao lista-sucessores f-solucao f-algoritmo)));verifica se existe uma solucao nos sucessores para o dfs
-		          (cond
-		            (solucao (list solucao (- (get-universal-time) tempo-inicial))); devolve a solucao, com o tempo de execucao
-					(T (procura-generica-2 no-inicial prof-max f-solucao f-sucessores f-algoritmo lista-operadores f-heuristica (funcall f-algoritmo (rest abertos) lista-sucessores) (cons (car abertos) fechados))); expande a arvore se o primeiro dos abertos nao for solucao
-					)
-			)
-		)
-	)
-)
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -308,8 +287,6 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 ;; Classificação do tabuleiro
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
 (defun mapear-bool-binario (matriz)
 	(mapcar 
 		(lambda 
@@ -360,7 +337,6 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 			(matriz2d-transposta matriz)
 		)
 	)
-	
 )
 
 
@@ -483,14 +459,14 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 	(append abertos sucessores)
 )
 
-
 (defun dfs (abertos sucessores)
 	""
 	(append sucessores abertos)
 )
 
 (defun a-asterisco (abertos sucessores)
-	(stable-sort (append abertos sucessores) (lambda (x) (no-controlo-f x)))
+	""
+	(sort (append abertos sucessores) (lambda (no1 no2) (<= (no-controlo-f no1) (no-controlo-f no2))))
 )
 
 
@@ -500,13 +476,28 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 ;; Sucessores
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun sucessores (no lista-operadores f-algoritmo prof-max)
+(defun sucessores (no lista-operadores f-algoritmo prof-max &optional (heuristica nil))
 	"Gera os sucessores"
 	(cond
 		( (and (eql f-algoritmo 'dfs) (>= (no-profundidade no) prof-max)) nil)
 		( t (let
 				(
-					(funcao (lambda (op) (funcall op no)))			
+					(funcao (lambda (op)
+									(cond 
+											((not (eql f-algoritmo 'a-asterisco)) (funcall op no))
+											( t (let*
+													(
+														(g (1+ (no-controlo-g no)))
+														(sucessor (funcall op no))
+														(h (funcall heuristica sucessor))
+														(f (+ g h))
+													)
+													(set-no-controlo sucessor (list g h f))
+												)
+											)
+									)
+							)
+					)			
 				)
 				(limpar-nils (mapcar funcao lista-operadores))
 			)
@@ -527,13 +518,22 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 ;; Heurísticas
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun a (tabuleiro o)
-	(- o (numero-caixas-fechadas tabuleiro) 1)
+(defun heuristica (o)
+	(lambda (no) (- o (numero-caixas-fechadas (no-estado no)) 1))
 )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Testes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun teste-bfs (n m o)
-   (procura-generica (no-criar (criar-tabuleiro-vazio n m)) nil (criar-solucao o) 'sucessores 'bfs (criar-operacoes n m))
+   (procura-generica (no-criar (criar-tabuleiro-vazio n m)) (criar-solucao o) 'sucessores 'bfs (criar-operacoes n m))
 )
+
+(defun teste-dfs (n m o p)
+   (procura-generica (no-criar (criar-tabuleiro-vazio n m)) (criar-solucao o) 'sucessores 'dfs (criar-operacoes n m) p)
+)
+
+(defun teste-a-asterisco (n m o)
+	(procura-generica (no-criar (criar-tabuleiro-vazio n m) nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'a-asterisco (criar-operacoes n m) nil (heuristica o))
+)
+
