@@ -1,4 +1,13 @@
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; IDA*
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun ida-asterisco ()
+
+)
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Genéricos
@@ -55,15 +64,15 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 (defun bisecao (profundidade numero-nos-gerados margem &optional (minimo 0) (maximo numero-nos-gerados))
 	(let*
 		(
-			(media (/ (+ minimo maximo) 2))
-			(numero-nos-gerado-calculado (calcular-numero-nos-gerados media profundidade))
-			(diferenca (abs (- numero-nos-gerados numero-nos-gerado-calculado)))
-			(p (< numero-nos-gerado-calculado numero-nos-gerados))
+			(media (/ (+ minimo maximo) 2)) ; faz a média entre o mínimo e o máximo
+			(numero-nos-gerado-calculado (calcular-numero-nos-gerados media profundidade)) ; calcula o numero de nos gerados utilizando a média como fator de ramificacao
+			(diferenca (abs (- numero-nos-gerados numero-nos-gerado-calculado))) ; calcula a diferenca entre o numero de nos gerados e o numero de nos gerados calculado através da média
+			(p (< numero-nos-gerado-calculado numero-nos-gerados)) ; verifica se o numero de nos gerado através da média é inferior ao numero de nos gerados
 		)
 		(cond
-			( (< diferenca margem) media )
-			( p (bisecao profundidade numero-nos-gerados margem media maximo) )
-			( t (bisecao profundidade numero-nos-gerados margem minimo media) )
+			( (< diferenca margem) media ) ; se a diferença for inferior à margem de erro, devolve a média atual
+			( p (bisecao profundidade numero-nos-gerados margem media maximo) ) ; se a media inferior ao fator de ramificacao utilizamos a média como limite inferior
+			( t (bisecao profundidade numero-nos-gerados margem minimo media) ) ; se a media superior ao fator de ramificacao utilizamos a média como limite superior
 		)
 	)
 )
