@@ -45,16 +45,19 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 	)
 )
 
-(defun procura-generica (no-inicial f-solucao f-sucessores f-algoritmo lista-operadores 
+(defun procura-generica (no-inicial ; nó inicial
+						 f-solucao ; função que verifica se um nó é uma solucao
+						 f-sucessores ; função que gera os sucessores
+						 f-algoritmo ; algoritmo
+						 lista-operadores ; lista dos operadores
 						&optional 	
-							(prof-max  nil)
-							(heuristica nil) 
-							(abertos (list no-inicial)) 
-							(fechados nil) 
-							(tempo-inicial (get-universal-time)) 
-							(nos-gerados 0) 
-							(nos-expandidos 0) 
-							(profundidade 0) 
+							(prof-max  nil) ; profundidade máxima
+							(heuristica nil) ; heuristica
+							(abertos (list no-inicial)) ; lista de abertos
+							(fechados nil) ; lista de fechados
+							(tempo-inicial (get-universal-time)) ; timestamp de inicio da procura
+							(nos-gerados 0) ; numero de nos gerados
+							(nos-expandidos 0) ; numero de nos expandidos
 						)
   "Permite procurar a solucao de um problema usando a procura no espaço de estados. A partir de um estado inicial,
  de uma funcao que gera os sucessores e de um dado algoritmo. De acordo com o algoritmo pode ser usada um limite
@@ -63,65 +66,64 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 		; nao existe solucao ao problema
 		((null abertos) nil)
 		; se o primeiro dos abertos e solucao este no e devolvido
-		((funcall f-solucao (car abertos)) (list 	(car abertos) 
-													(- (get-universal-time) tempo-inicial) 
-													nos-gerados 
-													nos-expandidos 
-													profundidade
+		((funcall f-solucao (car abertos)) (list 	(car abertos) ; primeiro nó de abertos
+													(- (get-universal-time) tempo-inicial) ; tempo em segundos que a procura levou a encontrar a solução
+													nos-gerados ; número de nós gerados
+													nos-expandidos ; número de nós expandidos 
+													(no-profundidade (car abertos)) ; função heuristica
 											)
 		)
 		; se o no ja existe nos fechados é ignorado
-		((existep (first abertos) fechados f-algoritmo) (procura-generica 	no-inicial 
-																			f-solucao
-																			f-sucessores
-																			f-algoritmo
-																			lista-operadores
-																			prof-max
-																			heuristica
-																			(cdr abertos)
-																			fechados
-																			tempo-inicial
-																			nos-gerados
-																			nos-expandidos 
-																			(1+ profundidade)
+		((existep (first abertos) fechados f-algoritmo) (procura-generica 	no-inicial ; nó ínicial
+																			f-solucao ; função que verifica se um nó é uma solucao
+																			f-sucessores ; função que gera os sucessores
+																			f-algoritmo ; algoritmo
+																			lista-operadores ; lista dos operadores
+																			prof-max ; profundidade máxima
+																			heuristica ; heuristica
+																			(cdr abertos) ; resto da lista de abertos
+																			fechados ; lista de fechados
+																			tempo-inicial ; timestamp em que foi iniciada a procura
+																			nos-gerados ; número de nós gerados
+																			nos-expandidos ; número de nós expandidos
 														)
 		)
 		(T (let*
 				(
 					;lista dos sucessores do primeiro dos abertos
-					(lista-sucessores 	(funcall f-sucessores 
-													(first abertos)  
-													lista-operadores 
-													f-algoritmo 
-													prof-max 
-													heuristica
+					(lista-sucessores 	(funcall f-sucessores ; gerar os sucessores
+													(first abertos) ; primeiro nó de abertos 
+													lista-operadores ; lista de operadores
+													f-algoritmo ; algoritmo
+													prof-max ; profundidade máxima
+													heuristica ; função heuristica
 										)
 					)
 					(solucao (existe-solucao lista-sucessores f-solucao f-algoritmo));verifica se existe uma solucao nos sucessores para o dfs
 				)
 				(cond
 					; devolve a solucao
-					(solucao 	(list 	solucao 
-										(- (get-universal-time) tempo-inicial)
-										nos-gerados
-										nos-expandidos 
-										profundidade
+					(solucao 	(list 	solucao ; nó solução
+										(- (get-universal-time) tempo-inicial) ; tempo em segundos que a procura levou a encontrar a solução
+										nos-gerados ; número de nós gerados
+										nos-expandidos ; número de nós expandidos
+										(no-profundidade solucao) ; profundidade do nó solução
+										(/ (no-profundidade solucao) nos-gerados) ; penetrância
 								)
 					)
 					; expande a arvore se o primeiro dos abertos nao for solucao
-					(T (procura-generica 	no-inicial 
-											f-solucao 
-											f-sucessores 
-											f-algoritmo 
-											lista-operadores
-											prof-max 
-											heuristica 
-											(funcall f-algoritmo (rest abertos) lista-sucessores) 
-											(cons (car abertos) fechados) 
-											tempo-inicial 
-											(+ nos-gerados (length lista-sucessores)) 
-											(1+ nos-expandidos) 
-											(1+ profundidade)) 
+					(T (procura-generica 	no-inicial ; nó ínicial
+											f-solucao ; função que verifica se um nó é uma solucao
+											f-sucessores ; função que gera os sucessores
+											f-algoritmo ; algoritmo
+											lista-operadores ; lista dos operadores
+											prof-max ; profundidade máxima
+											heuristica ; heuristica
+											(funcall f-algoritmo (rest abertos) lista-sucessores) ; utiliza o algoritmo para juntar o resto da lista de abertos e a lista de sucessores para a próxima lista de abertos
+											(cons (car abertos) fechados) ; adiciona o primeiro nó de abertos aos fechados e envia para a proxima lista de fechados
+											tempo-inicial ; timestamp em que foi iniciada a procura
+											(+ nos-gerados (length lista-sucessores)) ; incrementa os número de nós gerados com o tamanho da lista de sucessores
+											(1+ nos-expandidos)) ; incrementa o número de nós expandidos
 					)
 				)
 			)
