@@ -45,6 +45,29 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 	)
 )
 
+(defun calcular-numero-nos-gerados (fator-ramificacao profundidade)
+	(cond 
+		( (<= profundidade 0) 1 )
+		( t (+ (expt fator-ramificacao profundidade) (calcular-numero-nos-gerados fator-ramificacao (1- profundidade))) )
+	)
+)
+
+(defun bisecao (profundidade numero-nos-gerados margem &optional (minimo 0) (maximo numero-nos-gerados))
+	(let*
+		(
+			(media (/ (+ minimo maximo) 2))
+			(numero-nos-gerado-calculado (calcular-numero-nos-gerados media profundidade))
+			(diferenca (abs (- numero-nos-gerados numero-nos-gerado-calculado)))
+			(p (< numero-nos-gerado-calculado numero-nos-gerados))
+		)
+		(cond
+			( (< diferenca margem) media )
+			( p (bisecao profundidade numero-nos-gerados margem media maximo) )
+			( t (bisecao profundidade numero-nos-gerados margem minimo media) )
+		)
+	)
+)
+
 (defun procura-generica (no-inicial ; nó inicial
 						 f-solucao ; função que verifica se um nó é uma solucao
 						 f-sucessores ; função que gera os sucessores
@@ -58,6 +81,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 							(tempo-inicial (get-universal-time)) ; timestamp de inicio da procura
 							(nos-gerados 0) ; numero de nos gerados
 							(nos-expandidos 0) ; numero de nos expandidos
+							(margem-bisecao 0.5)
 						)
   "Permite procurar a solucao de um problema usando a procura no espaço de estados. A partir de um estado inicial,
  de uma funcao que gera os sucessores e de um dado algoritmo. De acordo com o algoritmo pode ser usada um limite
@@ -66,11 +90,13 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 		; nao existe solucao ao problema
 		((null abertos) nil)
 		; se o primeiro dos abertos e solucao este no e devolvido
-		((funcall f-solucao (car abertos)) (list 	(car abertos) ; primeiro nó de abertos
+		((funcall f-solucao (car abertos))  (list 	(car abertos) ; primeiro nó de abertos
 													(- (get-universal-time) tempo-inicial) ; tempo em segundos que a procura levou a encontrar a solução
 													nos-gerados ; número de nós gerados
 													nos-expandidos ; número de nós expandidos 
 													(no-profundidade (car abertos)) ; função heuristica
+													(/ (no-profundidade (car abertos)) nos-gerados) ; penetrância
+													(bisecao (no-profundidade (car abertos)) nos-gerados margem-bisecao) ; fator de ramificacao
 											)
 		)
 		; se o no ja existe nos fechados é ignorado
@@ -86,6 +112,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 																			tempo-inicial ; timestamp em que foi iniciada a procura
 																			nos-gerados ; número de nós gerados
 																			nos-expandidos ; número de nós expandidos
+																			margem-bisecao ; margem de erro utilizada no metodo de bisecao
 														)
 		)
 		(T (let*
@@ -109,6 +136,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 										nos-expandidos ; número de nós expandidos
 										(no-profundidade solucao) ; profundidade do nó solução
 										(/ (no-profundidade solucao) nos-gerados) ; penetrância
+										(bisecao (no-profundidade solucao) nos-gerados margem-bisecao) ; fator de ramificacao
 								)
 					)
 					; expande a arvore se o primeiro dos abertos nao for solucao
@@ -123,7 +151,8 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 											(cons (car abertos) fechados) ; adiciona o primeiro nó de abertos aos fechados e envia para a proxima lista de fechados
 											tempo-inicial ; timestamp em que foi iniciada a procura
 											(+ nos-gerados (length lista-sucessores)) ; incrementa os número de nós gerados com o tamanho da lista de sucessores
-											(1+ nos-expandidos)) ; incrementa o número de nós expandidos
+											(1+ nos-expandidos) ; incrementa o número de nós expandidos
+											margem-bisecao)
 					)
 				)
 			)
