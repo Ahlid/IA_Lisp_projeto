@@ -1,15 +1,5 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; IDA*
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defun ida-asterisco ()
-
-)
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Genéricos
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -580,7 +570,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 				(
 					(funcao (lambda (op)
 									(cond 
-											((not (eql f-algoritmo 'a-asterisco)) (funcall op no))
+											((not (or (eql f-algoritmo 'a-asterisco) (eql f-algoritmo 'ida-asterisco))) (funcall op no))
 											( t (let*
 													(
 														(g (1+ (no-controlo-g no)))
