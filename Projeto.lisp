@@ -46,7 +46,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 
 (defun calcular-numero-nos-gerados (fator-ramificacao profundidade)
 	(cond 
-		( (<= profundidade 0) 1 )
+		( (<= profundidade 1) fator-ramificacao)
 		( t (+ (expt fator-ramificacao profundidade) (calcular-numero-nos-gerados fator-ramificacao (1- profundidade))) )
 	)
 )
