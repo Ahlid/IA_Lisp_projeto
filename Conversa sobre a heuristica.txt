@@ -1,0 +1,75 @@
+os que faltam (arcos) exato mas não é tudo
+
+preciso das partilhas, se uma caixa partilha um arco que falta deves encontrar
+
+..
+
+tipo vais ter estas possibilidades
+
+tens que encontrar o numero de partilhas
+
+n-partilhas-4-4 0
+n-partilhas-4-3 0
+n-partilhas-4-2 0
+n-partilhas-4-1 0 
+n-partilhas-3-3 3 
+n-partilhas-3-2 1
+n-partilhas-3-1  0
+n-partilhas-2-2 1
+n-partilhas-2-1 0
+n-partilhas-1-1 0
+
+aqui vamos ao numero de partilhas que inclua 2 arcos
+alias, tem que incluir o 2 e tem que ter os antecessores 
+ou seja só pode ser 2-[<=2] percebes? sim, e no outro, pega no 3 e vai ver o melhor 
+certo? 3-2 calma
+vamos calcular os nós partilhado para o (2 arcos a faltar):  1+ 0 = 1
+logo podemos retirar 1 arco aos 6 certo? sim
+
+agora se nós escolhemos todas as que têm 2 arcos a faltar então todos os arcos que
+partilham com caixas que faltavam 2 arcos vão se "marcados" certo? sim
+isto significa que as partilhas que incluirem o x-2 ou 2-x aconteceram
+e podemos usar isto no de 3 arcos a faltar certo? sim
+
+n-partilhas-3-2 1 
+aqui sabemos que este arco já está posto logo não conta nesta fase e podemos retirar
+assim retiramos 1 desses arcos pois nós de certeza que vamos escolher a caixa que 
+falte 3 arcos que está a partilhar o arco com a caixa que faltam 2
+percebes? sim, para preencher as caixas onde faltam 2 arcos eu vou usar um
+arco partilhado 3-2 sim pois vais preencher todas
+e agora só falta somar 5 + 2 = 7 -> custo do H* (eu acho que até é capaz de ser o H)
+não tenho a certeza porque não estou a prever situações onde não tenho a certeza
+ sim, é mais facil provar que não é admissivel que h*<=h
+mas tambem nao estou a ver situação onde não sja o h
+agora repara como deu h (neste caso)
+mesmo assim não tenho a certeza de deu deixa lá ver se me enganei
+
+
+exato ou seja precisamos disso tudo
+mas terás que fazer isto para qualquer tabuleiro
+sim tenho de ver se da uma combinhação binaria
+tenta não complicar, aquela formula deu mais trabalho do que devia
+certo
+depois com isso eu consigo aplicar uma heuristica bacana a que inventamos i see
+ foi bem pensado repara como vai funcionar
+
+
+até ali percebes certo? onde, nao vi nada sim
+
+agora começamos a ver as necessidades pela direita
+temos 4 caixas a faltar
+ali não temos caixas logo não podemos usar certo? sim e passar para com 2 arco? exato
+aqui utilizamos todas as caixas e ficamos com 3 caixa fechadas mas fica a faltar 1 certo? sim
+falta aquela e temos 5 caixas disponiveis, certo? nao percebi
+quais 5 caixas  okok
+logo precisamos de uma delas certo?sim
+agora entra as partilhas
+primeiro vemos quantos arcos são necessários sem contar com as partilhas
+ali precisamos de no máximo 6 arcos pois 3 caixas * 2arcos que faltam = 6
+sim e do outro lado precisamos de 1, 1x3 = 3, depois disto sim vais analisar 
+os arcos partilhados
+sim.
+aqui é que entra a beleza
+fazes 2 em 1 
+
+
