@@ -1,3 +1,36 @@
+;; tronco comum
+
+
+(defun verificar-n-arcos-faltam (caixa n)
+  (cond
+   ((= n (- 4 (apply '+ caixa))) 1)
+   (t 0)
+   )
+  )
+
+;; parte dos numeros de caixas com n linhas a faltar
+
+(defun n-caixas-a-faltar-x-arcos(caixas n)
+  (apply
+   '+
+   (mapcar
+    (lambda (x)
+      (apply '+
+             ( mapcar
+               (lambda (z)
+                 (verificar-n-arcos-faltam z n))
+               x )
+             )
+      )
+    caixas)
+   )
+
+  )
+
+
+;;parte das partilhas
+
+
 (defun h-numero-partilhas-horizonta-duas-linhas-quadrados(linha1 linha2 n1 n2)
 
   (apply '+
@@ -41,50 +74,6 @@
 )
 
 
-(defun n-caixas-a-faltar-x-arcos(caixas n)
-  (apply
-   '+
-   (mapcar
-    (lambda (x)
-      (apply '+
-             ( mapcar
-               (lambda (z)
-                 (verificar-n-arcos-faltam z n))
-               x )
-             )
-      )
-    caixas)
-   )
-
-  )
-
-(defun verificar-n-arcos-faltam (caixa n)
-  (cond
-   ((= n (- 4 (apply '+ caixa))) 1)
-   (t 0)
-   )
-  )
-
-
-(defun calcurar-n-partilhas-m-p (caixas n1 n2)
-
-(+ (aux-partilhas-horizontal caixas n1 n2) (aux-partilhas-vertical caixas n1 n2))
-
-)
-
-
-
-(defun get-helper()
-
-'( ((0 0 1 0) (0 0 1 1)) ((0 0 1 0)(0 0 1 1)) )
-)
-(defun get-helper2()
-
-'( ((1 1 0 0) (1 1 0 0) (1 1 0 0)) ((1 1 0 0)(1 1 0 0) (1 1 0 0)) ((1 1 0 0)(1 1 0 0) (0 0 0 0))  )
-)
-
-
-
 (defun aux-partilhas-vertical(caixas n1 n2)
 
   (cond
@@ -101,4 +90,24 @@
 
    )
 
+  )
+
+
+;; a função que faz mesmo o calculo total
+(defun calcurar-n-partilhas-n1-n2 (caixas n1 n2)
+
+(+ (aux-partilhas-horizontal caixas n1 n2) (aux-partilhas-vertical caixas n1 n2))
+
+)
+
+;; helpers
+
+
+  (defun get-helper()
+
+  '( ((0 0 1 0) (0 0 1 1)) ((0 0 1 0)(0 0 1 1)) )
+  )
+  (defun get-helper2()
+
+  '( ((1 1 0 0) (1 1 0 0) (1 1 0 0)) ((1 1 0 0)(1 1 0 0) (1 1 0 0)) ((1 1 0 0)(1 1 0 0) (0 0 0 0))  )
   )
