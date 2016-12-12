@@ -1,0 +1,77 @@
+escreve aqui
+123
+ok então ainda te lembras mais ou menos? sim
+
+então deixa lá ver se me lembro
+xD
+bem depois de termos o numero das caixas (arcos em falta para cada caixa) e termos as partilhas podemos começar a pensar na heuristica
+
+a euristica basicamente o que faz é fazer as caixas do tabuleiro dando prioridade
+aos que tiverem menos arcos por fazer.
+
+certo?
+r:sim
+
+portanto no tabuleiro que temos se quisermos atingir 5 caixa precisamos de fazer + 4 caixas.
+
+portanto vamos primeiro ver quantas caixas existem onde faltem apenas 1 arco.
+Neste caso temos 0 logo não perdemos tempo e passamos para as caixas de 2 arcos.
+
+(tudo bem até agora? sim)
+
+Agora temos 3 caixas com o número 2. Visto que queremos fazer 4 caixas vamos preencher estas 3 caixas. (é isto que a vai tornar não admissivel)
+
+Agora sabemos que se preenchemos todas as caixas com o número 2 então todas as partilhas relacionadas com o número 2 estão utilizadas.
+
+(tudo bem até agora? sim)
+
+Isto significa que agora temos 3 caixas fechadas. Essas 3 caixas fechadas correspondem a 3*2 arestas por fechar sem contar com partilhas. logo nos sabemos que sempre que existirem partilhas 2-(<=2) nós vamos usufruir delas.
+
+(tudo bem até agora? sim)
+
+(agora eu faço a questão.. porque não 2-3)
+(eu ali disse 2-(<=2) porque ainda não sei se vou precisar de uma caixa com 3 por fazer? Sim, o objetivo desta fase é retirar 1 arco por cada partilha pois se eles partilhão 1 arco, o custo será sempre com esse arco retirado)
+(aquele não conta porque não estamos a fazer a caixa 3)(certo? sim)
+continuando
+
+Agora sem contar com as partilhas temos 6 arestas e retirando o número de partilhas que se aplicam (2-(<=2)) ficamos com 6-1 = 5
+
+Pronto passamos agora para as caixas de 3 por fazer. Agora temos mais do que 1 (caixas que faltam fechar contando com as que supostamente fechamos) caixas disponiveis. Escolhemos 1 dessas caixas e se existirem partilhas com caixas de dois(ou 1), retiramos 1 arco por cada partilha 
+ali temos que ter cuidado por nada garante que esta caixa tenha duas arestas partilhadas. o que se garante é que se escolhermos 1 caixa essa de certeza que vai aproveitar uma das partilhas. Aqui existem algumas arestas a limar mas isso deixo contigo. Faz uns exemplosi para veres se encontras uma solução melhor.
+Percebeste tudo? sim mas não estou a visualizar como vou limar sem complexidade
+Podes ter condições como essa que te disse
+(1 ou mais caixas com 3 e uma partilha 3-2 ou 3-1 => retirar 1 arco)
+ah, sim, eu já estou a pensar numar formula matematica mas ainda tenho de ver
+se resulta, aqui o problema é que não consegues identificar de quem é o arco partilhado. mas aqui pretende-se calcular o custo estimado, logo saber de quem é o arco não interessa mais para resoler o problema? Interessa porque consegues saber exatamente o h com isso. Mas não vale a pena porque dá muito trabalho
+sim, acho que teria de receber mais coisas a função sim
+manda-me a conversa então, acho que consigo com uma formula, olha tenho parte do código feito, dá uma olhada
+
+estás vivo? sim, deixa só ser os parametros
+
+
+não era esta? são aquelas 3 mas estavam todas a meio não acabei
+
+mas tu chamas calcular-heuristica2 
+certo? sim depos essa é que chamas as outras ou outra sei que tinha feito aquela de cima para ser cada iteração depois a iteraçoes são feitas pela do meio e a debaixo recebe os valores e chama a do meio... algo desse género
+
+ok
+
+vou tentar amanha só faltar os manuais
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

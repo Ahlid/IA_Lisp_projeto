@@ -338,11 +338,21 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 (defun criar-operacao (x y funcao)
 	"Cria uma função lambda que representa uma operação através de uma operação (arco-horizontal/arco-vertical) e a posição x e y"
 	(lambda (no) 
-			(no-criar 
-				(funcall funcao x y (no-estado no)) 
-				no 
-				(1+ (no-profundidade no))
+			(let 
+				(
+					(tabuleiro (funcall funcao x y (no-estado no)) )
+				)
+				(cond 
+					((equal (no-estado no) tabuleiro) nil)
+					(t (no-criar 
+							tabuleiro
+							no 
+							(1+ (no-profundidade no))
+						)
+					)
+				)
 			)
+			
 	)
 )
 
