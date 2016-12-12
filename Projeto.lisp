@@ -340,13 +340,15 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 	(lambda (no) 
 			(let 
 				(
-					(tabuleiro (funcall funcao x y (no-estado no)) )
+					( tabuleiro (funcall funcao x y (no-estado no)) )
 				)
 				(cond 
 					((equal (no-estado no) tabuleiro) nil)
-					(t (no-criar 
-							tabuleiro
-							no 
+					(t 	(set-no-profundidade 
+							(set-no-pai 
+									(set-no-estado no tabuleiro) 
+									no
+							) 
 							(1+ (no-profundidade no))
 						)
 					)
@@ -518,7 +520,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 
 
 
-(defun no-alterar-estado (no estado)
+(defun set-no-estado (no estado)
  "Altera o estado de um nó"
   (substituir 0 estado no)
 )
@@ -604,18 +606,24 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 		( t (let
 				(
 					(funcao (lambda (op)
-									(cond 
-											((not (or (eql f-algoritmo 'a-asterisco) (eql f-algoritmo 'ida-asterisco))) (funcall op no))
-											( t (let*
+									(let*
+										(
+											(sucessor (funcall op no))
+										)
+										(cond
+											((null sucessor) nil)
+											((not (or (eql f-algoritmo 'a-asterisco) (eql f-algoritmo 'ida-asterisco))) sucessor)
+											( t 
+												(let*
 													(
 														(g (1+ (no-controlo-g no)))
-														(sucessor (funcall op no))
 														(h (funcall heuristica sucessor))
 														(f (+ g h))
 													)
 													(set-no-controlo sucessor (list g h f))
 												)
 											)
+										)
 									)
 							)
 					)			
@@ -643,7 +651,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 	(lambda (no) (- o (numero-caixas-fechadas (no-estado no)) 1))
 )
 
-
+; aqui estava a fazer cada iteração, acho que consegues reaproveitar
 (defun calcular-heuristica2-arcos-faltam 	(	
 												n-caixas-faltam ; número de caixas que faltam preencher
 												n ; numero de arcos a faltar
@@ -668,10 +676,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 		)
 	)
 	
-	(list 
-		(- n-caixas-faltam (min n-caixas-faltam n-caixas-faltar-n-arcos)) 
-		()
-	)										
+									
 
 )
 
