@@ -1,9 +1,17 @@
+RICARDO:
 Estudo comparativo entre os 3 métodos (bfs dfs a*)  (indicar os space complexity)
 Programar, aplicar e estudar o IDA* (Interactive Deepening) (indicar o space complexity)
-Elaboração da segunda heuristica
+Realizar as alinieas a,b,c,d,e,f
+Dividir o projeto em 3 ficheiros
+Comentar o código
+
+TIAGO: 
+Fazer a leitura e escrita de ficheiros
+Comentar código da escrita de ficheiros
 Manual técnico
 Manual utilizador
-Realizar as alinieas a,b,c,d,e,f
+Elaboração da segunda heuristica
+Comentar código heuristica
 
 
 resolver este erro
