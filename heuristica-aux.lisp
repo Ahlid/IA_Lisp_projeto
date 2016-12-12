@@ -78,7 +78,7 @@
 
   (cond
    ((null caixas) 0)
-   (T (+ (h-numero-partilhas-vertical (first caixas) n1 n2) (aux-partilha-vertical (rest caixas) n1 n2) ))
+   (T (+ (h-numero-partilhas-vertical (first caixas) n1 n2) (aux-partilhas-vertical (rest caixas) n1 n2) ))
    )
   )
 
