@@ -1,0 +1,7 @@
+Estudo comparativo entre os 3 métodos (bfs dfs a*)  (indicar os space complexity)
+Programar, aplicar e estudar o IDA* (Interactive Deepening) (indicar o space complexity)
+Elaboração da segunda heuristica
+Manual técnico
+Manual utilizador
+Realizar as alinieas a,b,c,d,e,f
+

@@ -240,8 +240,8 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 )
 
 (defun tabuleiro-d ()
-	'((()()()()())
-	(()()()()()()))
+	'(((nil nil nil nil nil)(nil nil nil nil nil)(nil nil nil nil nil)(nil nil nil nil nil)(nil nil nil nil nil))
+	((nil nil nil nil)(nil nil nil nil)(nil nil nil nil)(nil nil nil nil)(nil nil nil nil)(nil nil nil nil)))
 )
 
 (defun tabuleiro-e ()
@@ -253,7 +253,6 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 	'(((nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil t nil nil nil nil nil)(nil t nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil))
 	((nil nil nil nil nil nil nil)(nil nil nil nil t nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)))
 )
-
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
