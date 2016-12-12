@@ -187,6 +187,6 @@
 	(append sucessores abertos)
 )
 
-(defun teste-ida-asterisco (n m o)
-	(procura-generica-ida-asterisco (no-criar (criar-tabuleiro-vazio n m) nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'ida-asterisco (criar-operacoes n m) (heuristica o))
+(defun teste-ida-asterisco (n m o tabuleiro)
+	(procura-generica-ida-asterisco (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'ida-asterisco (criar-operacoes n m) (heuristica o))
 )

@@ -1,0 +1,2 @@
+( teste-ida-asterisco 3 3 3 (tabuleiro-a))
+(((((NIL NIL NIL) (NIL T T) (NIL T T) (NIL NIL T)) ((NIL NIL NIL) (NIL T NIL) (NIL T T) (NIL T T))) ((((NIL NIL NIL) (NIL NIL T) (NIL T T) (NIL NIL T)) ((NIL NIL NIL) (NIL T NIL) (NIL T T) (NIL T T))) ((((NIL NIL NIL) (NIL NIL T) (NIL T T) (NIL NIL T)) ((NIL NIL NIL) (NIL T NIL) (NIL NIL T) (NIL T T))) NIL 0 (0 0 0)) 1 (1 0 1)) 2 (2 -1 1)) 0 72 3 2 1/36 1017/128)

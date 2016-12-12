@@ -4,16 +4,6 @@ Programar, aplicar e estudar o IDA* (Interactive Deepening) (indicar o space com
 Realizar as alinieas a,b,c,d,e,f
 Dividir o projeto em 3 ficheiros
 Comentar o código
-
-TIAGO: 
-Fazer a leitura e escrita de ficheiros
-Comentar código da escrita de ficheiros
-Manual técnico
-Manual utilizador
-Elaboração da segunda heuristica
-Comentar código heuristica
-
-
 resolver este erro
 (teste-dfs 4 4 7 1000 (tabuleiro-b))
 debugger invoked on a DIVISION-BY-ZERO in thread
@@ -28,4 +18,15 @@ restarts (invokable by number or by possibly-abbreviated name):
 
 (SB-KERNEL::INTEGER-/-INTEGER 1 0)
 0] 0
+
+TIAGO: 
+Fazer a leitura e escrita de ficheiros
+Comentar código da escrita de ficheiros
+Manual técnico
+Manual utilizador
+Elaboração da segunda heuristica
+Comentar código heuristica
+
+
+
 
