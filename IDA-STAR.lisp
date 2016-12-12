@@ -17,10 +17,10 @@
 												limite ; limite de custo f da procura
 												heuristica ; heuristica
 												&optional 
-													(abertos (list no-inicial)) ; lista de abertos
-													(fechados nil) ; lista de fechados
 													(nos-gerados 0) ; numero de nos gerados
 													(nos-expandidos 0) ; numero de nos expandidos
+													(abertos (list no-inicial)) ; lista de abertos
+													(fechados nil) ; lista de fechados
 													(margem-bisecao 0.5) ; margem de erro utilizada no metodo de bisecao
 											)
   "Permite procurar a solucao de um problema usando a procura no espaço de estados. A partir de um estado inicial,
@@ -31,41 +31,45 @@
 		((null abertos) nil)
 		; se o no ja existe nos fechados é ignorado
 		((existep (first abertos) fechados f-algoritmo) (procura-generica-ida-asterisco-aux 	no-inicial ; nó ínicial
-																			f-solucao ; função que verifica se um nó é uma solucao
-																			f-sucessores ; função que gera os sucessores
-																			f-algoritmo ; algoritmo
-																			lista-operadores ; lista dos operadores
-																			limite ; limite de custo f da procura
-																			heuristica ; heuristica
-																			(cdr abertos) ; resto da lista de abertos
-																			fechados ; lista de fechados
-																			nos-gerados ; número de nós gerados
-																			nos-expandidos ; número de nós expandidos
-																			margem-bisecao ; margem de erro utilizada no metodo de bisecao
+																								f-solucao ; função que verifica se um nó é uma solucao
+																								f-sucessores ; função que gera os sucessores
+																								f-algoritmo ; algoritmo
+																								lista-operadores ; lista dos operadores
+																								limite ; limite de custo f da procura
+																								heuristica ; heuristica
+																								nos-gerados ; número de nós gerados
+																								nos-expandidos ; número de nós expandidos
+																								(cdr abertos) ; resto da lista de abertos
+																								fechados ; lista de fechados
+																								margem-bisecao ; margem de erro utilizada no metodo de bisecao
 														)
 		)	
-		; se a custo f do primeiro no de abertos é superior ao limite, devolve esse custo f
+		; se a custo f do primeiro no de abertos é superior ao limite, utilizamos como comparação do resultado da proxima expansão da arvore
 		( (> (no-controlo-f  (first abertos)) limite) 
 								(let
 									(
 										(resultado (procura-generica-ida-asterisco-aux 	no-inicial ; nó ínicial
-																			f-solucao ; função que verifica se um nó é uma solucao
-																			f-sucessores ; função que gera os sucessores
-																			f-algoritmo ; algoritmo
-																			lista-operadores ; lista dos operadores
-																			limite ; limite de custo f da procura
-																			heuristica ; heuristica
-																			(cdr abertos) ; resto da lista de abertos
-																			fechados ; lista de fechados
-																			nos-gerados ; número de nós gerados
-																			nos-expandidos ; número de nós expandidos
-																			margem-bisecao ; margem de erro utilizada no metodo de bisecao
-														)
+																						f-solucao ; função que verifica se um nó é uma solucao
+																						f-sucessores ; função que gera os sucessores
+																						f-algoritmo ; algoritmo
+																						lista-operadores ; lista dos operadores
+																						limite ; limite de custo f da procura
+																						heuristica ; heuristica
+																						nos-gerados ; número de nós gerados
+																						nos-expandidos ; número de nós expandidos
+																						(cdr abertos) ; resto da lista de abertos
+																						fechados ; lista de fechados
+																						margem-bisecao ; margem de erro utilizada no metodo de bisecao
+													)
 										)
 									)
 									(cond 
-										( (null resultado) (no-controlo-f  (first abertos)) )
-										( (numberp resultado) (min (no-controlo-f (first abertos)) resultado) )
+										( (null resultado) 	(list 	(no-controlo-f  (first abertos)) 
+																	nos-gerados ; número de nós gerados
+																	nos-expandidos ; número de nós expandidos
+															)
+										)
+										( (numberp (first resultado)) (cons (min (no-controlo-f (first abertos)) (first resultado)) (rest resultado)) )
 										( (listp resultado) resultado )
 									)
 								)
@@ -114,10 +118,10 @@
 																lista-operadores ; lista dos operadores
 																limite ; limite de custo f da procura
 																heuristica ; heuristica
-																(funcall f-algoritmo (rest abertos) lista-sucessores) ; utiliza o algoritmo para juntar o resto da lista de abertos e a lista de sucessores para a próxima lista de abertos
-																(cons (car abertos) fechados) ; adiciona o primeiro nó de abertos aos fechados e envia para a proxima lista de fechados
 																(+ nos-gerados (length lista-sucessores)) ; incrementa os número de nós gerados com o tamanho da lista de sucessores
 																(1+ nos-expandidos) ; incrementa o número de nós expandidos
+																(funcall f-algoritmo (rest abertos) lista-sucessores) ; utiliza o algoritmo para juntar o resto da lista de abertos e a lista de sucessores para a próxima lista de abertos
+																(cons (car abertos) fechados) ; adiciona o primeiro nó de abertos aos fechados e envia para a proxima lista de fechados
 																margem-bisecao
 											)
 								)			
@@ -142,6 +146,8 @@
 												(limite 0)
 												(tempo-inicial (get-universal-time)) ; timestamp em que foi iniciada a procura		
 												(margem-bisecao 0.5) ; margem de erro do fator de ramificacao
+												(numero-nos-gerados 0)
+												(numero-nos-expandidos 0)
 											)
 	(let
 		(
@@ -152,20 +158,26 @@
 																lista-operadores ; lista dos operadores
 																limite ; limite de custo f da procura
 																heuristica ; heuristica
+																numero-nos-gerados
+																numero-nos-expandidos
 						)
 			)
 		)
 		(cond ;;TODO: as estatisticas têm que acompanhar i algoritmo
-			( (numberp resultado) 	(procura-generica-ida-asterisco 	no-inicial
-																		f-solucao
-																		f-sucessores
-																		f-algoritmo
-																		lista-operadores
-																		heuristica
-																		resultado
-									)
+			( (numberp (first resultado)) 	(procura-generica-ida-asterisco 	no-inicial
+																				f-solucao
+																				f-sucessores
+																				f-algoritmo
+																				lista-operadores
+																				heuristica
+																				(first resultado)
+																				tempo-inicial
+																				margem-bisecao
+																				(second resultado)
+																				(third resultado)
+											)
 			)
-			( (listp resultado) resultado ) 
+			( (listp resultado) (append (list (first resultado) (- (get-universal-time) tempo-inicial)) (rest resultado)) ) 
 		)
 	)					
 )
