@@ -224,10 +224,36 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 )
 
 
-(defun tabuleiro1 ()
-	"retorna um tabuleiro vazio de dimensão 3 x 3"
-	(criar-tabuleiro-vazio 3 3)
+(defun tabuleiro-a ()
+	'(((nil nil nil) (nil nil t) (nil t t) (nil nil t)) 
+	((nil nil nil)(nil t nil)(nil nil t)(nil t t)))
 )
+
+(defun tabuleiro-b ()
+	'(((nil nil t nil)(t t t t)(nil nil t t)(nil nil t t)(nil nil t t))
+	((nil nil t t)(nil nil t t)(t t t t)(t nil t t)(nil t t t)))
+)
+
+(defun tabuleiro-c ()
+	'(((nil nil t nil)(t nil t t)(nil nil t t)(nil nil t t)(nil nil t t))
+	((nil nil t t)(nil nil t t)(nil nil t t)(t nil t t)(nil t t t)))
+)
+
+(defun tabuleiro-d ()
+	'((()()()()())
+	(()()()()()()))
+)
+
+(defun tabuleiro-e ()
+	'(((nil nil nil t nil nil)(nil nil nil t t t)(t t t t t nil)(nil nil nil t t nil)(nil nil nil t t nil)(nil nil t t t t)(nil nil t t t t))
+	((nil nil nil t t t)(nil t nil nil t t)(nil t t nil t t)(nil nil t t nil nil)(t nil t nil t nil)(nil nil t t nil nil)(nil t t t t t)))
+)
+
+(defun tabuleiro-f ()
+	'(((nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil t nil nil nil nil nil)(nil t nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil))
+	((nil nil nil nil nil nil nil)(nil nil nil nil t nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)))
+)
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -608,18 +634,47 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 	(lambda (no) (- o (numero-caixas-fechadas (no-estado no)) 1))
 )
 
+;;basicamente tu vais fazer umas funções que vao alimentar esta com esses valores, já te mostro como ok
+
+(defun calcular-heuristica2 (	n-caixas-objetivo
+								n-caixas-fechadas 
+								n-caixas-faltar-1-arcos
+								n-caixas-faltar-2-arcos
+								n-caixas-faltar-3-arcos
+								n-caixas-faltar-4-arcos
+								n-partilhas-4-4
+								n-partilhas-4-3
+								n-partilhas-4-2
+								n-partilhas-4-1
+								n-partilhas-3-3 
+								n-partilhas-3-2 
+								n-partilhas-3-1  
+								n-partilhas-2-2
+								n-partilhas-2-1
+								n-partilhas-1-1
+							)
+	(let
+		(
+			(n-caixas-faltam (- n-caixas-objetivo n-caixas-fechadas))
+		)
+		
+		-1
+		
+	)					
+)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Testes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun teste-bfs (n m o)
-   (procura-generica (no-criar (criar-tabuleiro-vazio n m)) (criar-solucao o) 'sucessores 'bfs (criar-operacoes n m))
+(defun teste-bfs (n m o tabuleiro)
+   (procura-generica (no-criar tabuleiro) (criar-solucao o) 'sucessores 'bfs (criar-operacoes n m))
 )
 
-(defun teste-dfs (n m o p)
-   (procura-generica (no-criar (criar-tabuleiro-vazio n m)) (criar-solucao o) 'sucessores 'dfs (criar-operacoes n m) p)
+(defun teste-dfs (n m o p tabuleiro)
+   (procura-generica (no-criar tabuleiro) (criar-solucao o) 'sucessores 'dfs (criar-operacoes n m) p)
 )
 
-(defun teste-a-asterisco (n m o)
-	(procura-generica (no-criar (criar-tabuleiro-vazio n m) nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'a-asterisco (criar-operacoes n m) nil (heuristica o))
+(defun teste-a-asterisco (n m o tabuleiro)
+	(procura-generica (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'a-asterisco (criar-operacoes n m) nil (heuristica o))
 )
 

@@ -21,7 +21,7 @@
 													(fechados nil) ; lista de fechados
 													(nos-gerados 0) ; numero de nos gerados
 													(nos-expandidos 0) ; numero de nos expandidos
-													(margem-bisecao 0.5)
+													(margem-bisecao 0.5) ; margem de erro utilizada no metodo de bisecao
 											)
   "Permite procurar a solucao de um problema usando a procura no espaço de estados. A partir de um estado inicial,
  de uma funcao que gera os sucessores e de um dado algoritmo. De acordo com o algoritmo pode ser usada um limite
@@ -150,7 +150,7 @@
 																f-sucessores ; função que gera os sucessores
 																f-algoritmo ; algoritmo
 																lista-operadores ; lista dos operadores
-																limite ; limite de custo f da procura ;; EM TESTES
+																limite ; limite de custo f da procura
 																heuristica ; heuristica
 						)
 			)
