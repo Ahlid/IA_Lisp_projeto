@@ -633,7 +633,46 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 	(lambda (no) (- o (numero-caixas-fechadas (no-estado no)) 1))
 )
 
-;;basicamente tu vais fazer umas funções que vao alimentar esta com esses valores, já te mostro como ok
+
+(defun calcular-heuristica2-arcos-faltam 	(	
+												n-caixas-faltam ; número de caixas que faltam preencher
+												n ; numero de arcos a faltar
+												n-caixas-faltar-n-arcos ; número de caixas onde faltam n arcos
+												n-partilhas-relevantes ; número de partilhas que são relevantes às caixas onde faltam n arcos
+											)
+	(let* 
+		(
+			(n-caixas-ficam-a-faltar (- n-caixas-faltam (min n-caixas-faltam n-caixas-faltar-n-arcos)) ); número de caixas que ficaram a faltar se utilizarmos todas as caixas possiveis
+		)
+		(cond 
+			( 	(= n-caixas-ficam-a-faltar 0) 
+				(list   0 ; número de caixas que ficam a faltar
+						(- (* n-caixas-faltar-n-arcos n) n-partilhas-relevantes) ; número de arcos necessários para as caixas
+				)
+			)
+			( 	t 
+				(list   n-caixas-ficam-a-faltar ; número de caixas que ficam a faltar
+						(- (* n-caixas-faltar-n-arcos n) n-partilhas-relevantes) ; número de arcos necessários para as caixas
+				)
+			)
+		)
+	)
+	
+	(list 
+		(- n-caixas-faltam (min n-caixas-faltam n-caixas-faltar-n-arcos)) 
+		()
+	)										
+
+)
+
+(defun calcular-heuristica2-aux (	n-caixas-faltam 
+									n-caixas-faltar-1-arcos
+									n-caixas-faltar-2-arcos
+									n-caixas-faltar-3-arcos
+									n-caixas-faltar-4-arcos)
+								
+	-1
+)
 
 (defun calcular-heuristica2 (	n-caixas-objetivo
 								n-caixas-fechadas 
@@ -657,7 +696,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 			(n-caixas-faltam (- n-caixas-objetivo n-caixas-fechadas))
 		)
 		
-		-1
+		
 		
 	)					
 )

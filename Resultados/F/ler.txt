@@ -1,0 +1,2 @@
+O bfs demorou muito
+O a* demorou muito com a heuristica do enunciado

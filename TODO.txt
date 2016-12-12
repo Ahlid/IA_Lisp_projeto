@@ -5,3 +5,19 @@ Manual técnico
 Manual utilizador
 Realizar as alinieas a,b,c,d,e,f
 
+
+resolver este erro
+(teste-dfs 4 4 7 1000 (tabuleiro-b))
+debugger invoked on a DIVISION-BY-ZERO in thread
+#<THREAD "main thread" RUNNING {1002924913}>:
+  arithmetic error DIVISION-BY-ZERO signalled
+Operation was /, operands (1 0).
+
+Type HELP for debugger help, or (SB-EXT:EXIT) to exit from SBCL.
+
+restarts (invokable by number or by possibly-abbreviated name):
+  0: [ABORT] Exit debugger, returning to top level.
+
+(SB-KERNEL::INTEGER-/-INTEGER 1 0)
+0] 0
+
