@@ -96,10 +96,10 @@
 ;; a funÃ§Ã£o que faz mesmo o calculo total
 (defun calcurar-n-partilhas-n1-n2 (caixas n1 n2)
   (cond
-   ((= n1 n2)
+   ((= n1 n2) 
     (+ (aux-partilhas-horizontal caixas n1 n2) (aux-partilhas-vertical caixas n1 n2 ))
     )
-   ( T
+   ( T 
      (+ (+ (aux-partilhas-horizontal caixas n1 n2) (aux-partilhas-vertical caixas n1 n2)) (+ (aux-partilhas-horizontal caixas n2 n1) (aux-partilhas-vertical caixas n2 n1)))
      )
    )
@@ -121,7 +121,7 @@
 
 (defun get-helper3()
 
-  '(
+  '( 
     ( (0 0 1 0) (1 1 1 1) (0 1 0 1))
     ( (0 0 1 0) (1 0 0 1) (1 1 0 0))
     ( (0 0 1 0) (0 0 0 1) (1 0 0 0))
@@ -132,8 +132,8 @@
 (defun convert-top-bottom(linha)
   (cond
    ((null (second linha)) nil)
-   (T
-    (cons (mapcar 'list (first linha) (second linha))  (convert-top-bottom (rest linha)))
+   (T 
+    (cons (mapcar 'list (first linha) (second linha))  (convert-top-bottom (rest linha)))            
     )
    )
   )
@@ -152,18 +152,12 @@
 )
 
 (defun converter-aux(tops-bottoms lefts-rights)
-
-  (mapcar
+  
+  (mapcar 
    (lambda (x y)
      (append x (reverse y))
      )
    tops-bottoms lefts-rights
    )
-
+  
   )
-
-
-(defun tabuleiro-e ()
-	'(((nil nil nil t nil nil)(nil nil nil t t t)(t t t t t nil)(nil nil nil t t nil)(nil nil nil t t nil)(nil nil t t t t)(nil nil t t t t))
-	((nil nil nil t t t)(nil t nil nil t t)(nil t t nil t t)(nil nil t t nil nil)(t nil t nil t nil)(nil nil t t nil nil)(nil t t t t t)))
-)
