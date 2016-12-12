@@ -1,0 +1,8 @@
+(teste-a-asterisco 4 4 7 (tabuleiro-b))
+(((((NIL NIL T NIL) (T T T T) (NIL NIL T T) (NIL NIL T T) (NIL NIL T T))
+   ((NIL NIL T T) (NIL NIL T T) (T T T T) (T T T T) (NIL T T T)))
+  ((((NIL NIL T NIL) (T T T T) (NIL NIL T T) (NIL NIL T T) (NIL NIL T T))
+    ((NIL NIL T T) (NIL NIL T T) (T T T T) (T NIL T T) (NIL T T T)))
+   NIL 0 (0 0 0))
+  1 (1 -1 0))
+ 0 2 1 1 1/2 1)
