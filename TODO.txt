@@ -1,6 +1,6 @@
 RICARDO:
 Estudo comparativo entre os 3 métodos (bfs dfs a*)  (indicar os space complexity)
-Programar, aplicar e estudar o IDA* (Interactive Deepening) (indicar o space complexity)
+Programar, aplicar e estudar o IDA* (Iterative Deepening) (indicar o space complexity)
 Realizar as alinieas a,b,c,d,e,f
 Dividir o projeto em 3 ficheiros
 Comentar o código
