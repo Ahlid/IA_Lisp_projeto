@@ -93,7 +93,7 @@
   )
 
 
-;; a funÃ§Ã£o que faz mesmo o calculo total
+;; a funÃƒÂ§ÃƒÂ£o que faz mesmo o calculo total
 (defun calcurar-n-partilhas-n1-n2 (caixas n1 n2)
   (cond
    ((= n1 n2)
@@ -196,3 +196,102 @@
 (mapear-para-binario (converter-tabuleiro (tabuleiro-c)))
 
 )
+
+
+(defun calcular-heuristica2 (	n-caixas-objetivo
+								n-caixas-fechadas
+								n-caixas-faltar-1-arcos
+								n-caixas-faltar-2-arcos
+								n-caixas-faltar-3-arcos
+								n-caixas-faltar-4-arcos
+								n-partilhas-4-4
+								n-partilhas-4-3
+								n-partilhas-4-2
+								n-partilhas-4-1
+								n-partilhas-3-3
+								n-partilhas-3-2
+								n-partilhas-3-1
+								n-partilhas-2-2
+								n-partilhas-2-1
+								n-partilhas-1-1
+							)
+	(let
+		(
+			(n-caixas-faltam (- n-caixas-objetivo n-caixas-fechadas))
+		)
+
+
+          (+
+           (heuristica2-aux-1-arco n-caixas-faltam n-caixas-faltar-1-arcos n-partilhas-1-1)
+           (heuristica2-aux-2-arco (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos)) n-caixas-faltar-2-arcos n-partilhas-2-1 n-partilhas-2-2)
+           (heuristica2-aux-3-arco (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos n-caixas-faltar-2-arcos )) n-caixas-faltar-3-arcos n-partilhas-3-1 n-partilhas-3-2 n-partilhas-3-3)
+           (heuristica2-aux-4-arco (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos n-caixas-faltar-2-arcos n-caixas-faltar-3-arcos )) n-caixas-faltar-4-arcos n-partilhas-4-1 n-partilhas-4-2 n-partilhas-4-3 n-partilhas-4-4)
+           )
+
+
+
+	)
+)
+
+
+(defun heuristica2-aux-1-arco (n-caixas-faltam n-caixas-faltar-1-arco n-partilhas-1-1)
+
+  (let*
+      (
+       (n-caixas-a-usar (min n-caixas-faltam n-caixas-faltar-1-arco))
+       (n-partilhas-a-usar (min n-partilhas-1-1 n-caixas-a-usar))
+       )
+    (- n-caixas-a-usar (floor (/ n-partilhas-a-usar 2)))
+    )
+
+ )
+
+(defun heuristica2-aux-2-arco (n-caixas-faltam n-caixas-faltar-2-arco n-partilhas-2-1 n-partilhas-2-2)
+  (cond
+   ((= 0 n-caixas-faltam) 0)
+   (t
+    (let*
+        (
+         (n-caixas-a-usar (min n-caixas-faltam n-caixas-faltar-2-arco))
+         (n-partilhas-a-usar-2-2 (min n-partilhas-2-2 (- n-caixas-a-usar 1)))
+         )
+      (- (* 2 n-caixas-a-usar) n-partilhas-2-1  n-partilhas-a-usar-2-2 )
+      )
+
+    )
+   )
+  )
+
+(defun heuristica2-aux-3-arco (n-caixas-faltam n-caixas-faltar-3-arco n-partilhas-3-1 n-partilhas-3-2 n-partilhas-3-3)
+  (cond
+   ((= 0 n-caixas-faltam) 0)
+   (t
+    (let*
+        (
+         (n-caixas-a-usar (min n-caixas-faltam n-caixas-faltar-3-arco))
+         (n-partilhas-a-usar-3-3 (min n-partilhas-3-3 (- n-caixas-a-usar 1)))
+
+
+         )
+      (- (* 3 n-caixas-a-usar) n-partilhas-3-1  n-partilhas-3-2 n-partilhas-a-usar-3-3 )
+    )
+
+    )
+   )
+  )
+(defun heuristica2-aux-4-arco (n-caixas-faltam n-caixas-faltar-4-arco n-partilhas-4-1 n-partilhas-4-2 n-partilhas-4-3 n-partilhas-4-4)
+
+  (cond
+   ((= 0 n-caixas-faltam) 0)
+   (t (let*
+          (
+           (n-caixas-a-usar (min n-caixas-faltam n-caixas-faltar-4-arco))
+           (n-partilhas-a-usar-4-4 (min n-partilhas-4-4 (- n-caixas-a-usar 1))
+                                   )
+           )
+        (- (* 4 n-caixas-a-usar) n-partilhas-4-1  n-partilhas-4-2 n-partilhas-4-3 n-partilhas-a-usar-4-4 )
+        )
+
+      )
+   )
+  )
