@@ -10,22 +10,22 @@ Retorna verdadeiro se o nó existir na lista. Deve ter em atenção que para o a
 o conceito de nó repetido é particular-
 No algoritmo dfs um nó só é considerado igual se a sua profundidade for inferior às profundidades existentes na lista"
   (cond
-    ( (null lista) nil )
+    ( (null lista) nil ) ;  a lista está vazia
     ( t
       (let*
 		  (
-			(is-dfs (eql f-algoritmo 'dfs))
-			(proximo-no-lista (first lista))
-			(estados-iguais (equal (no-estado no) (no-estado proximo-no-lista)))
-			(profundidade-superior (> (no-profundidade no) (no-profundidade proximo-no-lista)) )
-			(dfs-exitep (and is-dfs estados-iguais profundidade-superior))
-			(else-existep (and (not is-dfs) estados-iguais))
+			(is-dfs (eql f-algoritmo 'dfs)) ; se é o algoritmo depth first
+			(proximo-no-lista (first lista)) ; buscar o próximo da lista
+			(estados-iguais (equal (no-estado no) (no-estado proximo-no-lista))) ; verifica se o estado do proximo no da lista é igual ao estado do no que estamos a avaliar
+			(profundidade-superior (> (no-profundidade no) (no-profundidade proximo-no-lista)) ) ; se a profundidade do nó avalidado é maior que a do proximo no da lista
+			(dfs-exitep (and is-dfs estados-iguais profundidade-superior)) ; condição para o depth first => estados iguais e profundidade do nó é superior
+			(else-existep (and (not is-dfs) estados-iguais)) ; condição para os restantes algoritmos => estados iguais
 		  )
 
         (cond
-          ( dfs-exitep t )
-          ( else-existep t )
-          ( t (existep no (rest lista) f-algoritmo) )
+          ( dfs-exitep t ) ; se existir o nó igual e com profundidade superior é considerado que o no a avaliar já existe na lista
+          ( else-existep t ) ; se simplesmente existe na lista
+          ( t (existep no (rest lista) f-algoritmo) ) ; volta a fazer com o resto da lista
         )
       )
     )
@@ -37,17 +37,18 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 (defun existe-solucao (lista f-solucao f-algoritmo)
 	"Verifica se existe uma solucao ao problema numa lista de sucessores para o algoritmo dfs"
 	(cond
-		((not (eql f-algoritmo 'dfs)) nil)
-		((null lista) nil)
-		((funcall f-solucao (car lista)) (car lista))
-		(T (existe-solucao (cdr lista) f-solucao f-algoritmo))
+		((not (eql f-algoritmo 'dfs)) nil) ; se não for o algoritmo dfs devolve nil pois não vamos avaliar os sucessores nesta altura
+		((null lista) nil) ; se a lista estiver vazia devolve nil
+		((funcall f-solucao (car lista)) (car lista)) ; verifica se o primeiro elemento da lista é solução e se for retorna esse elemento
+		(T (existe-solucao (cdr lista) f-solucao f-algoritmo)) ; volta a chamar a função com o resto da lista
 	)
 )
 
 (defun calcular-numero-nos-gerados (fator-ramificacao profundidade)
+	"Calcula o número de nos gerados a partir do fator de ramificação e a profundidade"
 	(cond 
-		( (<= profundidade 1) fator-ramificacao)
-		( t (+ (expt fator-ramificacao profundidade) (calcular-numero-nos-gerados fator-ramificacao (1- profundidade))) )
+		( (<= profundidade 1) fator-ramificacao) ; se a profundidade é menor ou igual a devolvemos o fator ramificacao elevado a 1 
+		( t (+ (expt fator-ramificacao profundidade) (calcular-numero-nos-gerados fator-ramificacao (1- profundidade))) ) ; faz a soma recursiva do polinómio
 	)
 )
 
@@ -169,32 +170,33 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 (defun substituir (i valor l)
 	"Substitui um elemento de uma lista correpondente ao índice i pelo valor"
 	(cond
-		( (null l) nil )
-		( (= i 0) (cons valor (rest l)) )
-		( t (cons (first l) (substituir (1- i) valor (rest l))) )
+		( (null l) nil ) ; se a lista está vazia devolve nil
+		( (= i 0) (cons valor (rest l)) ) ;se o indice é igual 0, mete o valor atrás da lista
+		( t (cons (first l) (substituir (1- i) valor (rest l))) ) ; chama a função com o rest da lista e com o indice decrementado e nao receber o valor junta no ínicio o primeiro elemento da lista
 	)
 )
 
 (defun elemento-por-indice (i l)
 	"Devolve o elemento de uma lista correspondente ao índice i"
 	(cond
-		( (null l) nil )
-		( (= i 0) (first l) )
-		( t (elemento-por-indice (1- i) (rest l)) )
+		( (null l) nil ) ; devolve nil se a lista l está vazia
+		( (= i 0) (first l) ) ; se i igual a 0 devolve o primeiro elemento da lista
+		( t (elemento-por-indice (1- i) (rest l)) ) ; chama a função com o resta da lista e com o indice decrementado
 	)
 )
 
 (defun matriz2d-transposta (m)
 	"Faz a transposta da matriz m"
-	(apply  #'mapcar (cons #'list m))
+	(apply  #'mapcar (cons #'list m)) ; transpões a matriz
 )
 
 (defun limpar-nils (lista)
-	(apply #'append
+	"Remove os nils de uma lista"
+	(apply #'append ; remove todos os nils fazendo o append das listas com os elementos
 		(mapcar (lambda (e)
 						(cond
-							((null e) nil)
-							(t (list e))
+							((null e) nil) ; caso o elemento seja nil, devolve nil
+							(t (list e)) ; caso contrario cria uma lista com o elemento
 						)
 				) lista
 		)
@@ -210,46 +212,52 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 (defun criar-tabuleiro-vazio (n m)
 	"Gera um tabuleiro vazio com n linhas e m colunas"
 	(list
-		(make-list (1+ n) :initial-element (make-list m))
-		(make-list (1+ m) :initial-element (make-list n))
+		(make-list (1+ n) :initial-element (make-list m)) ; cria uma matriz vazia com n+1 linhas e m colunas preechida com nils
+		(make-list (1+ m) :initial-element (make-list n)) ; cria uma matriz vazia com m+1 linhas e n colunas preechida com nils
 	)
 )
 
 (defun criar-tabuleiro-cheio (n m)
 	"Gera um tabuleiro cheio com n linhas e m colunas"
 	(list
-		(make-list (1+ n) :initial-element (make-list m :initial-element T))
-		(make-list (1+ m) :initial-element (make-list n :initial-element T))
+		(make-list (1+ n) :initial-element (make-list m :initial-element T)) ; cria uma matriz vazia com n+1 linhas e m colunas preechida com t
+		(make-list (1+ m) :initial-element (make-list n :initial-element T)) ; cria uma matriz vazia com m+1 linhas e n colunas preechida com t
 	)
 )
 
 
 (defun tabuleiro-a ()
+	"Devolve o tabuleiro da alinea A"
 	'(((nil nil nil) (nil nil t) (nil t t) (nil nil t)) 
 	((nil nil nil)(nil t nil)(nil nil t)(nil t t)))
 )
 
 (defun tabuleiro-b ()
+	"Devolve o tabuleiro da alinea B"
 	'(((nil nil t nil)(t t t t)(nil nil t t)(nil nil t t)(nil nil t t))
 	((nil nil t t)(nil nil t t)(t t t t)(t nil t t)(nil t t t)))
 )
 
 (defun tabuleiro-c ()
+	"Devolve o tabuleiro da alinea C"
 	'(((nil nil t nil)(t nil t t)(nil nil t t)(nil nil t t)(nil nil t t))
 	((nil nil t t)(nil nil t t)(nil nil t t)(t nil t t)(nil t t t)))
 )
 
 (defun tabuleiro-d ()
+	"Devolve o tabuleiro da alinea D"
 	'(((nil nil nil nil nil)(nil nil nil nil nil)(nil nil nil nil nil)(nil nil nil nil nil)(nil nil nil nil nil))
 	((nil nil nil nil)(nil nil nil nil)(nil nil nil nil)(nil nil nil nil)(nil nil nil nil)(nil nil nil nil)))
 )
 
 (defun tabuleiro-e ()
+	"Devolve o tabuleiro da alinea E"
 	'(((nil nil nil t nil nil)(nil nil nil t t t)(t t t t t nil)(nil nil nil t t nil)(nil nil nil t t nil)(nil nil t t t t)(nil nil t t t t))
 	((nil nil nil t t t)(nil t nil nil t t)(nil t t nil t t)(nil nil t t nil nil)(t nil t nil t nil)(nil nil t t nil nil)(nil t t t t t)))
 )
 
 (defun tabuleiro-f ()
+	"Devolve o tabuleiro da alinea F"
 	'(((nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil t nil nil nil nil nil)(nil t nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil))
 	((nil nil nil nil nil nil nil)(nil nil nil nil t nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)))
 )
@@ -261,13 +269,13 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 
 (defun get-arcos-horizontais (tabuleiro)
 	"Retorna a lista dos arcos horizontais de um tabuleiro"
-	(first tabuleiro)
+	(first tabuleiro) ; devolve o primeiro elemento do tabuleiro
 )
 
 
 (defun get-arcos-verticais (tabuleiro)
 	"Retorna a lista dos arcos verticiais de um tabuleiro"
-	(first (rest tabuleiro))
+	(first (rest tabuleiro)) ; devolve o segundo elemento do tabuleiro
 )
 
 
@@ -275,25 +283,23 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 (defun arco-na-posicao (i lista)
 	"Recebe uma lista de arcos e tenta inserir um arco na posição i"
 	(cond
-		((eq (elemento-por-indice (1- i) lista) T) nil)
-		(t (substituir (1- i) T lista))
+		((eq (elemento-por-indice (1- i) lista) T) nil) ; se o arco já existe na posição, devolve nil
+		(t (substituir (1- i) T lista)) ; caso contrário substitui o nil pelo T no indice
 	)
-	(substituir (1- i) T lista)
 )
-
 
 
 (defun arco-aux (x y matriz)
 	"Recebe uma matriz de arcos e tenta inserir um arco na posição x y"
 	(let*
 		(
-			(x-aux (1- x))
-			(lista (elemento-por-indice x-aux matriz))
-			(nova-lista (arco-na-posicao y lista))
+			(x-aux (1- x)) ; altera a indexação do x para x-1
+			(lista (elemento-por-indice x-aux matriz)) ;vai buscar a lista a matriz na posição x-1
+			(nova-lista (arco-na-posicao y lista)) ; mete o arco na posição
 		)
 		(cond
-			((null nova-lista) nil)
-			(T (substituir x-aux nova-lista matriz))
+			((null nova-lista) nil) ; se devolveu nil devolve nil
+			(T (substituir x-aux nova-lista matriz)) ; caso contrário substitui a lista
 		)
 
 	)
@@ -304,12 +310,12 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 	"Recebe um tabuleiro e tenta inserir um arco na posição x y dos arcos horizontais"
 	(let*
 		(
-			(arcos-horizontais (get-arcos-horizontais tabuleiro))
-			(arcos-horizontais-resultado (arco-aux x y arcos-horizontais))
+			(arcos-horizontais (get-arcos-horizontais tabuleiro)) ; vai buscar a matriz de arcos horizontais ao tabuleiro
+			(arcos-horizontais-resultado (arco-aux x y arcos-horizontais)) ; mete o arco na posição x e y da matriz
 		)
 		(cond
-			((null arcos-horizontais-resultado) nil)
-			(t (substituir 0 arcos-horizontais-resultado tabuleiro))
+			((null arcos-horizontais-resultado) nil) ; se devolveu nil devolve nil
+			(t (substituir 0 arcos-horizontais-resultado tabuleiro)) ; caso contrário substitui a matriz nos arcos horizontais do tabuleiro
 		)
 
 	)
@@ -320,12 +326,12 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 	"Recebe um tabuleiro e tenta inserir um arco na posição x y dos arcos verticais"
 	(let*
 		(
-			(arcos-verticais (get-arcos-verticais tabuleiro))
-			(arcos-verticais-resultado (arco-aux x y arcos-verticais))
+			(arcos-verticais (get-arcos-verticais tabuleiro)) ; vai buscar a matriz de arcos verticais ao tabuleiro
+			(arcos-verticais-resultado (arco-aux x y arcos-verticais)) ; mete o arco na posição x e y da matriz
 		)
 		(cond
-			( (null arcos-verticais-resultado) nil)
-			( t (substituir 1 arcos-verticais-resultado tabuleiro) )
+			( (null arcos-verticais-resultado) nil) ; se devolveu nil devolve nil
+			( t (substituir 1 arcos-verticais-resultado tabuleiro) ) ; caso contrário substitui a matriz nos arcos verticais do tabuleiro
 		)
 	)
 )
@@ -337,19 +343,19 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 
 (defun criar-operacao (x y funcao)
 	"Cria uma função lambda que representa uma operação através de uma operação (arco-horizontal/arco-vertical) e a posição x e y"
-	(lambda (no) 
+	(lambda (no) ; operador
 			(let 
 				(
-					( tabuleiro (funcall funcao x y (no-estado no)) )
+					( tabuleiro (funcall funcao x y (no-estado no)) ) ;executa a operação sobre o no
 				)
 				(cond 
-					((equal (no-estado no) tabuleiro) nil)
-					(t 	(set-no-profundidade 
-							(set-no-pai 
-									(set-no-estado no tabuleiro) 
+					((equal (no-estado no) tabuleiro) nil) ; se o estado do antecessor é igual ao estado do sucessor, é discartando devolvendo nil
+					(t 	(set-no-profundidade  ; altera a profundidade do nó
+							(set-no-pai ; altera a pai do nó antecessor devolvendo um novo nó
+									(set-no-estado no tabuleiro) ; altera o estado do nó
 									no
 							) 
-							(1+ (no-profundidade no))
+							(1+ (no-profundidade no)) ; altera a profundidade do nó
 						)
 					)
 				)
@@ -362,8 +368,8 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 (defun criar-operacoes-decrementarY (x y funcao)
 	"Decrementa o valor de y recursivamente e vai criando operações com o valor de x e y e a função"
 	(cond
-		( (= y 0) nil )
-		( t (cons (criar-operacao x y funcao) (criar-operacoes-decrementarY x (1- y) funcao)) )
+		( (= y 0) nil ) ; se y igual a 0 devolve nil
+		( t (cons (criar-operacao x y funcao) (criar-operacoes-decrementarY x (1- y) funcao)) ) ; cria a operação para x e y e chama recusivamente a função com y-1
 	)
 )
 
@@ -371,8 +377,8 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 (defun criar-operacoes-decrementarX (x y funcao)
 	"Decrementa o valor de x recursivamente e vai chamando a função 'criar-operacoes-decrementarY' com o valor de x e y e a funcao"
 	(cond
-		( (= x 0) nil )
-		( t (append (criar-operacoes-decrementarY x y funcao) (criar-operacoes-decrementarX (1- x) y funcao)) )
+		( (= x 0) nil ) ; se x igual a 0 devolve nil
+		( t (append (criar-operacoes-decrementarY x y funcao) (criar-operacoes-decrementarX (1- x) y funcao)) ) ; chama a função que cria as operações decrementando y para x e começando em y e chama recusivamente a função com x-1
 	)
 )
 
@@ -380,8 +386,8 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 (defun criar-operacoes (n m)
 	"Gera todos os operadores possíveis para um tabuleiro de n por m"
 	(append
-		(criar-operacoes-decrementarX (1+ n) m 'arco-horizontal)
-		(criar-operacoes-decrementarX (1+ m) n 'arco-vertical)
+		(criar-operacoes-decrementarX (1+ n) m 'arco-horizontal) ; chama a função que cria as operações decrementando x partindo de x = (n+1) e y = m
+		(criar-operacoes-decrementarX (1+ m) n 'arco-vertical) ; chama a função que cria as operações decrementando x partindo de x = (m+1) e y = n
 	)
 )
 
@@ -414,16 +420,17 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 ;; Classificação do tabuleiro
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun mapear-bool-binario (matriz)
+(defun mapear-bool-binario (lista)
+	"Mapeia uma lista de valores booleanos (t e nil) para uma lista de valores binarios (1 0)"
 	(mapcar 
 		(lambda 
 			(elemento)
 			(cond 
-				(elemento 1) 
-				(t 0)
+				(elemento 1) ; se o elemento é T devolve 1
+				(t 0) ; caso contrário devolve 0
 			)
 		)
-		matriz	
+		lista	
 	)
 )
 
@@ -446,6 +453,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 )
 
 (defun criar-candidatos (matriz)
+	"Cria uma matriz com os candidatos tendo em conta que arcos paralelos na mesma caixa são considerados candidatos"
 	(criar-candidatos-aux 
 		(mapcar
 			(lambda 
@@ -454,14 +462,14 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 					(lambda 
 						(lista)
 						(cond 
-							( (< (length lista) 2) nil )
-							( t (and (first lista) (second lista)) )
+							( (< (length lista) 2) nil ) ; se exitirem menos de 2 elementos em paralelo não pode existir um candidato
+							( t (and (first lista) (second lista)) ) ; se existirem ambos os arcos paralelos e consecutivos devolve t, caso contrário nil
 						)
 					)
 					linha
 				)
 			)
-			(matriz2d-transposta matriz)
+			(matriz2d-transposta matriz) ; tranposta da matriz para que se consiga ter as linhas da matriz com os arcos paralelos
 		)
 	)
 )
@@ -472,13 +480,13 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 	"Devolve o número fechadas num tabuleiro"
 	(let 
 		(
-			(candidatos1 (alisa (criar-candidatos (get-arcos-horizontais tabuleiro))))
-			(candidatos2 (alisa (matriz2d-transposta (criar-candidatos (get-arcos-verticais tabuleiro)))))
+			(candidatos1 (alisa (criar-candidatos (get-arcos-horizontais tabuleiro)))) ; gera os candidatos dos arcos horizontais num lista linear
+			(candidatos2 (alisa (matriz2d-transposta (criar-candidatos (get-arcos-verticais tabuleiro))))) ; gera os candidatos dos arcos verticais numa lista linear
 		)
-		(apply  '+ 	(mapear-bool-binario 
+		(apply  '+ 	(mapear-bool-binario ; mapeia a lista para elementos binários e somas os seus valores
 						(mapcar 
 							(lambda (&rest lista) 
-									(and (first lista) (second lista))
+									(and (first lista) (second lista)); aplica um and entre o candidato dos horizontais e o candidato dos verticais, caso ambos sejam t existe de facto um quadrado
 							) 
 							candidatos1 
 							candidatos2
@@ -536,7 +544,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 )
 
 (defun set-no-controlo (no controlo)
- "Altera o pai do nó"
+ "Altera o elemeto de controlo do nó"
   (substituir 3 controlo no)
 )
 
@@ -578,18 +586,18 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;f-algoritmo
 (defun bfs (abertos sucessores)
-	""
-	(append abertos sucessores)
+	"Função de ordenação e junção da lista de abertos com a lista de sucessores no algoritmo breadth-first"
+	(append abertos sucessores) ; mete a lista de abertos à esquerda da lista de sucessores
 )
 
 (defun dfs (abertos sucessores)
-	""
-	(append sucessores abertos)
+	"Função de ordenação e junção da lista de abertos com a lista de sucessores no algoritmo depth-first"
+	(append sucessores abertos) ; mete a lista de abertos à direita da lista de sucessores
 )
 
 (defun a-asterisco (abertos sucessores)
-	""
-	(sort (append abertos sucessores) (lambda (no1 no2) (<= (no-controlo-f no1) (no-controlo-f no2))))
+	"Função de ordenação e junção da lista de abertos com a lista de sucessores no algoritmo a*"
+	(sort (append abertos sucessores) (lambda (no1 no2) (<= (no-controlo-f no1) (no-controlo-f no2)))) ; junta os aberto e os sucessores e ordena a lista resultante através do custo f
 )
 
 
@@ -602,25 +610,25 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 (defun sucessores (no lista-operadores f-algoritmo prof-max &optional (heuristica nil))
 	"Gera os sucessores"
 	(cond
-		( (and (eql f-algoritmo 'dfs) (>= (no-profundidade no) prof-max)) nil)
+		( (and (eql f-algoritmo 'dfs) (>= (no-profundidade no) prof-max)) nil) ;se for o algoritmo depth-first e a profundidade do nó for igual ou superior à profundidade máxima, devolve uma lista vazia
 		( t (let
 				(
-					(funcao (lambda (op)
+					(funcao (lambda (op) ;função que irá gerar os nós sucessores para cada operação
 									(let*
 										(
-											(sucessor (funcall op no))
+											(sucessor (funcall op no)) 
 										)
 										(cond
-											((null sucessor) nil)
-											((not (or (eql f-algoritmo 'a-asterisco) (eql f-algoritmo 'ida-asterisco))) sucessor)
+											((null sucessor) nil) ; se o sucessor gerado pelo operador não pôde ser aplicado, devolve nil
+											((not (or (eql f-algoritmo 'a-asterisco) (eql f-algoritmo 'ida-asterisco))) sucessor) ; se não for uma procura informada devolve o sucessor (não tem elemento de controle de custos)
 											( t 
 												(let*
 													(
-														(g (1+ (no-controlo-g no)))
-														(h (funcall heuristica sucessor))
-														(f (+ g h))
+														(g (1+ (no-controlo-g no))) ; calculo custo g do sucessor
+														(h (funcall heuristica sucessor)) ; calculo custo h* do sucessor
+														(f (+ g h)) ; calculo custo f do sucessor
 													)
-													(set-no-controlo sucessor (list g h f))
+													(set-no-controlo sucessor (list g h f)) ; alterar o elemento de controlo do sucessor
 												)
 											)
 										)
@@ -628,7 +636,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 							)
 					)			
 				)
-				(limpar-nils (mapcar funcao lista-operadores))
+				(limpar-nils (mapcar funcao lista-operadores)) ; executa todas as operações e limpa aquelas que não foram aplicadas
 			)
 		)
 	)
