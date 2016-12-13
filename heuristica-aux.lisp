@@ -295,3 +295,36 @@
       )
    )
   )
+
+
+(defun heuristica-2 (o)
+  (lambda (no)
+    (let
+         ( (tabuleiro-convertido (mapear-para-binario (converter-tabuleiro (no-estado no)) )) )
+
+
+      (calcular-heuristica2
+        o
+        (n-caixas-a-faltar-x-arcos tabuleiro-convertido 0)
+        (n-caixas-a-faltar-x-arcos tabuleiro-convertido 1)
+        (n-caixas-a-faltar-x-arcos tabuleiro-convertido 2)
+        (n-caixas-a-faltar-x-arcos tabuleiro-convertido 3)
+        (n-caixas-a-faltar-x-arcos tabuleiro-convertido 4)
+        (calcurar-n-partilhas-n1-n2 tabuleiro-convertido 4 4)
+        (calcurar-n-partilhas-n1-n2 tabuleiro-convertido 4 3)
+        (calcurar-n-partilhas-n1-n2 tabuleiro-convertido 4 2)
+        (calcurar-n-partilhas-n1-n2 tabuleiro-convertido 4 1)
+        (calcurar-n-partilhas-n1-n2 tabuleiro-convertido 3 3)
+        (calcurar-n-partilhas-n1-n2 tabuleiro-convertido 3 2)
+        (calcurar-n-partilhas-n1-n2 tabuleiro-convertido 3 1)
+        (calcurar-n-partilhas-n1-n2 tabuleiro-convertido 2 2)
+        (calcurar-n-partilhas-n1-n2 tabuleiro-convertido 2 1)
+        (calcurar-n-partilhas-n1-n2 tabuleiro-convertido 1 1)
+
+        )
+
+       )
+
+
+    )
+  )

@@ -45,7 +45,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 )
 
 (defun calcular-numero-nos-gerados (fator-ramificacao profundidade)
-	(cond 
+	(cond
 		( (<= profundidade 1) fator-ramificacao)
 		( t (+ (expt fator-ramificacao profundidade) (calcular-numero-nos-gerados fator-ramificacao (1- profundidade))) )
 	)
@@ -72,7 +72,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 						 f-sucessores ; função que gera os sucessores
 						 f-algoritmo ; algoritmo
 						 lista-operadores ; lista dos operadores
-						&optional 	
+						&optional
 							(prof-max  nil) ; profundidade máxima
 							(heuristica nil) ; heuristica
 							(abertos (list no-inicial)) ; lista de abertos
@@ -92,7 +92,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 		((funcall f-solucao (car abertos))  (list 	(car abertos) ; primeiro nó de abertos
 													(- (get-universal-time) tempo-inicial) ; tempo em segundos que a procura levou a encontrar a solução
 													nos-gerados ; número de nós gerados
-													nos-expandidos ; número de nós expandidos 
+													nos-expandidos ; número de nós expandidos
 													(no-profundidade (car abertos)) ; função heuristica
 													(/ (no-profundidade (car abertos)) nos-gerados) ; penetrância
 													(bisecao (no-profundidade (car abertos)) nos-gerados margem-bisecao) ; fator de ramificacao
@@ -118,7 +118,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 				(
 					;lista dos sucessores do primeiro dos abertos
 					(lista-sucessores 	(funcall f-sucessores ; gerar os sucessores
-													(first abertos) ; primeiro nó de abertos 
+													(first abertos) ; primeiro nó de abertos
 													lista-operadores ; lista de operadores
 													f-algoritmo ; algoritmo
 													prof-max ; profundidade máxima
@@ -225,7 +225,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 
 
 (defun tabuleiro-a ()
-	'(((nil nil nil) (nil nil t) (nil t t) (nil nil t)) 
+	'(((nil nil nil) (nil nil t) (nil t t) (nil nil t))
 	((nil nil nil)(nil t nil)(nil nil t)(nil t t)))
 )
 
@@ -337,24 +337,24 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 
 (defun criar-operacao (x y funcao)
 	"Cria uma função lambda que representa uma operação através de uma operação (arco-horizontal/arco-vertical) e a posição x e y"
-	(lambda (no) 
-			(let 
+	(lambda (no)
+			(let
 				(
 					( tabuleiro (funcall funcao x y (no-estado no)) )
 				)
-				(cond 
+				(cond
 					((equal (no-estado no) tabuleiro) nil)
-					(t 	(set-no-profundidade 
-							(set-no-pai 
-									(set-no-estado no tabuleiro) 
+					(t 	(set-no-profundidade
+							(set-no-pai
+									(set-no-estado no tabuleiro)
 									no
-							) 
+							)
 							(1+ (no-profundidade no))
 						)
 					)
 				)
 			)
-			
+
 	)
 )
 
@@ -415,21 +415,21 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun mapear-bool-binario (matriz)
-	(mapcar 
-		(lambda 
+	(mapcar
+		(lambda
 			(elemento)
-			(cond 
-				(elemento 1) 
+			(cond
+				(elemento 1)
 				(t 0)
 			)
 		)
-		matriz	
+		matriz
 	)
 )
 
 (defun criar-candidatos-aux (matriz)
-	(mapcar 
-		(lambda 
+	(mapcar
+		(lambda
 			(linha)
 			(reverse (rest (reverse linha)))
 		)
@@ -439,21 +439,21 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 
 (defun alisa (lista)
 	"Retorna a lista com todos os elementos contidos na lista principal"
-	(cond 
+	(cond
 		( (null lista) nil )
 		( t (append (first lista) (alisa (rest lista))) )
 	)
 )
 
 (defun criar-candidatos (matriz)
-	(criar-candidatos-aux 
+	(criar-candidatos-aux
 		(mapcar
-			(lambda 
+			(lambda
 				(linha)
-				(maplist 
-					(lambda 
+				(maplist
+					(lambda
 						(lista)
-						(cond 
+						(cond
 							( (< (length lista) 2) nil )
 							( t (and (first lista) (second lista)) )
 						)
@@ -470,17 +470,17 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 
 (defun numero-caixas-fechadas (tabuleiro)
 	"Devolve o número fechadas num tabuleiro"
-	(let 
+	(let
 		(
 			(candidatos1 (alisa (criar-candidatos (get-arcos-horizontais tabuleiro))))
 			(candidatos2 (alisa (matriz2d-transposta (criar-candidatos (get-arcos-verticais tabuleiro)))))
 		)
-		(apply  '+ 	(mapear-bool-binario 
-						(mapcar 
-							(lambda (&rest lista) 
+		(apply  '+ 	(mapear-bool-binario
+						(mapcar
+							(lambda (&rest lista)
 									(and (first lista) (second lista))
-							) 
-							candidatos1 
+							)
+							candidatos1
 							candidatos2
 						)
 					)
@@ -613,7 +613,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 										(cond
 											((null sucessor) nil)
 											((not (or (eql f-algoritmo 'a-asterisco) (eql f-algoritmo 'ida-asterisco))) sucessor)
-											( t 
+											( t
 												(let*
 													(
 														(g (1+ (no-controlo-g no)))
@@ -626,7 +626,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 										)
 									)
 							)
-					)			
+					)
 				)
 				(limpar-nils (mapcar funcao lista-operadores))
 			)
@@ -647,50 +647,50 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 ;; Heurísticas
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun heuristica (o)
+(defun heuristica (o) ;; não o 'o' é o objetivo(numero de caixas a fechar), que fica em closure no lambda
 	(lambda (no) (- o (numero-caixas-fechadas (no-estado no)) 1))
 )
 
 ; aqui estava a fazer cada iteração, acho que consegues reaproveitar
-(defun calcular-heuristica2-arcos-faltam 	(	
+(defun calcular-heuristica2-arcos-faltam 	(
 												n-caixas-faltam ; número de caixas que faltam preencher
 												n ; numero de arcos a faltar
 												n-caixas-faltar-n-arcos ; número de caixas onde faltam n arcos
 												n-partilhas-relevantes ; número de partilhas que são relevantes às caixas onde faltam n arcos
 											)
-	(let* 
+	(let*
 		(
 			(n-caixas-ficam-a-faltar (- n-caixas-faltam (min n-caixas-faltam n-caixas-faltar-n-arcos)) ); número de caixas que ficaram a faltar se utilizarmos todas as caixas possiveis
 		)
-		(cond 
-			( 	(= n-caixas-ficam-a-faltar 0) 
+		(cond
+			( 	(= n-caixas-ficam-a-faltar 0)
 				(list   0 ; número de caixas que ficam a faltar
 						(- (* n-caixas-faltar-n-arcos n) n-partilhas-relevantes) ; número de arcos necessários para as caixas
 				)
 			)
-			( 	t 
+			( 	t
 				(list   n-caixas-ficam-a-faltar ; número de caixas que ficam a faltar
 						(- (* n-caixas-faltar-n-arcos n) n-partilhas-relevantes) ; número de arcos necessários para as caixas
 				)
 			)
 		)
 	)
-	
-									
+
+
 
 )
 
-(defun calcular-heuristica2-aux (	n-caixas-faltam 
+(defun calcular-heuristica2-aux (	n-caixas-faltam
 									n-caixas-faltar-1-arcos
 									n-caixas-faltar-2-arcos
 									n-caixas-faltar-3-arcos
 									n-caixas-faltar-4-arcos)
-								
+
 	-1
 )
 
 (defun calcular-heuristica2 (	n-caixas-objetivo
-								n-caixas-fechadas 
+								n-caixas-fechadas
 								n-caixas-faltar-1-arcos
 								n-caixas-faltar-2-arcos
 								n-caixas-faltar-3-arcos
@@ -699,9 +699,9 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 								n-partilhas-4-3
 								n-partilhas-4-2
 								n-partilhas-4-1
-								n-partilhas-3-3 
-								n-partilhas-3-2 
-								n-partilhas-3-1  
+								n-partilhas-3-3
+								n-partilhas-3-2
+								n-partilhas-3-1
 								n-partilhas-2-2
 								n-partilhas-2-1
 								n-partilhas-1-1
@@ -710,10 +710,10 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 		(
 			(n-caixas-faltam (- n-caixas-objetivo n-caixas-fechadas))
 		)
-		
-		
-		
-	)					
+
+
+
+	)
 )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -731,3 +731,6 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 	(procura-generica (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'a-asterisco (criar-operacoes n m) nil (heuristica o))
 )
 
+(defun teste-a-asterisco-h2 (n m o tabuleiro)
+	(procura-generica (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'a-asterisco (criar-operacoes n m) nil (heuristica-2 o))
+)
