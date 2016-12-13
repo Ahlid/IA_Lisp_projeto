@@ -282,10 +282,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 
 (defun arco-na-posicao (i lista)
 	"Recebe uma lista de arcos e tenta inserir um arco na posição i"
-	(cond
-		((eq (elemento-por-indice (1- i) lista) T) nil) ; se o arco já existe na posição, devolve nil
-		(t (substituir (1- i) T lista)) ; caso contrário substitui o nil pelo T no indice
-	)
+	(substituir (1- i) T lista) ; substitui pelo T no indice
 )
 
 
@@ -739,5 +736,9 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 	(procura-generica (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'a-asterisco (criar-operacoes n m) nil (heuristica o))
 )
 (defun teste-a-asterisco-h2 (n m o tabuleiro)
+	(procura-generica (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'a-asterisco (criar-operacoes n m) nil (heuristica-2 o))
+)
+
+(defun teste-ida-asterisco-h2 (n m o tabuleiro)
 	(procura-generica (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'a-asterisco (criar-operacoes n m) nil (heuristica-2 o))
 )
