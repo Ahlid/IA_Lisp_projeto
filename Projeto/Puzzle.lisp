@@ -20,44 +20,6 @@
 	)
 )
 
-
-(defun tabuleiro-a ()
-	"Devolve o tabuleiro da alinea A"
-	'(((nil nil nil) (nil nil t) (nil t t) (nil nil t))
-	((nil nil nil)(nil t nil)(nil nil t)(nil t t)))
-)
-
-(defun tabuleiro-b ()
-	"Devolve o tabuleiro da alinea B"
-	'(((nil nil t nil)(t t t t)(nil nil t t)(nil nil t t)(nil nil t t))
-	((nil nil t t)(nil nil t t)(t t t t)(t nil t t)(nil t t t)))
-)
-
-(defun tabuleiro-c ()
-	"Devolve o tabuleiro da alinea C"
-	'(((nil nil t nil)(t nil t t)(nil nil t t)(nil nil t t)(nil nil t t))
-	((nil nil t t)(nil nil t t)(nil nil t t)(t nil t t)(nil t t t)))
-)
-
-(defun tabuleiro-d ()
-	"Devolve o tabuleiro da alinea D"
-	'(((nil nil nil nil nil)(nil nil nil nil nil)(nil nil nil nil nil)(nil nil nil nil nil)(nil nil nil nil nil))
-	((nil nil nil nil)(nil nil nil nil)(nil nil nil nil)(nil nil nil nil)(nil nil nil nil)(nil nil nil nil)))
-)
-
-(defun tabuleiro-e ()
-	"Devolve o tabuleiro da alinea E"
-	'(((nil nil nil t nil nil)(nil nil nil t t t)(t t t t t nil)(nil nil nil t t nil)(nil nil nil t t nil)(nil nil t t t t)(nil nil t t t t))
-	((nil nil nil t t t)(nil t nil nil t t)(nil t t nil t t)(nil nil t t nil nil)(t nil t nil t nil)(nil nil t t nil nil)(nil t t t t t)))
-)
-
-(defun tabuleiro-f ()
-	"Devolve o tabuleiro da alinea F"
-	'(((nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil t nil nil nil nil nil)(nil t nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil))
-	((nil nil nil nil nil nil nil)(nil nil nil nil t nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)(nil nil nil nil nil nil nil)))
-)
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Manipulação de tabuleiros
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -498,51 +460,14 @@
 	)
 )
 
-
-;; helpers
-
-
-(defun get-helper()
-	'(
-		((0 0 1 0) (0 0 1 1))
-		((0 0 1 0) (0 0 1 1))
-	)
-)
-(defun get-helper2()
-	'(
-		((1 1 0 0) (1 1 0 0) (1 1 0 0))
-		((1 1 0 0) (1 1 0 0) (1 1 0 0))
-		((1 1 0 0) (1 1 0 0) (0 0 0 0))
-	)
-)
-
-
-(defun get-helper3()
-	'(
-		( (0 0 1 0) (1 1 1 1) (0 1 0 1))
-		( (0 0 1 0) (1 0 0 1) (1 1 0 0))
-		( (0 0 1 0) (0 0 0 1) (1 0 0 0))
-	)
-)
-
-
 (defun convert-top-bottom(linha)
- "função que junta as arestar de baixo e cima de cada caixa conforme a linha"
+	"Função que junta as arestar de baixo e cima de cada caixa conforme a linha"
 	(cond
 		( (null (second linha)) nil )
 		( T
 			(cons (mapcar 'list (first linha) (second linha))  (convert-top-bottom (rest linha)));; junta e chama a proxima
 		)
 	)
-)
-
-(defun tabuleiro-c ()
-	'(((nil nil t nil)(t nil t t)(nil nil t t)(nil nil t t)(nil nil t t))
-	((nil nil t t)(nil nil t t)(nil nil t t)(t nil t t)(nil t t t)))
-)
-(defun matriz2d-transposta (m)
-	"Faz a transposta da matriz m"
-	(apply  #'mapcar (cons #'list m))
 )
 
 (defun converter-tabuleiro(tabuleiro)
@@ -561,40 +486,13 @@
 	)
 )
 
-
-(defun tabuleiro-e ()
-	'(((nil nil nil t nil nil)(nil nil nil t t t)(t t t t t nil)(nil nil nil t t nil)(nil nil nil t t nil)(nil nil t t t t)(nil nil t t t t))
-	((nil nil nil t t t)(nil t nil nil t t)(nil t t nil t t)(nil nil t t nil nil)(t nil t nil t nil)(nil nil t t nil nil)(nil t t t t t)))
-)
-
-
 (defun mapear-para-binario (matriz)
- "função que recebe uma matriz 3D e a tranforma binario nil-0 e t-1"
+	"Função que recebe uma matriz3D e a tranforma para binario nil-0 e t-1"
 	(cond
 		((null matriz) nil)
 		(T (cons (mapcar 'mapear-bool-binario (first matriz) ) (mapear-para-binario (rest matriz))))
 	)
 )
-
-(defun mapear-bool-binario (matriz)
- "função que recebe uma matriz e a converte em binario nil-0 e t-1"
-	(mapcar
-		(lambda
-			(elemento)
-			(cond
-				(elemento 1)
-				(t 0)
-			)
-		)
-		matriz
-	)
-)
-
-
-(defun estrutura-test()
-	(mapear-para-binario (converter-tabuleiro (tabuleiro-c)))
-)
-
 
 (defun calcular-heuristica2 (	n-caixas-objetivo ;;caixas a fazer
 								n-caixas-fechadas ;; caixas já feitas
@@ -614,8 +512,7 @@
 								n-partilhas-1-1;;numero de partilhas 1-1
 							)
 
-	"função que calcula a segunda euristica"
-
+	"função que calcula a segunda heuristica"
 	(let
 		(
 			(n-caixas-faltam (- n-caixas-objetivo n-caixas-fechadas)) ;;constante para calcular numero de caixas em falta
@@ -628,7 +525,6 @@
 		)
 	)
 )
-
 
 (defun heuristica2-aux-1-arco (n-caixas-faltam n-caixas-faltar-1-arco n-partilhas-1-1)
 	"função que calcula o numero de arestas a usar para caixas de 1 arco"
@@ -689,7 +585,6 @@
 	)
 )
 
-
 (defun heuristica-2 (o)
 	"função que devolve o calculo da heuristica para um no"
 	(lambda (no)
@@ -723,6 +618,7 @@
 ;; Testes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
 (defun teste-bfs (n m o tabuleiro)
 	(procura-generica (no-criar tabuleiro) (criar-solucao o) 'sucessores 'bfs (criar-operacoes n m))
 )
@@ -734,6 +630,7 @@
 (defun teste-a-asterisco (n m o tabuleiro)
 	(procura-generica (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'a-asterisco (criar-operacoes n m) nil (heuristica o))
 )
+
 (defun teste-a-asterisco-h2 (n m o tabuleiro)
 	(procura-generica (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'a-asterisco (criar-operacoes n m) nil (heuristica-2 o))
 )
@@ -745,3 +642,16 @@
 (defun teste-ida-asterisco-h2 (n m o tabuleiro)
 	(procura-generica-ida-asterisco (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'ida-asterisco (criar-operacoes n m) (heuristica-2 o))
 )
+
+
+(defun numero-caixas-horizontais (tabuleiro)
+	
+
+)
+
+(defun numero-caixas-linhas (tabuleiro)
+	
+
+)
+
+
