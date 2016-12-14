@@ -5,22 +5,37 @@
 ;;;; Data: 2 de dezembro de 2016
 ;;;; Versão 1
 
-(defun puzzle ()
-  "Permite iniciar o programa"
-  (load (concatenate 'string (diretoria-atual) "problema.lisp"))
-  (load (concatenate 'string (diretoria-atual) "procura.lisp"))
-  (menu-principal)
-  )
 
-(defun diretoria-atual ()
-  "Define o caminho para os ficheiros do projeto a partir da raiz"
-  ; Para mac
-  ;(let ((caminho "/Users/paulo/Dropbox/EST-IPS/Aulas/IA_15_16/laboratorios/lab5/"))
-  ; para PC MS Windows
-  (let ((path "C:\\Documents and Settings\\projetos-ia\\projecto1\\"))
-    path
-    )
-  )
+(defun pedir-directoria ()
+	"Pede a directoria dos ficheiros ao utilizador"
+	(progn
+		(format t "Insira o diretório: ")
+		(read)
+	)
+)
+
+(defun puzzle ()
+	"Permite iniciar o programa"
+	(let 
+		(
+			(diretoria-atual (pedir-directoria))
+		)
+		(progn
+			(load (compile-file (concatenate 'string diretoria-atual "puzzle.lisp")))
+			(load (compile-file (concatenate 'string diretoria-atual "procura.lisp")))
+			(menu-principal)
+		)
+	)
+)
+
+
+
+; (defun diretoria-atual ()
+;  "Define o caminho para os ficheiros do projeto a partir da raiz"
+;  (let ((path "C:\\Documents and Settings\\projetos-ia\\projecto1\\"))
+;    path
+;    )
+;  )
 
 ;;; MENU PRINCIPAL
 (defun menu-principal ()
@@ -33,7 +48,7 @@
       (format t "~%|            1-Resolver um tabuleiro                   |")
       (format t "~%|            2-Regras do Puzzle                        |")
       (format t "~%|            3-Mostrar um Puzzle                       |")
-      (format t "~%|            3-Sair                                    |")
+      (format t "~%|            4-Sair                                    |")
       (format t "~%|                                                      |")
       (format t "~% ------------------------------------------------------")
       (format t "~%~%Escolha:")
@@ -55,8 +70,8 @@
   )
 
 (defun menu-jogar()
-
-  )
+	
+)
 
 ;;;Regras do puzzle
 (defun regras () 
@@ -76,5 +91,20 @@
 )
 
 (defun imprime-tabuleiro ()
+	
+)
 
-  )
+
+;*standard-output*
+(defun imprimir-resultado (stream resultado)
+	(progn 
+		(write-line "Resultado:" stream)
+		(write-line (format nil "Nó objetivo: ~a" (first resultado)) stream)
+		(write-line (format nil "Tempo de resolução: ~a" (second resultado)) stream)
+		(write-line (format nil "Número de nós gerado: ~a" (third resultado)) stream)
+		(write-line (format nil "Número de nós expandidos: ~a" (fourth resultado)) stream)
+		(write-line (format nil "Profundidade: ~a" (fifth resultado)) stream)
+		(write-line (format nil "Penetrancia: ~,4f" (float (sixth resultado))) stream)
+		(write-line (format nil "Fator de ramificação: ~,4f" (float (seventh resultado))) stream)
+	)
+)

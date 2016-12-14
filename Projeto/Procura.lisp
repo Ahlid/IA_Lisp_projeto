@@ -316,26 +316,26 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 																lista-operadores ; lista dos operadores
 																limite ; limite de custo f da procura
 																heuristica ; heuristica
-																numero-nos-gerados
-																numero-nos-expandidos
+																numero-nos-gerados ; numero de nos gerados
+																numero-nos-expandidos ; numero de nos expandidos
 						)
 			)
 		)
 		(cond ;;TODO: as estatisticas têm que acompanhar i algoritmo
-			( (numberp (first resultado)) 	(procura-generica-ida-asterisco 	no-inicial
-																				f-solucao
-																				f-sucessores
-																				f-algoritmo
-																				lista-operadores
-																				heuristica
-																				(first resultado)
-																				tempo-inicial
-																				margem-bisecao
-																				(second resultado)
-																				(third resultado)
+			( (numberp (first resultado)) 	(procura-generica-ida-asterisco 	no-inicial ; nó inicial
+																				f-solucao ; função que verifica se um nó é uma solucao
+																				f-sucessores ; função que gera os sucessores
+																				f-algoritmo ; algoritmo
+																				lista-operadores ; lista dos operadores
+																				heuristica ; heuristica
+																				(first resultado) ; no
+																				tempo-inicial ; tempo inicial
+																				margem-bisecao ; margem da bisecao
+																				(second resultado) ; numero de nos gerados
+																				(third resultado) ; numero de nos expandidos
 											)
 			)
-			( (listp resultado) (append (list (first resultado) (- (get-universal-time) tempo-inicial)) (rest resultado)) ) 
+			( (listp resultado) (append (list (first resultado) (- (get-universal-time) tempo-inicial)) (rest resultado)) ) ; junta o tempo ao resultado
 		)
 	)					
 )
