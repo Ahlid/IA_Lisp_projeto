@@ -67,19 +67,15 @@
 	(first tabuleiro) ; devolve o primeiro elemento do tabuleiro
 )
 
-
 (defun get-arcos-verticais (tabuleiro)
 	"Retorna a lista dos arcos verticiais de um tabuleiro"
 	(first (rest tabuleiro)) ; devolve o segundo elemento do tabuleiro
 )
 
-
-
 (defun arco-na-posicao (i lista)
 	"Recebe uma lista de arcos e tenta inserir um arco na posição i"
 	(substituir (1- i) T lista) ; substitui pelo T no indice
 )
-
 
 (defun arco-aux (x y matriz)
 	"Recebe uma matriz de arcos e tenta inserir um arco na posição x y"
@@ -93,10 +89,8 @@
 			((null nova-lista) nil) ; se devolveu nil devolve nil
 			(T (substituir x-aux nova-lista matriz)) ; caso contrário substitui a lista
 		)
-
 	)
 )
-
 
 (defun arco-horizontal (x y tabuleiro)
 	"Recebe um tabuleiro e tenta inserir um arco na posição x y dos arcos horizontais"
@@ -109,7 +103,6 @@
 			((null arcos-horizontais-resultado) nil) ; se devolveu nil devolve nil
 			(t (substituir 0 arcos-horizontais-resultado tabuleiro)) ; caso contrário substitui a matriz nos arcos horizontais do tabuleiro
 		)
-
 	)
 )
 
@@ -188,7 +181,6 @@
 ;; Testes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
 (defun aplicar-consecutivamente (tabuleiro operacoes)
 	"Aplica um conjunto de operações consecutivas a um tabuleiro"
 	(cond
@@ -196,6 +188,7 @@
 		( t (aplicar-consecutivamente (funcall (first operacoes) tabuleiro) (rest operacoes)) )
 	)
 )
+
 
 (defun teste-preecher (n m)
 	"Realiza um teste que gera todos os operadores possiveis e os aplica num tabuleiro n por m consecutivo, com objetivo a preecher todo o tabuleiro com arcos"
@@ -227,10 +220,11 @@
 )
 
 (defun criar-candidatos-aux (matriz)
-	(mapcar
+	"Remove a última coluna da matriz"
+	(mapcar ; passa por cada lista da matriz
 		(lambda
 			(linha)
-			(reverse (rest (reverse linha)))
+			(reverse (rest (reverse linha))) ; retira o último elemento da lista
 		)
 		matriz
 	)
@@ -293,7 +287,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Ordenação
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;f-algoritmo
+
 (defun bfs (abertos sucessores)
 	"Função de ordenação e junção da lista de abertos com a lista de sucessores no algoritmo breadth-first"
 	(append abertos sucessores) ; mete a lista de abertos à esquerda da lista de sucessores
@@ -313,9 +307,6 @@
 	"Função de ordenação e junção da lista de abertos com a lista de sucessores no algoritmo ida*"
 	(append sucessores abertos) ; mete a lista de abertos à direita da lista de sucessores
 )
-
-
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Sucessores
@@ -585,7 +576,6 @@
 	)
 )
 
-
 (defun mapear-bool-binario (matriz)
  "função que recebe uma matriz e a converte em binario nil-0 e t-1"
 	(mapcar
@@ -624,7 +614,7 @@
 								n-partilhas-1-1;;numero de partilhas 1-1
 							)
 
- "função que calcula a segunda euristica"
+	"função que calcula a segunda euristica"
 
 	(let
 		(
@@ -641,8 +631,7 @@
 
 
 (defun heuristica2-aux-1-arco (n-caixas-faltam n-caixas-faltar-1-arco n-partilhas-1-1)
-
- "função que calcula o numero de arestas a usar para caixas de 1 arco"
+	"função que calcula o numero de arestas a usar para caixas de 1 arco"
 	(let*
 		(
 			(n-caixas-a-usar (min n-caixas-faltam n-caixas-faltar-1-arco)) ;;numero de caixas a usar
@@ -653,7 +642,7 @@
  )
 
 (defun heuristica2-aux-2-arco (n-caixas-faltam n-caixas-faltar-2-arco n-partilhas-2-1 n-partilhas-2-2)
-  "função que calcula o numero de arestas a usar para caixas de 1 arco"
+	"função que calcula o numero de arestas a usar para caixas de 1 arco"
 	(cond
 	   ((= 0 n-caixas-faltam) 0)
 	   (t
@@ -670,7 +659,7 @@
 )
 
 (defun heuristica2-aux-3-arco (n-caixas-faltam n-caixas-faltar-3-arco n-partilhas-3-1 n-partilhas-3-2 n-partilhas-3-3)
-  "função que calcula o numero de arestas a usar para caixas de 1 arco"
+	"função que calcula o numero de arestas a usar para caixas de 1 arco"
 	(cond
 		( (= 0 n-caixas-faltam) 0 )
 		(t
@@ -686,7 +675,7 @@
 )
 
 (defun heuristica2-aux-4-arco (n-caixas-faltam n-caixas-faltar-4-arco n-partilhas-4-1 n-partilhas-4-2 n-partilhas-4-3 n-partilhas-4-4)
-  "função que calcula o numero de arestas a usar para caixas de 1 arco"
+	"função que calcula o numero de arestas a usar para caixas de 1 arco"
 	(cond
 		( (= 0 n-caixas-faltam) 0 )
 		(t 	(let*
@@ -702,8 +691,8 @@
 
 
 (defun heuristica-2 (o)
- "função que devolve o calculo da heuristica para um no"
-  (lambda (no)
+	"função que devolve o calculo da heuristica para um no"
+	(lambda (no)
 		(let
 			(
 				( tabuleiro-convertido (mapear-para-binario (converter-tabuleiro (no-estado no))) );;converte o tabuleiro para bonario

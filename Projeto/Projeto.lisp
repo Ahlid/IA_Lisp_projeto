@@ -29,21 +29,13 @@
 )
 
 
-
-; (defun diretoria-atual ()
-;  "Define o caminho para os ficheiros do projeto a partir da raiz"
-;  (let ((path "C:\\Documents and Settings\\projetos-ia\\projecto1\\"))
-;    path
-;    )
-;  )
-
 ;;; MENU PRINCIPAL
 (defun menu-principal ()
 	"Apresenta o menu principal com as opcões do programa"
   (loop
     (progn
       (format t "~% ------------------------------------------------------")
-      (format t "~%|         PUZZLE DOS PONTOS E  DAS CAIXAS              |")
+      (format t "~%|         PUZZLE DOS PONTOS E DAS CAIXAS               |")
       (format t "~%|                                                      |")
       (format t "~%|            1-Resolver um tabuleiro                   |")
       (format t "~%|            2-Regras do Puzzle                        |")
