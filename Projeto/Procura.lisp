@@ -306,7 +306,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 												(margem-bisecao 0.5) ; margem de erro do fator de ramificacao
 												(numero-nos-gerados 0)
 												(numero-nos-expandidos 0)
-											)
+										)
 	(let
 		(
 			(resultado 	(procura-generica-ida-asterisco-aux 	no-inicial ; nó inicial
