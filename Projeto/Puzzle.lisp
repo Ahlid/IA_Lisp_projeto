@@ -644,14 +644,14 @@
 )
 
 
-(defun numero-caixas-horizontais (tabuleiro)
-	
-
+(defun numero-caixas-horizontal (tabuleiro)
+	"Dá número de caixas na horizontal"
+	(length (first (first tabuleiro)))
 )
 
-(defun numero-caixas-linhas (tabuleiro)
-	
-
+(defun numero-caixas-vertical (tabuleiro)
+	"Dá número de caixas na vertical"
+	(length (first (second tabuleiro)))
 )
 
 
