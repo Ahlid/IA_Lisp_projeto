@@ -83,6 +83,17 @@
 	)
 )
 
+(defun numero-caixas-horizontal (tabuleiro)
+	"Dá número de caixas na horizontal"
+	(length (first (get-arcos-horizontais tabuleiro)))
+)
+
+(defun numero-caixas-vertical (tabuleiro)
+	"Dá número de caixas na vertical"
+	(length (first (get-arcos-verticais tabuleiro)))
+)
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Operadores
@@ -619,23 +630,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defun numero-caixas-horizontais (tabuleiro)
-	(length (car (rest (get-arcos-horizontais tabuleiro))))
-)
-
-(defun numero-caixas-linhas (tabuleiro)
-	
-(length (car (rest (get-arcos-verticais tabuleiro))))
-)
-
-
-
 (defun teste-bfs (o tabuleiro)
-	(procura-generica (no-criar tabuleiro) (criar-solucao o) 'sucessores 'bfs (criar-operacoes (numero-caixas-horizontais tabuleiro) (numero-caixas-linhas tabuleiro)))
+	(procura-generica (no-criar tabuleiro) (criar-solucao o) 'sucessores 'bfs (criar-operacoes (numero-caixas-horizontal tabuleiro) (numero-caixas-vertical tabuleiro)))
 )
 
 (defun teste-dfs (o p tabuleiro)
-	(procura-generica (no-criar tabuleiro) (criar-solucao o) 'sucessores 'dfs (criar-operacoes (numero-caixas-horizontais tabuleiro) (numero-caixas-linhas tabuleiro)) p)
+	(procura-generica (no-criar tabuleiro) (criar-solucao o) 'sucessores 'dfs (criar-operacoes (numero-caixas-horizontal tabuleiro) (numero-caixas-vertical tabuleiro)) p)
 )
 
 (defun teste-a-asterisco (n m o tabuleiro)

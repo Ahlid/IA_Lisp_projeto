@@ -195,7 +195,7 @@
 		(let ((resposta (read)))
 			(cond
 				((not (numberp resposta)) (progn (format t "~%> Insira um objectivo valido")(format t "~%> ")(obter-objectivo)))
-				((and (>= resposta 1) (<= resposta (* (numero-caixas-horizontais tabuleiro) (numero-caixas-linhas tabuleiro)))) resposta)
+				((and (>= resposta 1) (<= resposta (* (numero-caixas-horizontal tabuleiro) (numero-caixas-vertical tabuleiro)))) resposta)
 				(T (obter-objectivo tabuleiro))))
 	)
 )
