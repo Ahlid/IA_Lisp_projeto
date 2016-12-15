@@ -180,24 +180,11 @@
 )
 
 
-	(defun resultado-simulacao(resultado)
+(defun resultado-simulacao(resultado)
 
-	(with-open-file (ficheiro (concatenate 'string (diretoria-atual)"estatisticas.dat")
-							:direction :output
-							:if-exists :append
-							:if-does-not-exist :create)
+(list resultado)
 
-		;; Esta parte será escrita no ficheiro do tipo .DAT
-		(imprimir-resultado ficheiro resultado)
-		;(format ficheiro "~%> resultado ~a" resultado)
-
-		;(format ficheiro "Profundidade da Solução: ~s ~%" (second (car abertos)))
-		(format ficheiro "___________________________________________________~%")
-
-		)
-	
-
-	)
+)
 
 
 
@@ -263,4 +250,4 @@
 	)
 
 
-)
+) 
