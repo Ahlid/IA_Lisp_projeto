@@ -391,7 +391,7 @@
 ((null no) nil)
 (T(progn
 (teste-pai (no-pai no) stream)
-(format stream "~%> ~s" (no-estado no))
+(desenhar-tabuleiro (no-estado no) stream)
 (format stream "~%> ")
 (terpri)
 
