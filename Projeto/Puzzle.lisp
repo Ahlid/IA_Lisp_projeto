@@ -643,7 +643,6 @@
 	(procura-generica-ida-asterisco (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'ida-asterisco (criar-operacoes n m) (heuristica-2 o))
 )
 
-
 (defun numero-caixas-horizontal (tabuleiro)
 	"Dá número de caixas na horizontal"
 	(length (first (first tabuleiro)))
