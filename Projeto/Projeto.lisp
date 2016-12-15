@@ -112,10 +112,76 @@
 
 (defun imprime-tabuleiro ()
 	
+	
+	
+)
+
+(defun criar-linha-horizontal (lista)
+	"Imprime uma linha de valores booleanos como um linha de traços horizontais"
+	(cond 
+		((null lista) "o")
+		(t (concatenate 'string 
+							(cond 
+								((first lista) "o---")								
+								(t "o   ")
+							) 
+							(criar-linha-horizontal (rest lista))
+			)
+		)
+	)
+)
+
+(defun criar-linha-vertical (lista)
+	"Imprime uma linha de valores booleanos como um linha de traços verticais"
+	(cond 
+		( (null lista) "" )
+		( t 
+			(concatenate 'string 	
+							(cond 
+								((and (first lista) (> (length lista) 1)) "|   ")
+								((and (first lista) (<= (length lista) 1)) "|")
+								(t "    ")
+							) 
+							(criar-linha-vertical (rest lista))
+			) 
+		)
+	)
+)
+
+(defun desenhar-tabuleiro-aux (lista1 lista2 stream)
+	""
+	(cond 
+		((and (null lista1) (null lista2)) nil)
+		(t
+			(progn
+				(cond 
+					((> (length (first lista1)) 0) 
+						(write-line (criar-linha-horizontal (first lista1)) stream)
+					)
+				)
+				(cond 
+					((> (length (first lista2)) 0) 
+						(write-line (criar-linha-vertical (first lista2)) stream)
+					)
+				)
+				(desenhar-tabuleiro-aux (rest lista1) (rest lista2) stream)
+			)
+		)
+	)
+)	
+
+
+(defun desenhar-tabuleiro (tabuleiro stream)
+	"Desenha o tabuleiro"
+	(desenhar-tabuleiro-aux 
+		(get-arcos-horizontais tabuleiro)
+		(matriz2d-transposta (get-arcos-verticais tabuleiro))
+		stream
+	)
 )
 
 
-;*standard-output*
+
 (defun imprimir-resultado (stream resultado)
 	(progn 
 		(write-line "Resultado:" stream)
@@ -134,7 +200,6 @@
 (progn
 		(format t "~%>")
 		(format t "~%> Escolha tabuleiro inicial do problema ")
-		
 		(format t "~%> 	a) Tabuleiro A ")
 		(format t "~%> 	b) Tabuleiro B ")
 		(format t "~%> 	c) Tabuleiro C ")
@@ -183,7 +248,7 @@
 (defun resultado-simulacao(resultado)
 
 (list resultado)
-
+	
 )
 
 
@@ -231,7 +296,7 @@
 
 
 (defun obter-profundidade()
-
+	""
 	(progn
 		(format t "~%> Qual a profundidade que pretende ?")
 		(format t "~%> ESCOLHA ")
@@ -248,6 +313,4 @@
 			)
 		)
 	)
-
-
 ) 
