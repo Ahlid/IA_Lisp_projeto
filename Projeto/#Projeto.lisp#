@@ -1,13 +1,13 @@
 ;;;; menu.lisp
-;;;; Exemplo de utilização de menus
-;;;; E de definição de caminhos para os ficheiros
-;;;; Autor: Cédric Grueau
+;;;; Exemplo de utilizaÃ§Ã£o de menus
+;;;; E de definiÃ§Ã£o de caminhos para os ficheiros
+;;;; Autor: CÃ©dric Grueau
 ;;;; Data: 2 de dezembro de 2016
-;;;; Versão 1
+;;;; VersÃ£o 1
 
 
 (defun iniciar ()	
-"Função que inicializa o programa, chamando a função que apresenta o menu inicial."
+"FunÃ§Ã£o que inicializa o programa, chamando a funÃ§Ã£o que apresenta o menu inicial."
 	(progn
 		(compile-file (concatenate 'string (diretoria-atual)"procura.lisp"))  
 		(compile-file (concatenate 'string (diretoria-atual)"puzzle.lisp"))
@@ -18,7 +18,7 @@
 )
 
 (defun diretoria-atual () 
-"Função que define um caminho para leitura dos ficheiros."
+"FunÃ§Ã£o que define um caminho para leitura dos ficheiros."
 	(let (
 			;(path-ricardo)
 			(path-tiago  "C:\\Users\\pcts\\Desktop\\ProjIA\\Projeto\\"))
@@ -33,7 +33,7 @@
 (defun pedir-directoria ()
 	"Pede a directoria dos ficheiros ao utilizador"
 	(progn
-		(format t "Insira o diretório: ")
+		(format t "Insira o diretÃ³rio: ")
 		(read)
 	)
 )
@@ -42,7 +42,7 @@
 
 ;;; MENU PRINCIPAL
 (defun menu-principal ()
-	"Apresenta o menu principal com as opcões do programa"
+	"Apresenta o menu principal com as opcÃµes do programa"
   (loop
     (progn
       (format t "~% ------------------------------------------------------")
@@ -90,7 +90,7 @@
 		((eql algoritmo 'a-asterisco)
 		(cond
 		((eql heuristica 'heuristica)(resultado-simulacao (teste-a-asterisco objetivo tabuleiro)))
-		(t (resultado-simulacao (teste-a-asterisco-h2 objetivo tabuleiro)))
+ 		(t (resultado-simulacao (teste-a-asterisco-h2 objetivo tabuleiro)))
 		)
 		)
 		
@@ -135,18 +135,15 @@
 (defun imprimir-resultado (stream resultado)
 	(progn 
 		(write-line "Resultado:" stream)
-		
-		(write-line (format nil "Resolução:"  stream))
-		(teste-pai (first resultado) stream)
-		(write-line (format nil "Tempo de resolução: ~a" (second resultado)) stream)
-		(write-line (format nil "Número de nós gerado: ~a" (third resultado)) stream)
-		(write-line (format nil "Número de nós expandidos: ~a" (fourth resultado)) stream)
+		(write-line (format nil "NÃ³ objetivo: ~a" (first resultado)) stream)
+		(write-line (format nil "Tempo de resoluÃ§Ã£o: ~a" (second resultado)) stream)
+		(write-line (format nil "NÃºmero de nÃ³s gerado: ~a" (third resultado)) stream)
+		(write-line (format nil "NÃºmero de nÃ³s expandidos: ~a" (fourth resultado)) stream)
 		(write-line (format nil "Profundidade: ~a" (fifth resultado)) stream)
 		(write-line (format nil "Penetrancia: ~,4f" (float (sixth resultado))) stream)
-		(write-line (format nil "Fator de ramificação: ~,4f" (float (seventh resultado))) stream)
+		(write-line (format nil "Fator de ramificaÃ§Ã£o: ~,4f" (float (seventh resultado))) stream)
 	)
 )
-
 
 (defun escolher-tabuleiro() 
 
@@ -179,7 +176,7 @@
 							((equal opcao 'd) (nth 3 (read ficheiro)))
 							((equal opcao 'e) (nth 4 (read ficheiro)))
 							((equal opcao 'f) (nth 5 (read ficheiro)))
-							;((equal opcao 'g) (nth 6 (read ficheiro)))	; se for adicionado ao nosso ficheiro é o problema 6, se for adicionado num ficheiro novo é o problema 1
+							;((equal opcao 'g) (nth 6 (read ficheiro)))	; se for adicionado ao nosso ficheiro Ã© o problema 6, se for adicionado num ficheiro novo Ã© o problema 1
 						)
 					)
 		)
@@ -206,11 +203,11 @@
 							:if-exists :append
 							:if-does-not-exist :create)
 
-		;; Esta parte será escrita no ficheiro do tipo .DAT
+		;; Esta parte serÃ¡ escrita no ficheiro do tipo .DAT
 		(imprimir-resultado ficheiro resultado)
 		;(format ficheiro "~%> resultado ~a" resultado)
 
-		;(format ficheiro "Profundidade da Solução: ~s ~%" (second (car abertos)))
+		;(format ficheiro "Profundidade da SoluÃ§Ã£o: ~s ~%" (second (car abertos)))
 		(format ficheiro "___________________________________________________~%")
 
 		)
@@ -220,7 +217,7 @@
 
 
 
-(defun obter-objectivo(tabuleiro) "Le do utilizador o número objectivo de caixas a fechar"
+(defun obter-objectivo(tabuleiro) "Le do utilizador o nÃºmero objectivo de caixas a fechar"
 	(progn
 		(format t "~%> Qual o objectivo ?")
 		(format t "~%> ")
@@ -288,7 +285,7 @@
 
 
 
-(defun escolher-heuristica () "Recebe do utilizador a decisão de qual heurística usar"
+(defun escolher-heuristica () "Recebe do utilizador a decisÃ£o de qual heurÃ­stica usar"
 	(progn
 		(format t "~%> Qual a heuristica que pretende aplicar?")
 		(format t "~%> 	1) Proposta pelos professores")
@@ -313,23 +310,3 @@
 		)
 	)
 ) 
-
-
-
-
-(defun teste-pai(no stream) 
-
-(cond
-((null no) nil)
-(T(progn
-(teste-pai (no-pai no) stream)
-(format stream "~%> ~s" (no-estado no))
-(format stream "~%> ")
-(terpri)
-
-))
-
-)
-
-
-)

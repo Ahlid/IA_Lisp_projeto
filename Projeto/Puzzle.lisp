@@ -528,11 +528,19 @@
 		(
 			(n-caixas-faltam (- n-caixas-objetivo n-caixas-fechadas)) ;;constante para calcular numero de caixas em falta
 		)
-        (+
-			(heuristica2-aux-1-arco n-caixas-faltam n-caixas-faltar-1-arcos n-partilhas-1-1) ;; calcula arcos a usar para caixas onde falta 1 arco
-			(heuristica2-aux-2-arco (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos)) n-caixas-faltar-2-arcos n-partilhas-2-1 n-partilhas-2-2) ;; calcula arcos a usar para caixas onde falta 2 arcos
-			(heuristica2-aux-3-arco (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos n-caixas-faltar-2-arcos )) n-caixas-faltar-3-arcos n-partilhas-3-1 n-partilhas-3-2 n-partilhas-3-3) ;; calcula arcos a usar para caixas onde falta 3 arcos
-			(heuristica2-aux-4-arco (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos n-caixas-faltar-2-arcos n-caixas-faltar-3-arcos )) n-caixas-faltar-4-arcos n-partilhas-4-1 n-partilhas-4-2 n-partilhas-4-3 n-partilhas-4-4) ;; calcula arcos a usar para caixas onde falta 4 arcos
+        ;;(+
+		;;	(heuristica2-aux-1-arco n-caixas-faltam n-caixas-faltar-1-arcos n-partilhas-1-1) ;; calcula arcos a usar para caixas onde falta 1 arco
+		;;	(heuristica2-aux-2-arco (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos)) n-caixas-faltar-2-arcos n-partilhas-2-1 n-partilhas-2-2) ;; calcula arcos a usar para caixas onde falta 2 arcos
+		;;	(heuristica2-aux-3-arco (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos n-caixas-faltar-2-arcos )) n-caixas-faltar-3-arcos n-partilhas-3-1 n-partilhas-3-2 n-partilhas-3-3) ;; calcula arcos a usar para caixas onde falta 3 arcos
+		;;;;	(heuristica2-aux-4-arco (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos n-caixas-faltar-2-arcos n-caixas-faltar-3-arcos )) n-caixas-faltar-4-arcos n-partilhas-4-1 n-partilhas-4-2 n-partilhas-4-3 n-partilhas-4-4) ;; calcula arcos a usar para caixas onde falta 4 arcos
+		;;)
+		
+		
+		(+
+		(min n-caixas-faltam n-caixas-faltar-1-arcos)
+		(min (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos)) n-caixas-faltar-2-arcos)
+		(min (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos n-caixas-faltar-2-arcos )) n-caixas-faltar-3-arcos)
+		(min (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos n-caixas-faltar-2-arcos n-caixas-faltar-3-arcos )) n-caixas-faltar-4-arcos)
 		)
 	)
 )
@@ -638,20 +646,20 @@
 	(procura-generica (no-criar tabuleiro) (criar-solucao o) 'sucessores 'dfs (criar-operacoes (numero-caixas-horizontal tabuleiro) (numero-caixas-vertical tabuleiro)) p)
 )
 
-(defun teste-a-asterisco (n m o tabuleiro)
-	(procura-generica (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'a-asterisco (criar-operacoes n m) nil (heuristica o))
+(defun teste-a-asterisco (o tabuleiro)
+	(procura-generica (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'a-asterisco (criar-operacoes (numero-caixas-horizontal tabuleiro) (numero-caixas-vertical tabuleiro)) nil (heuristica o))
 )
 
-(defun teste-a-asterisco-h2 (n m o tabuleiro)
-	(procura-generica (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'a-asterisco (criar-operacoes n m) nil (heuristica-2 o))
+(defun teste-a-asterisco-h2 (o tabuleiro)
+	(procura-generica (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'a-asterisco (criar-operacoes (numero-caixas-vertical tabuleiro) (numero-caixas-horizontal tabuleiro)) nil (heuristica-2 o))
 )
 
-(defun teste-ida-asterisco (n m o tabuleiro)
-	(procura-generica-ida-asterisco (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'ida-asterisco (criar-operacoes n m) (heuristica o))
+(defun teste-ida-asterisco (o tabuleiro)
+	(procura-generica-ida-asterisco (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'ida-asterisco (criar-operacoes (numero-caixas-horizontal tabuleiro) (numero-caixas-vertical tabuleiro)) (heuristica o))
 )
 
-(defun teste-ida-asterisco-h2 (n m o tabuleiro)
-	(procura-generica-ida-asterisco (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'ida-asterisco (criar-operacoes n m) (heuristica-2 o))
+(defun teste-ida-asterisco-h2 (o tabuleiro)
+	(procura-generica-ida-asterisco (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'ida-asterisco (criar-operacoes (numero-caixas-horizontal tabuleiro) (numero-caixas-vertical tabuleiro)) (heuristica-2 o))
 )
 
 
