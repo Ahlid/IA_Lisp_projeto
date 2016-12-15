@@ -619,12 +619,23 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defun teste-bfs (n m o tabuleiro)
-	(procura-generica (no-criar tabuleiro) (criar-solucao o) 'sucessores 'bfs (criar-operacoes n m))
+(defun numero-caixas-horizontais (tabuleiro)
+	(length (car (rest (get-arcos-horizontais tabuleiro))))
 )
 
-(defun teste-dfs (n m o p tabuleiro)
-	(procura-generica (no-criar tabuleiro) (criar-solucao o) 'sucessores 'dfs (criar-operacoes n m) p)
+(defun numero-caixas-linhas (tabuleiro)
+	
+(length (car (rest (get-arcos-verticais tabuleiro))))
+)
+
+
+
+(defun teste-bfs (o tabuleiro)
+	(procura-generica (no-criar tabuleiro) (criar-solucao o) 'sucessores 'bfs (criar-operacoes (numero-caixas-horizontais tabuleiro) (numero-caixas-linhas tabuleiro)))
+)
+
+(defun teste-dfs (o p tabuleiro)
+	(procura-generica (no-criar tabuleiro) (criar-solucao o) 'sucessores 'dfs (criar-operacoes (numero-caixas-horizontais tabuleiro) (numero-caixas-linhas tabuleiro)) p)
 )
 
 (defun teste-a-asterisco (n m o tabuleiro)
@@ -643,15 +654,5 @@
 	(procura-generica-ida-asterisco (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'ida-asterisco (criar-operacoes n m) (heuristica-2 o))
 )
 
-
-(defun numero-caixas-horizontais (tabuleiro)
-	
-
-)
-
-(defun numero-caixas-linhas (tabuleiro)
-	
-
-)
 
 
