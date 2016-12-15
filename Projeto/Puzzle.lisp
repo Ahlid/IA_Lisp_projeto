@@ -83,6 +83,17 @@
 	)
 )
 
+(defun numero-caixas-horizontal (tabuleiro)
+	"Dá número de caixas na horizontal"
+	(length (first (get-arcos-horizontais tabuleiro)))
+)
+
+(defun numero-caixas-vertical (tabuleiro)
+	"Dá número de caixas na vertical"
+	(length (first (get-arcos-verticais tabuleiro)))
+)
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Operadores
@@ -619,12 +630,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defun teste-bfs (n m o tabuleiro)
-	(procura-generica (no-criar tabuleiro) (criar-solucao o) 'sucessores 'bfs (criar-operacoes n m))
+(defun teste-bfs (o tabuleiro)
+	(procura-generica (no-criar tabuleiro) (criar-solucao o) 'sucessores 'bfs (criar-operacoes (numero-caixas-horizontal tabuleiro) (numero-caixas-vertical tabuleiro)))
 )
 
-(defun teste-dfs (n m o p tabuleiro)
-	(procura-generica (no-criar tabuleiro) (criar-solucao o) 'sucessores 'dfs (criar-operacoes n m) p)
+(defun teste-dfs (o p tabuleiro)
+	(procura-generica (no-criar tabuleiro) (criar-solucao o) 'sucessores 'dfs (criar-operacoes (numero-caixas-horizontal tabuleiro) (numero-caixas-vertical tabuleiro)) p)
 )
 
 (defun teste-a-asterisco (n m o tabuleiro)
@@ -643,14 +654,5 @@
 	(procura-generica-ida-asterisco (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'ida-asterisco (criar-operacoes n m) (heuristica-2 o))
 )
 
-(defun numero-caixas-horizontal (tabuleiro)
-	"Dá número de caixas na horizontal"
-	(length (first (first tabuleiro)))
-)
-
-(defun numero-caixas-vertical (tabuleiro)
-	"Dá número de caixas na vertical"
-	(length (first (second tabuleiro)))
-)
 
 
