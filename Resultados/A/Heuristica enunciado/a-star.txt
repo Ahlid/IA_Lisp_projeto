@@ -1,2 +1,32 @@
-(teste-a-asterisco 3 3 3 (tabuleiro-a))
-(((((NIL NIL NIL) (NIL T T) (NIL T T) (NIL NIL T)) ((NIL NIL NIL) (NIL T NIL) (NIL T T) (NIL T T))) ((((NIL NIL NIL) (NIL NIL T) (NIL T T) (NIL NIL T)) ((NIL NIL NIL) (NIL T NIL) (NIL T T) (NIL T T))) ((((NIL NIL NIL) (NIL NIL T) (NIL T T) (NIL NIL T)) ((NIL NIL NIL) (NIL T NIL) (NIL NIL T) (NIL T T))) NIL 0 (0 0 0)) 1 (1 0 1)) 2 (2 -1 1)) 0 31 2 2 2/31 651/128)
+Resultado:
+o   o   o   o
+                
+o   o   o---o
+    |       |
+o   o---o---o
+        |   |
+o   o   o---o
+___________________________________________________
+o   o   o   o
+                
+o   o   o---o
+    |   |   |
+o   o---o---o
+        |   |
+o   o   o---o
+___________________________________________________
+o   o   o   o
+                
+o   o---o---o
+    |   |   |
+o   o---o---o
+        |   |
+o   o   o---o
+___________________________________________________
+Tempo de resolução: 0
+Número de nós gerado: 31
+Número de nós expandidos: 2
+Profundidade: 2
+Penetrancia: 0.0645
+Fator de ramificação: 5.0859
+___________________________________________________

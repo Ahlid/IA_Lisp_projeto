@@ -639,15 +639,15 @@
 
 
 (defun teste-bfs (o tabuleiro)
-	(procura-generica (no-criar tabuleiro) (criar-solucao o) 'sucessores 'bfs (criar-operacoes (numero-caixas-horizontal tabuleiro) (numero-caixas-vertical tabuleiro)))
+	(procura-generica (no-criar tabuleiro) (criar-solucao o) 'sucessores 'bfs (criar-operacoes (numero-caixas-vertical tabuleiro) (numero-caixas-horizontal tabuleiro)))
 )
 
 (defun teste-dfs (o p tabuleiro)
-	(procura-generica (no-criar tabuleiro) (criar-solucao o) 'sucessores 'dfs (criar-operacoes (numero-caixas-horizontal tabuleiro) (numero-caixas-vertical tabuleiro)) p)
+	(procura-generica (no-criar tabuleiro) (criar-solucao o) 'sucessores 'dfs (criar-operacoes (numero-caixas-vertical tabuleiro) (numero-caixas-horizontal tabuleiro)) p)
 )
 
 (defun teste-a-asterisco (o tabuleiro)
-	(procura-generica (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'a-asterisco (criar-operacoes (numero-caixas-horizontal tabuleiro) (numero-caixas-vertical tabuleiro)) nil (heuristica o))
+	(procura-generica (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'a-asterisco (criar-operacoes (numero-caixas-vertical tabuleiro) (numero-caixas-horizontal tabuleiro)) nil (heuristica o))
 )
 
 (defun teste-a-asterisco-h2 (o tabuleiro)
@@ -655,11 +655,11 @@
 )
 
 (defun teste-ida-asterisco (o tabuleiro)
-	(procura-generica-ida-asterisco (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'ida-asterisco (criar-operacoes (numero-caixas-horizontal tabuleiro) (numero-caixas-vertical tabuleiro)) (heuristica o))
+	(procura-generica-ida-asterisco (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'ida-asterisco (criar-operacoes (numero-caixas-vertical tabuleiro) (numero-caixas-horizontal tabuleiro)) (heuristica o))
 )
 
 (defun teste-ida-asterisco-h2 (o tabuleiro)
-	(procura-generica-ida-asterisco (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'ida-asterisco (criar-operacoes (numero-caixas-horizontal tabuleiro) (numero-caixas-vertical tabuleiro)) (heuristica-2 o))
+	(procura-generica-ida-asterisco (no-criar tabuleiro nil 0 '(0 0 0)) (criar-solucao o) 'sucessores 'ida-asterisco (criar-operacoes (numero-caixas-vertical tabuleiro) (numero-caixas-horizontal tabuleiro)) (heuristica-2 o))
 )
 
 

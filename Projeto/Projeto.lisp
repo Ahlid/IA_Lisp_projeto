@@ -1,9 +1,3 @@
-;;;; menu.lisp
-;;;; Exemplo de utilização de menus
-;;;; E de definição de caminhos para os ficheiros
-;;;; Autor: Cédric Grueau
-;;;; Data: 2 de dezembro de 2016
-;;;; Versão 1
 
 
 (defun iniciar ()	
@@ -20,12 +14,12 @@
 (defun diretoria-atual () 
 "Função que define um caminho para leitura dos ficheiros."
 	(let (
-			;(path-ricardo)
-			(path-tiago  "C:\\Users\\pcts\\Desktop\\ProjIA\\Projeto\\"))
+			(path-ricardo "C:/Users/Ricardo Morais/Documents/IA_Lisp_projeto/Projeto/")
+			;(path-tiago  "C:\\Users\\pcts\\Desktop\\ProjIA\\Projeto\\"))
 			;(path-professor ""))
 			
-		path-tiago
-		;path-ricardo
+		;path-tiago
+		path-ricardo
 		;path-professor
 	)
 )
@@ -75,36 +69,31 @@
 (defun menu-jogar()
 	
 	(let*
-	(
-		(tabuleiro (escolher-tabuleiro))
-		(objetivo (obter-objectivo tabuleiro))
-		(algoritmo (escolher-algoritmo))
-		(profundidade (cond ((eql algoritmo 'dfs) (obter-profundidade)) (T 9999)))
-		(heuristica (cond ((not (or (eql algoritmo 'dfs) (eql algoritmo 'bfs))) (escolher-heuristica)) (T nil)))
-		
-	)
-	
-	(cond
-		((eql algoritmo 'dfs) (resultado-simulacao (teste-dfs objetivo profundidade tabuleiro)))
-		((eql algoritmo 'bfs) (resultado-simulacao (teste-bfs objetivo tabuleiro)))
-		((eql algoritmo 'a-asterisco)
+		(
+			(tabuleiro (escolher-tabuleiro))
+			(objetivo (obter-objectivo tabuleiro))
+			(algoritmo (escolher-algoritmo))
+			(profundidade (cond ((eql algoritmo 'dfs) (obter-profundidade)) (T 9999)))
+			(heuristica (cond ((not (or (eql algoritmo 'dfs) (eql algoritmo 'bfs))) (escolher-heuristica)) (T nil)))
+			
+		)
 		(cond
-		((eql heuristica 'heuristica)(resultado-simulacao (teste-a-asterisco objetivo tabuleiro)))
-		(t (resultado-simulacao (teste-a-asterisco-h2 objetivo tabuleiro)))
+			((eql algoritmo 'dfs) (resultado-simulacao (teste-dfs objetivo profundidade tabuleiro)))
+			((eql algoritmo 'bfs) (resultado-simulacao (teste-bfs objetivo tabuleiro)))
+			((eql algoritmo 'a-asterisco)
+				(cond
+					((eql heuristica 'heuristica)(resultado-simulacao (teste-a-asterisco objetivo tabuleiro)))
+					(t (resultado-simulacao (teste-a-asterisco-h2 objetivo tabuleiro)))
+				)
+			)
+			((eql algoritmo 'ida-asterisco)
+				(cond
+					((eql heuristica 'heuristica)(resultado-simulacao (teste-ida-asterisco objetivo tabuleiro)))
+					(t (resultado-simulacao (teste-ida-asterisco-h2 objetivo tabuleiro)))
+				)
+			)
+			(T nil)
 		)
-		)
-		
-		((eql algoritmo 'ida-asterisco)
-		(cond
-		((eql heuristica 'heuristica)(resultado-simulacao (teste-ida-asterisco objetivo tabuleiro)))
-		(t (resultado-simulacao (teste-ida-asterisco-h2 objetivo tabuleiro)))
-		)
-		)
-		
-		
-		(T nil)
-
-	)
 	)
 	
 )
@@ -136,12 +125,12 @@
 	"Imprime uma linha de valores booleanos como um linha de traços horizontais"
 	(cond 
 		((null lista) "o")
-		(t (concatenate 'string 
+		(t 	(concatenate 'string 
 							(cond 
-								((first lista) "o---")								
-								(t "o   ")
+								((first lista) "o---") ; se o elemento é t devolve a linha						
+								(t "o   ") ; senão devolve espaço em branco		
 							) 
-							(criar-linha-horizontal (rest lista))
+							(criar-linha-horizontal (rest lista)) ; chama recusivamente a função com o rest da lista
 			)
 		)
 	)
@@ -150,37 +139,37 @@
 (defun criar-linha-vertical (lista)
 	"Imprime uma linha de valores booleanos como um linha de traços verticais"
 	(cond 
-		( (null lista) "" )
+		( (null lista) "" ) ; se não houver elementos na lista devolve uma string vazia
 		( t 
 			(concatenate 'string 	
 							(cond 
-								((and (first lista) (> (length lista) 1)) "|   ")
-								((and (first lista) (<= (length lista) 1)) "|")
-								(t "    ")
+								((and (first lista) (> (length lista) 1)) "|   ") ; se o elemento é t  e não é o ultimo elemento da lista	devolve a linha com espaços
+								((and (first lista) (<= (length lista) 1)) "|") ; se o elemento é t  e é o ultimo elemento da lista devolve a linha
+								(t "    ") ; senão imprime espaços em branco
 							) 
-							(criar-linha-vertical (rest lista))
+							(criar-linha-vertical (rest lista)) ; chama recusivamente a função com o rest da lista
 			) 
 		)
 	)
 )
 
-(defun desenhar-tabuleiro-aux (lista1 lista2 stream)
-	""
+(defun desenhar-tabuleiro-aux (matriz1 matriz2 stream)
+	"Ajuda a desenhar o tabuleiro recebendo duas listas"
 	(cond 
-		((and (null lista1) (null lista2)) nil)
+		((and (null matriz1) (null matriz2)) nil) ; quando as duas listas estiverem vazias retorna nil
 		(t
 			(progn
 				(cond 
-					((> (length (first lista1)) 0) 
-						(write-line (criar-linha-horizontal (first lista1)) stream)
+					((> (length (first matriz1)) 0) ; se já não existir elementos da matriz1 não escreve mais linhas horizontais
+						(write-line (criar-linha-horizontal (first matriz1)) stream) ; se existe uma linha horizontal escreve-a no stream
 					)
 				)
 				(cond 
-					((> (length (first lista2)) 0) 
-						(write-line (criar-linha-vertical (first lista2)) stream)
+					((> (length (first matriz2)) 0) ; se já não existir elementos da matriz2 não escreve mais linhas verticais
+						(write-line (criar-linha-vertical (first matriz2)) stream) ; se existe uma linha vertical escreve-a no stream
 					)
 				)
-				(desenhar-tabuleiro-aux (rest lista1) (rest lista2) stream)
+				(desenhar-tabuleiro-aux (rest matriz1) (rest matriz2) stream) ; faz a chamada recursiva com o rest das listas
 			)
 		)
 	)
@@ -189,10 +178,10 @@
 
 (defun desenhar-tabuleiro (tabuleiro stream)
 	"Desenha o tabuleiro"
-	(desenhar-tabuleiro-aux 
-		(get-arcos-horizontais tabuleiro)
-		(matriz2d-transposta (get-arcos-verticais tabuleiro))
-		stream
+	(desenhar-tabuleiro-aux ; Desenha o tabuleiro no stream
+		(get-arcos-horizontais tabuleiro) ; Matriz dos arcos horizontais
+		(matriz2d-transposta (get-arcos-verticais tabuleiro)) ; Transpõe a matriz dos arcos verticais de forma a termos uma lista de linhas linhas
+		stream ; stream de escrita
 	)
 )
 
@@ -216,7 +205,7 @@
 
 (defun escolher-tabuleiro() 
 
-(progn
+	(progn
 		(format t "~%>")
 		(format t "~%> Escolha tabuleiro inicial do problema ")
 		(format t "~%> 	a) Tabuleiro A ")
@@ -229,44 +218,44 @@
 		(format t "~%> Estado inicial: ")
 		(format t "~%> ")
 
-			(let* ((opcao (read))
-			   (opcao-valida (opcao-existe opcao '(a b c d e f))))
-					(with-open-file (ficheiro (concatenate 'string (diretoria-atual)"problemas.dat") :direction :input :if-does-not-exist :error)
-						(cond
-							((not opcao-valida) (progn
-													(format t "~%> Opcao Invalida!")
-													(format t "~%  ")
-													(terpri)
-													(ler-tabuleiro)))
-							((equal opcao 'a) (progn (format t "~%> Tabuleiro a") (nth 0 (read ficheiro))))
-							((equal opcao 'b) (nth 1 (read ficheiro)))
-							((equal opcao 'c) (nth 2 (read ficheiro)))
-							((equal opcao 'd) (nth 3 (read ficheiro)))
-							((equal opcao 'e) (nth 4 (read ficheiro)))
-							((equal opcao 'f) (nth 5 (read ficheiro)))
-							;((equal opcao 'g) (nth 6 (read ficheiro)))	; se for adicionado ao nosso ficheiro é o problema 6, se for adicionado num ficheiro novo é o problema 1
-						)
-					)
-		)
+		(let* 	
+			(
+				(opcao (read))
+				(opcao-valida (opcao-existe opcao '(a b c d e f)))
+			)
+			(with-open-file (ficheiro (concatenate 'string (diretoria-atual)"problemas.dat") :direction :input :if-does-not-exist :error)
+				(cond
+					((not opcao-valida) (progn
+											(format t "~%> Opcao Invalida!")
+											(format t "~%  ")
+											(terpri)
+											(ler-tabuleiro)))
+					((equal opcao 'a) (progn (format t "~%> Tabuleiro a") (nth 0 (read ficheiro))))
+					((equal opcao 'b) (nth 1 (read ficheiro)))
+					((equal opcao 'c) (nth 2 (read ficheiro)))
+					((equal opcao 'd) (nth 3 (read ficheiro)))
+					((equal opcao 'e) (nth 4 (read ficheiro)))
+					((equal opcao 'f) (nth 5 (read ficheiro)))
+					;((equal opcao 'g) (nth 6 (read ficheiro)))	; se for adicionado ao nosso ficheiro é o problema 6, se for adicionado num ficheiro novo é o problema 1
+				)
+			)
+		)	
 	)
-
 )
 
 
 (defun opcao-existe (elemento lista)
-
+	""
 	(cond
 		((null lista) nil)
 		((eql elemento (car lista)) T)
 		(T (opcao-existe elemento (cdr lista)))
 	)
-
 )
 
 
 (defun resultado-simulacao(resultado)
-
-
+	""
 	(with-open-file (ficheiro (concatenate 'string (diretoria-atual)"estatisticas.dat")
 							:direction :output
 							:if-exists :append
@@ -279,15 +268,14 @@
 		;(format ficheiro "Profundidade da Solução: ~s ~%" (second (car abertos)))
 		(format ficheiro "___________________________________________________~%")
 
-		)
-	
-
 	)
+)
 
 
 
 
-(defun obter-objectivo(tabuleiro) "Le do utilizador o número objectivo de caixas a fechar"
+(defun obter-objectivo(tabuleiro) 
+	"Le do utilizador o número objectivo de caixas a fechar"
 	(progn
 		(format t "~%> Qual o objectivo ?")
 		(format t "~%> ")
@@ -302,7 +290,7 @@
 
 
 (defun escolher-algoritmo()
-
+	""
 	(progn
 		(format t "~%> Qual o algoritmo que pretende usar?")
 		(format t "~%> 	bfs) Breadth-first Search")
@@ -325,7 +313,6 @@
 			)
 		)
 	)
-
 )
 
 
@@ -347,16 +334,11 @@
 			)
 		)
 	)
-
-
-
 )
 
 
-
-
-
-(defun escolher-heuristica () "Recebe do utilizador a decisão de qual heurística usar"
+(defun escolher-heuristica () 
+	"Recebe do utilizador a decisão de qual heurística usar"
 	(progn
 		(format t "~%> Qual a heuristica que pretende aplicar?")
 		(format t "~%> 	1) Proposta pelos professores")
@@ -386,18 +368,17 @@
 
 
 (defun teste-pai(no stream) 
-
-(cond
-((null no) nil)
-(T(progn
-(teste-pai (no-pai no) stream)
-(desenhar-tabuleiro (no-estado no) stream)
-(format stream "~%> ")
-(terpri)
-
-))
-
-)
-
-
+	""
+	(cond
+		((null no) nil)
+		(T	
+			(progn
+			(teste-pai (no-pai no) stream)
+			(desenhar-tabuleiro (no-estado no) stream)
+			;(format stream "~%> ")
+			(terpri)
+			(format stream "___________________________________________________~%")
+			)
+		)
+	)
 )
