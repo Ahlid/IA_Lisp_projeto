@@ -1,9 +1,429 @@
-(teste-dfs 6 6 20 1000 (tabuleiro-e))
-(((((T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T T T T T T) (T T T T T T) (T T T T T T))) ((((T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T T T T) (T T T T T T) (T T T T T T))) ((((T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T T) (T T T T T T) (T T T T T T))) ((((T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (T T T T T T) (T T T T T T))) ((((T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL T T T T T) (T T T T T T))) ((((T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T T T) (T T T T T T))) ((((T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL T) (T T T T T T))) ((((T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (T T T T T T))) ((((T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL NIL T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL NIL NIL T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL NIL NIL T NIL T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL NIL NIL T NIL NIL) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL NIL NIL T NIL NIL) (NIL T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL NIL NIL T NIL NIL) (NIL NIL T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL NIL NIL T NIL NIL) (NIL NIL NIL T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL NIL NIL T NIL NIL) (NIL NIL NIL T T T) (T T T T T NIL) (T T T T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL NIL NIL T NIL NIL) (NIL NIL NIL T T T) (T T T T T NIL) (NIL T T T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL NIL NIL T NIL NIL) (NIL NIL NIL T T T) (T T T T T NIL) (NIL NIL T T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL NIL NIL T NIL NIL) (NIL NIL NIL T T T) (T T T T T NIL) (NIL NIL NIL T T T) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL NIL NIL T NIL NIL) (NIL NIL NIL T T T) (T T T T T NIL) (NIL NIL NIL T T NIL) (T T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL NIL NIL T NIL NIL) (NIL NIL NIL T T T) (T T T T T NIL) (NIL NIL NIL T T NIL) (NIL T T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL NIL NIL T NIL NIL) (NIL NIL NIL T T T) (T T T T T NIL) (NIL NIL NIL T T NIL) (NIL NIL T T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL NIL NIL T NIL NIL) (NIL NIL NIL T T T) (T T T T T NIL) (NIL NIL NIL T T NIL) (NIL NIL NIL T T T) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL NIL NIL T NIL NIL) (NIL NIL NIL T T T) (T T T T T NIL) (NIL NIL NIL T T NIL) (NIL NIL NIL T T NIL) (T T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL NIL NIL T NIL NIL) (NIL NIL NIL T T T) (T T T T T NIL) (NIL NIL NIL T T NIL) (NIL NIL NIL T T NIL) (NIL T T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL NIL NIL T NIL NIL) (NIL NIL NIL T T T) (T T T T T NIL) (NIL NIL NIL T T NIL) (NIL NIL NIL T T NIL) (NIL NIL T T T T) (T T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL NIL NIL T NIL NIL) (NIL NIL NIL T T T) (T T T T T NIL) (NIL NIL NIL T T NIL) (NIL NIL NIL T T NIL) (NIL NIL T T T T) (NIL T T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) ((((NIL NIL NIL T NIL NIL) (NIL NIL NIL T T T) (T T T T T NIL) (NIL NIL NIL T T NIL) (NIL NIL NIL T T NIL) (NIL NIL T T T T) (NIL NIL T T T T)) ((NIL NIL NIL T T T) (NIL T NIL NIL T T) (NIL T T NIL T T) (NIL NIL T T NIL NIL) (T NIL T NIL T NIL) (NIL NIL T T NIL NIL) (NIL T T T T T))) NIL 0 NIL) 1 NIL) 2 NIL) 3 NIL) 4 NIL) 5 NIL) 6 NIL) 7 NIL) 8 NIL) 9 NIL) 10 NIL) 11 NIL) 12 NIL) 13 NIL) 14 NIL) 15 NIL) 16 NIL) 17 NIL) 18 NIL) 19 NIL) 20 NIL) 21 NIL) 22 NIL) 23 NIL) 24 NIL) 25 NIL) 26 NIL) 27 NIL) 28 NIL) 29 NIL) 0 770 28 29 29/770 9887955/8388608)
-
-
-
-
-
-
-
+___________________________________________________
+Resultado:
+o   o   o   o---o   o   o
+                |           
+o   o   o   o---o---o---o
+    |   |               |
+o---o---o---o---o---o   o
+        |   |   |   |   |
+o   o   o   o---o---o   o
+|           |       |   |
+o   o   o   o---o---o   o
+|   |   |       |       |
+o   o   o---o---o---o---o
+|   |   |               |
+o   o   o---o---o---o---o
+___________________________________________________
+o   o   o   o---o   o   o
+                |           
+o   o   o   o---o---o---o
+    |   |               |
+o---o---o---o---o---o   o
+        |   |   |   |   |
+o   o   o   o---o---o   o
+|           |       |   |
+o   o   o   o---o---o   o
+|   |   |       |       |
+o   o   o---o---o---o---o
+|   |   |               |
+o   o---o---o---o---o---o
+___________________________________________________
+o   o   o   o---o   o   o
+                |           
+o   o   o   o---o---o---o
+    |   |               |
+o---o---o---o---o---o   o
+        |   |   |   |   |
+o   o   o   o---o---o   o
+|           |       |   |
+o   o   o   o---o---o   o
+|   |   |       |       |
+o   o   o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o   o   o   o---o   o   o
+                |           
+o   o   o   o---o---o---o
+    |   |               |
+o---o---o---o---o---o   o
+        |   |   |   |   |
+o   o   o   o---o---o   o
+|           |       |   |
+o   o   o   o---o---o   o
+|   |   |       |       |
+o   o---o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o   o   o   o---o   o   o
+                |           
+o   o   o   o---o---o---o
+    |   |               |
+o---o---o---o---o---o   o
+        |   |   |   |   |
+o   o   o   o---o---o   o
+|           |       |   |
+o   o   o   o---o---o   o
+|   |   |       |       |
+o---o---o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o   o   o   o---o   o   o
+                |           
+o   o   o   o---o---o---o
+    |   |               |
+o---o---o---o---o---o   o
+        |   |   |   |   |
+o   o   o   o---o---o   o
+|           |       |   |
+o   o   o   o---o---o---o
+|   |   |       |       |
+o---o---o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o   o   o   o---o   o   o
+                |           
+o   o   o   o---o---o---o
+    |   |               |
+o---o---o---o---o---o   o
+        |   |   |   |   |
+o   o   o   o---o---o   o
+|           |       |   |
+o   o   o---o---o---o---o
+|   |   |       |       |
+o---o---o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o   o   o   o---o   o   o
+                |           
+o   o   o   o---o---o---o
+    |   |               |
+o---o---o---o---o---o   o
+        |   |   |   |   |
+o   o   o   o---o---o   o
+|           |       |   |
+o   o---o---o---o---o---o
+|   |   |       |       |
+o---o---o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o   o   o   o---o   o   o
+                |           
+o   o   o   o---o---o---o
+    |   |               |
+o---o---o---o---o---o   o
+        |   |   |   |   |
+o   o   o   o---o---o   o
+|           |       |   |
+o---o---o---o---o---o---o
+|   |   |       |       |
+o---o---o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o   o   o   o---o   o   o
+                |           
+o   o   o   o---o---o---o
+    |   |               |
+o---o---o---o---o---o   o
+        |   |   |   |   |
+o   o   o   o---o---o---o
+|           |       |   |
+o---o---o---o---o---o---o
+|   |   |       |       |
+o---o---o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o   o   o   o---o   o   o
+                |           
+o   o   o   o---o---o---o
+    |   |               |
+o---o---o---o---o---o   o
+        |   |   |   |   |
+o   o   o---o---o---o---o
+|           |       |   |
+o---o---o---o---o---o---o
+|   |   |       |       |
+o---o---o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o   o   o   o---o   o   o
+                |           
+o   o   o   o---o---o---o
+    |   |               |
+o---o---o---o---o---o   o
+        |   |   |   |   |
+o   o---o---o---o---o---o
+|           |       |   |
+o---o---o---o---o---o---o
+|   |   |       |       |
+o---o---o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o   o   o   o---o   o   o
+                |           
+o   o   o   o---o---o---o
+    |   |               |
+o---o---o---o---o---o   o
+        |   |   |   |   |
+o---o---o---o---o---o---o
+|           |       |   |
+o---o---o---o---o---o---o
+|   |   |       |       |
+o---o---o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o   o   o   o---o   o   o
+                |           
+o   o   o   o---o---o---o
+    |   |               |
+o---o---o---o---o---o---o
+        |   |   |   |   |
+o---o---o---o---o---o---o
+|           |       |   |
+o---o---o---o---o---o---o
+|   |   |       |       |
+o---o---o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o   o   o   o---o   o   o
+                |           
+o   o   o---o---o---o---o
+    |   |               |
+o---o---o---o---o---o---o
+        |   |   |   |   |
+o---o---o---o---o---o---o
+|           |       |   |
+o---o---o---o---o---o---o
+|   |   |       |       |
+o---o---o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o   o   o   o---o   o   o
+                |           
+o   o---o---o---o---o---o
+    |   |               |
+o---o---o---o---o---o---o
+        |   |   |   |   |
+o---o---o---o---o---o---o
+|           |       |   |
+o---o---o---o---o---o---o
+|   |   |       |       |
+o---o---o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o   o   o   o---o   o   o
+                |           
+o---o---o---o---o---o---o
+    |   |               |
+o---o---o---o---o---o---o
+        |   |   |   |   |
+o---o---o---o---o---o---o
+|           |       |   |
+o---o---o---o---o---o---o
+|   |   |       |       |
+o---o---o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o   o   o   o---o   o---o
+                |           
+o---o---o---o---o---o---o
+    |   |               |
+o---o---o---o---o---o---o
+        |   |   |   |   |
+o---o---o---o---o---o---o
+|           |       |   |
+o---o---o---o---o---o---o
+|   |   |       |       |
+o---o---o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o   o   o   o---o---o---o
+                |           
+o---o---o---o---o---o---o
+    |   |               |
+o---o---o---o---o---o---o
+        |   |   |   |   |
+o---o---o---o---o---o---o
+|           |       |   |
+o---o---o---o---o---o---o
+|   |   |       |       |
+o---o---o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o   o   o---o---o---o---o
+                |           
+o---o---o---o---o---o---o
+    |   |               |
+o---o---o---o---o---o---o
+        |   |   |   |   |
+o---o---o---o---o---o---o
+|           |       |   |
+o---o---o---o---o---o---o
+|   |   |       |       |
+o---o---o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o   o---o---o---o---o---o
+                |           
+o---o---o---o---o---o---o
+    |   |               |
+o---o---o---o---o---o---o
+        |   |   |   |   |
+o---o---o---o---o---o---o
+|           |       |   |
+o---o---o---o---o---o---o
+|   |   |       |       |
+o---o---o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o---o---o---o---o---o---o
+                |           
+o---o---o---o---o---o---o
+    |   |               |
+o---o---o---o---o---o---o
+        |   |   |   |   |
+o---o---o---o---o---o---o
+|           |       |   |
+o---o---o---o---o---o---o
+|   |   |       |       |
+o---o---o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o---o---o---o---o---o---o
+                |       |
+o---o---o---o---o---o---o
+    |   |               |
+o---o---o---o---o---o---o
+        |   |   |   |   |
+o---o---o---o---o---o---o
+|           |       |   |
+o---o---o---o---o---o---o
+|   |   |       |       |
+o---o---o---o---o---o---o
+|   |   |               |
+o---o---o---o---o---o---o
+___________________________________________________
+o---o---o---o---o---o---o
+                |       |
+o---o---o---o---o---o---o
+    |   |               |
+o---o---o---o---o---o---o
+        |   |   |   |   |
+o---o---o---o---o---o---o
+|           |       |   |
+o---o---o---o---o---o---o
+|   |   |       |       |
+o---o---o---o---o---o---o
+|   |   |           |   |
+o---o---o---o---o---o---o
+___________________________________________________
+o---o---o---o---o---o---o
+                |       |
+o---o---o---o---o---o---o
+    |   |               |
+o---o---o---o---o---o---o
+        |   |   |   |   |
+o---o---o---o---o---o---o
+|           |       |   |
+o---o---o---o---o---o---o
+|   |   |       |   |   |
+o---o---o---o---o---o---o
+|   |   |           |   |
+o---o---o---o---o---o---o
+___________________________________________________
+o---o---o---o---o---o---o
+                |       |
+o---o---o---o---o---o---o
+    |   |           |   |
+o---o---o---o---o---o---o
+        |   |   |   |   |
+o---o---o---o---o---o---o
+|           |       |   |
+o---o---o---o---o---o---o
+|   |   |       |   |   |
+o---o---o---o---o---o---o
+|   |   |           |   |
+o---o---o---o---o---o---o
+___________________________________________________
+o---o---o---o---o---o---o
+                |   |   |
+o---o---o---o---o---o---o
+    |   |           |   |
+o---o---o---o---o---o---o
+        |   |   |   |   |
+o---o---o---o---o---o---o
+|           |       |   |
+o---o---o---o---o---o---o
+|   |   |       |   |   |
+o---o---o---o---o---o---o
+|   |   |           |   |
+o---o---o---o---o---o---o
+___________________________________________________
+o---o---o---o---o---o---o
+                |   |   |
+o---o---o---o---o---o---o
+    |   |           |   |
+o---o---o---o---o---o---o
+        |   |   |   |   |
+o---o---o---o---o---o---o
+|           |       |   |
+o---o---o---o---o---o---o
+|   |   |       |   |   |
+o---o---o---o---o---o---o
+|   |   |       |   |   |
+o---o---o---o---o---o---o
+___________________________________________________
+o---o---o---o---o---o---o
+                |   |   |
+o---o---o---o---o---o---o
+    |   |           |   |
+o---o---o---o---o---o---o
+        |   |   |   |   |
+o---o---o---o---o---o---o
+|           |   |   |   |
+o---o---o---o---o---o---o
+|   |   |       |   |   |
+o---o---o---o---o---o---o
+|   |   |       |   |   |
+o---o---o---o---o---o---o
+___________________________________________________
+o---o---o---o---o---o---o
+                |   |   |
+o---o---o---o---o---o---o
+    |   |       |   |   |
+o---o---o---o---o---o---o
+        |   |   |   |   |
+o---o---o---o---o---o---o
+|           |   |   |   |
+o---o---o---o---o---o---o
+|   |   |       |   |   |
+o---o---o---o---o---o---o
+|   |   |       |   |   |
+o---o---o---o---o---o---o
+___________________________________________________
+Tempo de resolução: 0
+Número de nós gerado: 783
+Número de nós expandidos: 29
+Profundidade: 29
+Penetrancia: 0.0364
+Fator de ramificação: 1.1795
+___________________________________________________

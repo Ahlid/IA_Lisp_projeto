@@ -93,7 +93,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 													nos-gerados ; número de nós gerados
 													nos-expandidos ; número de nós expandidos
 													(no-profundidade (car abertos)) ; função heuristica
-													(/ (no-profundidade (car abertos)) nos-gerados) ; penetrância
+													(cond ((= nos-gerados 0) 1) (t (/ (no-profundidade (car abertos)) nos-gerados))) ; penetrância
 													(bisecao (no-profundidade (car abertos)) nos-gerados margem-bisecao) ; fator de ramificacao
 											)
 		)
@@ -124,18 +124,18 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 													heuristica ; função heuristica
 										)
 					)
-					(novo-nos-gerado (+ nos-gerados (length lista-sucessores)))
+					(novo-nos-gerados (+ nos-gerados (length lista-sucessores)))
 					(solucao (existe-solucao lista-sucessores f-solucao f-algoritmo));verifica se existe uma solucao nos sucessores para o dfs
 				)
 				(cond
 					; devolve a solucao
 					(solucao 	(list 	solucao ; nó solução
 										(- (get-universal-time) tempo-inicial) ; tempo em segundos que a procura levou a encontrar a solução
-										novo-nos-gerado ; número de nós gerados
+										novo-nos-gerados ; número de nós gerados
 										(1+ nos-expandidos) ; número de nós expandidos
 										(no-profundidade solucao) ; profundidade do nó solução
-										(/ (no-profundidade solucao) novo-nos-gerado) ; penetrância
-										(bisecao (no-profundidade solucao) novo-nos-gerado margem-bisecao) ; fator de ramificacao
+										(cond ((= nos-gerados 0) 1) (t (/ (no-profundidade (car abertos)) nos-gerados)))  ; penetrância
+										(bisecao (no-profundidade solucao) novo-nos-gerados margem-bisecao) ; fator de ramificacao
 								)
 					)
 					; expande a arvore se o primeiro dos abertos nao for solucao
@@ -149,7 +149,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 											(funcall f-algoritmo (rest abertos) lista-sucessores) ; utiliza o algoritmo para juntar o resto da lista de abertos e a lista de sucessores para a próxima lista de abertos
 											(cons (car abertos) fechados) ; adiciona o primeiro nó de abertos aos fechados e envia para a proxima lista de fechados
 											tempo-inicial ; timestamp em que foi iniciada a procura
-											novo-nos-gerado ; incrementa os número de nós gerados com o tamanho da lista de sucessores
+											novo-nos-gerados ; incrementa os número de nós gerados com o tamanho da lista de sucessores
 											(1+ nos-expandidos) ; incrementa o número de nós expandidos
 											margem-bisecao)
 					)
@@ -238,7 +238,7 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 														nos-gerados ; número de nós gerados
 														nos-expandidos ; número de nós expandidos 
 														(no-profundidade (car abertos)) ; função heuristica
-														(/ (no-profundidade (car abertos)) nos-gerados) ; penetrância
+														(cond ((= nos-gerados 0) 1) (t (/ (no-profundidade (car abertos)) nos-gerados))) ; penetrância
 														(bisecao (no-profundidade (car abertos)) nos-gerados margem-bisecao) ; fator de ramificacao
 												)
 		)
@@ -254,16 +254,16 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 										)
 					)
 					(solucao (existe-solucao lista-sucessores f-solucao f-algoritmo));verifica se existe uma solucao nos sucessores para o dfs
-					(novo-nos-gerado (+ nos-gerados (length lista-sucessores)))
+					(novo-nos-gerados (+ nos-gerados (length lista-sucessores)))
 				)
 				(cond
 					; devolve a solucao
 					(solucao 	(list 	solucao ; nó solução
-										novo-nos-gerado ; número de nós gerados
+										novo-nos-gerados ; número de nós gerados
 										nos-expandidos ; número de nós expandidos
 										(no-profundidade solucao) ; profundidade do nó solução
-										(/ (no-profundidade solucao) novo-nos-gerado) ; penetrância
-										(bisecao (no-profundidade solucao) novo-nos-gerado margem-bisecao) ; fator de ramificacao
+										(cond ((= novo-nos-gerados 0) 1) (t (/ (no-profundidade (car abertos)) novo-nos-gerados))) ; penetrância
+										(bisecao (no-profundidade solucao) novo-nos-gerados margem-bisecao) ; fator de ramificacao
 								)
 					)
 					; expande a arvore se o primeiro dos abertos nao for solucao
@@ -276,11 +276,11 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 																lista-operadores ; lista dos operadores
 																limite ; limite de custo f da procura
 																heuristica ; heuristica
-																novo-nos-gerado ; incrementa os número de nós gerados com o tamanho da lista de sucessores
+																novo-nos-gerados ; incrementa os número de nós gerados com o tamanho da lista de sucessores
 																(1+ nos-expandidos) ; incrementa o número de nós expandidos
 																(funcall f-algoritmo (rest abertos) lista-sucessores) ; utiliza o algoritmo para juntar o resto da lista de abertos e a lista de sucessores para a próxima lista de abertos
 																(cons (car abertos) fechados) ; adiciona o primeiro nó de abertos aos fechados e envia para a proxima lista de fechados
-																margem-bisecao
+																margem-bisecao ; Margem de erro da bisecao
 											)
 								)			
 							)
@@ -339,8 +339,6 @@ No algoritmo dfs um nó só é considerado igual se a sua profundidade for infer
 		)
 	)					
 )
-
-
 
 
 

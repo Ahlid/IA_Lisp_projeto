@@ -1,2 +1,33 @@
-(teste-bfs 3 3 3 (tabuleiro-a))
-(((((NIL NIL NIL) (NIL T T) (NIL T T) (NIL NIL T)) ((NIL NIL NIL) (NIL T NIL) (NIL T T) (NIL T T))) ((((NIL NIL NIL) (NIL T T) (NIL T T) (NIL NIL T)) ((NIL NIL NIL) (NIL T NIL) (NIL NIL T) (NIL T T))) ((((NIL NIL NIL) (NIL NIL T) (NIL T T) (NIL NIL T)) ((NIL NIL NIL) (NIL T NIL) (NIL NIL T) (NIL T T))) NIL 0 NIL) 1 NIL) 2 NIL) 0 914 64 2 1/457 243581/8192)
+___________________________________________________
+Resultado:
+o   o   o   o
+                
+o   o   o---o
+    |       |
+o   o---o---o
+        |   |
+o   o   o---o
+___________________________________________________
+o   o   o   o
+                
+o   o---o---o
+    |       |
+o   o---o---o
+        |   |
+o   o   o---o
+___________________________________________________
+o   o   o   o
+                
+o   o---o---o
+    |   |   |
+o   o---o---o
+        |   |
+o   o   o---o
+___________________________________________________
+Tempo de resolução: 0
+Número de nós gerado: 914
+Número de nós expandidos: 64
+Profundidade: 2
+Penetrancia: 0.0022
+Fator de ramificação: 29.7340
+___________________________________________________

@@ -1,2 +1,57 @@
-(teste-dfs 3 3 3 1000(tabuleiro-a))
-(((((NIL NIL NIL) (NIL T T) (T T T) (T T T)) ((NIL NIL NIL) (NIL T NIL) (NIL T T) (NIL T T))) ((((NIL NIL NIL) (NIL T T) (T T T) (T T T)) ((NIL NIL NIL) (NIL T NIL) (NIL NIL T) (NIL T T))) ((((NIL NIL NIL) (NIL NIL T) (T T T) (T T T)) ((NIL NIL NIL) (NIL T NIL) (NIL NIL T) (NIL T T))) ((((NIL NIL NIL) (NIL NIL T) (NIL T T) (T T T)) ((NIL NIL NIL) (NIL T NIL) (NIL NIL T) (NIL T T))) ((((NIL NIL NIL) (NIL NIL T) (NIL T T) (NIL T T)) ((NIL NIL NIL) (NIL T NIL) (NIL NIL T) (NIL T T))) ((((NIL NIL NIL) (NIL NIL T) (NIL T T) (NIL NIL T)) ((NIL NIL NIL) (NIL T NIL) (NIL NIL T) (NIL T T))) NIL 0 NIL) 1 NIL) 2 NIL) 3 NIL) 4 NIL) 5 NIL) 0 58 4 5 5/58 4031/2048)
+___________________________________________________
+Resultado:
+o   o   o   o
+                
+o   o   o---o
+    |       |
+o   o---o---o
+        |   |
+o   o   o---o
+___________________________________________________
+o   o   o   o
+                
+o   o   o---o
+    |       |
+o   o---o---o
+        |   |
+o   o---o---o
+___________________________________________________
+o   o   o   o
+                
+o   o   o---o
+    |       |
+o   o---o---o
+        |   |
+o---o---o---o
+___________________________________________________
+o   o   o   o
+                
+o   o   o---o
+    |       |
+o---o---o---o
+        |   |
+o---o---o---o
+___________________________________________________
+o   o   o   o
+                
+o   o---o---o
+    |       |
+o---o---o---o
+        |   |
+o---o---o---o
+___________________________________________________
+o   o   o   o
+                
+o   o---o---o
+    |   |   |
+o---o---o---o
+        |   |
+o---o---o---o
+___________________________________________________
+Tempo de resolução: 0
+Número de nós gerado: 70
+Número de nós expandidos: 5
+Profundidade: 5
+Penetrancia: 0.0690
+Fator de ramificação: 2.0593
+___________________________________________________

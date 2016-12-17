@@ -1,2 +1,139 @@
-(teste-dfs 4 4 10 1000 (tabuleiro-c))
-(((((T T T T) (T T T T) (T T T T) (T T T T) (T T T T)) ((NIL NIL T T) (NIL NIL T T) (NIL NIL T T) (T T T T) (T T T T))) ((((T T T T) (T T T T) (T T T T) (T T T T) (T T T T)) ((NIL NIL T T) (NIL NIL T T) (NIL NIL T T) (T NIL T T) (T T T T))) ((((T T T T) (T T T T) (T T T T) (T T T T) (T T T T)) ((NIL NIL T T) (NIL NIL T T) (NIL NIL T T) (T NIL T T) (NIL T T T))) ((((NIL T T T) (T T T T) (T T T T) (T T T T) (T T T T)) ((NIL NIL T T) (NIL NIL T T) (NIL NIL T T) (T NIL T T) (NIL T T T))) ((((NIL NIL T T) (T T T T) (T T T T) (T T T T) (T T T T)) ((NIL NIL T T) (NIL NIL T T) (NIL NIL T T) (T NIL T T) (NIL T T T))) ((((NIL NIL T NIL) (T T T T) (T T T T) (T T T T) (T T T T)) ((NIL NIL T T) (NIL NIL T T) (NIL NIL T T) (T NIL T T) (NIL T T T))) ((((NIL NIL T NIL) (T NIL T T) (T T T T) (T T T T) (T T T T)) ((NIL NIL T T) (NIL NIL T T) (NIL NIL T T) (T NIL T T) (NIL T T T))) ((((NIL NIL T NIL) (T NIL T T) (NIL T T T) (T T T T) (T T T T)) ((NIL NIL T T) (NIL NIL T T) (NIL NIL T T) (T NIL T T) (NIL T T T))) ((((NIL NIL T NIL) (T NIL T T) (NIL NIL T T) (T T T T) (T T T T)) ((NIL NIL T T) (NIL NIL T T) (NIL NIL T T) (T NIL T T) (NIL T T T))) ((((NIL NIL T NIL) (T NIL T T) (NIL NIL T T) (NIL T T T) (T T T T)) ((NIL NIL T T) (NIL NIL T T) (NIL NIL T T) (T NIL T T) (NIL T T T))) ((((NIL NIL T NIL) (T NIL T T) (NIL NIL T T) (NIL NIL T T) (T T T T)) ((NIL NIL T T) (NIL NIL T T) (NIL NIL T T) (T NIL T T) (NIL T T T))) ((((NIL NIL T NIL) (T NIL T T) (NIL NIL T T) (NIL NIL T T) (NIL T T T)) ((NIL NIL T T) (NIL NIL T T) (NIL NIL T T) (T NIL T T) (NIL T T T))) ((((NIL NIL T NIL) (T NIL T T) (NIL NIL T T) (NIL NIL T T) (NIL NIL T T)) ((NIL NIL T T) (NIL NIL T T) (NIL NIL T T) (T NIL T T) (NIL T T T))) NIL 0 NIL) 1 NIL) 2 NIL) 3 NIL) 4 NIL) 5 NIL) 6 NIL) 7 NIL) 8 NIL) 9 NIL) 10 NIL) 11 NIL) 12 NIL) 0 143 11 12 12/143 355355/262144)
+___________________________________________________
+Resultado:
+o   o   o---o   o
+            |       
+o---o   o---o---o
+                |
+o   o   o---o---o
+|   |   |   |   |
+o   o   o---o---o
+|   |   |   |   |
+o   o   o---o---o
+___________________________________________________
+o   o   o---o   o
+            |       
+o---o   o---o---o
+                |
+o   o   o---o---o
+|   |   |   |   |
+o   o   o---o---o
+|   |   |   |   |
+o   o---o---o---o
+___________________________________________________
+o   o   o---o   o
+            |       
+o---o   o---o---o
+                |
+o   o   o---o---o
+|   |   |   |   |
+o   o   o---o---o
+|   |   |   |   |
+o---o---o---o---o
+___________________________________________________
+o   o   o---o   o
+            |       
+o---o   o---o---o
+                |
+o   o   o---o---o
+|   |   |   |   |
+o   o---o---o---o
+|   |   |   |   |
+o---o---o---o---o
+___________________________________________________
+o   o   o---o   o
+            |       
+o---o   o---o---o
+                |
+o   o   o---o---o
+|   |   |   |   |
+o---o---o---o---o
+|   |   |   |   |
+o---o---o---o---o
+___________________________________________________
+o   o   o---o   o
+            |       
+o---o   o---o---o
+                |
+o   o---o---o---o
+|   |   |   |   |
+o---o---o---o---o
+|   |   |   |   |
+o---o---o---o---o
+___________________________________________________
+o   o   o---o   o
+            |       
+o---o   o---o---o
+                |
+o---o---o---o---o
+|   |   |   |   |
+o---o---o---o---o
+|   |   |   |   |
+o---o---o---o---o
+___________________________________________________
+o   o   o---o   o
+            |       
+o---o---o---o---o
+                |
+o---o---o---o---o
+|   |   |   |   |
+o---o---o---o---o
+|   |   |   |   |
+o---o---o---o---o
+___________________________________________________
+o   o   o---o---o
+            |       
+o---o---o---o---o
+                |
+o---o---o---o---o
+|   |   |   |   |
+o---o---o---o---o
+|   |   |   |   |
+o---o---o---o---o
+___________________________________________________
+o   o---o---o---o
+            |       
+o---o---o---o---o
+                |
+o---o---o---o---o
+|   |   |   |   |
+o---o---o---o---o
+|   |   |   |   |
+o---o---o---o---o
+___________________________________________________
+o---o---o---o---o
+            |       
+o---o---o---o---o
+                |
+o---o---o---o---o
+|   |   |   |   |
+o---o---o---o---o
+|   |   |   |   |
+o---o---o---o---o
+___________________________________________________
+o---o---o---o---o
+            |   |
+o---o---o---o---o
+                |
+o---o---o---o---o
+|   |   |   |   |
+o---o---o---o---o
+|   |   |   |   |
+o---o---o---o---o
+___________________________________________________
+o---o---o---o---o
+            |   |
+o---o---o---o---o
+            |   |
+o---o---o---o---o
+|   |   |   |   |
+o---o---o---o---o
+|   |   |   |   |
+o---o---o---o---o
+___________________________________________________
+Tempo de resolução: 0
+Número de nós gerado: 150
+Número de nós expandidos: 12
+Profundidade: 12
+Penetrancia: 0.0769
+Fator de ramificação: 1.3624
+___________________________________________________
