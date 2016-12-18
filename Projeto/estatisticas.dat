@@ -9,8 +9,13 @@ o   o   o---o
 ___________________________________________________
 o   o   o   o
                 
+<<<<<<< HEAD
 o   o---o---o
     |       |
+=======
+o   o   o---o
+    |   |   |
+>>>>>>> 99dbbe930300a25b968aafd672c2128adfbd134a
 o   o---o---o
         |   |
 o   o   o---o
@@ -24,9 +29,17 @@ o   o---o---o
 o   o   o---o
 ___________________________________________________
 Tempo de resolução: 0
+<<<<<<< HEAD
 Número de nós gerado: 914
 Número de nós expandidos: 64
 Profundidade: 2
 Penetrancia: 0.0022
 Fator de ramificação: 29.7340
+=======
+Número de nós gerado: 31
+Número de nós expandidos: 2
+Profundidade: 2
+Penetrancia: 0.0645
+Fator de ramificação: 5.0859
+>>>>>>> 99dbbe930300a25b968aafd672c2128adfbd134a
 ___________________________________________________
