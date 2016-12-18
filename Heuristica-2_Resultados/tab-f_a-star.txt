@@ -1631,10 +1631,10 @@ o---o---o---o---o---o---o   o
 |   |   |   |   |   |   |       
 o---o---o---o---o---o---o   o
 ___________________________________________________
-Tempo de resolução: 1
-Número de nós gerado: 5959
-Número de nós expandidos: 101
+Tempo de resoluÃ§Ã£o: 0
+NÃºmero de nÃ³s gerado: 5959
+NÃºmero de nÃ³s expandidos: 101
 Profundidade: 101
 Penetrancia: 0.0169
-Fator de ramificação: 1.0592
+Fator de ramificaÃ§Ã£o: 1.0592
 ___________________________________________________

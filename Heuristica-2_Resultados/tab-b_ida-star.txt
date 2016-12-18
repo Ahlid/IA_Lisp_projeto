@@ -1,0 +1,28 @@
+Resultado:
+o   o   o---o   o
+        |   |       
+o---o---o---o---o
+        |       |
+o   o   o---o---o
+|   |   |   |   |
+o   o   o---o---o
+|   |   |   |   |
+o   o   o---o---o
+___________________________________________________
+o   o   o---o   o
+        |   |       
+o---o---o---o---o
+        |   |   |
+o   o   o---o---o
+|   |   |   |   |
+o   o   o---o---o
+|   |   |   |   |
+o   o   o---o---o
+___________________________________________________
+Tempo de resolução: 0
+Número de nós gerado: 15
+Número de nós expandidos: 1
+Profundidade: 1
+Penetrancia: 0.0667
+Fator de ramificação: 14.5312
+___________________________________________________

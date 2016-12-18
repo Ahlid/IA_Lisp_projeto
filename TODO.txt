@@ -1,13 +1,12 @@
 RICARDO:
-Estudo comparativo entre os 3 métodos (bfs dfs a*)  (indicar os space complexity)
-estudar o IDA* (Iterative Deepening) (indicar o space complexity)
+manual tecnico resultados tabuleiro
 
 TIAGO: 
-Fazer a leitura de ficheiros
-Comentar código da escrita de ficheiros
-Manual técnico
+
+Comentar código projeto.lisp
+Manual técnico (funções projeto.lisp)
 Manual utilizador
-Comentar código heuristica
+
 
 
 

@@ -14,12 +14,12 @@
 (defun diretoria-atual () 
 "Função que define um caminho para leitura dos ficheiros."
 	(let (
-			(path-ricardo "C:/Users/Ricardo Morais/Documents/IA_Lisp_projeto/Projeto/")
-			;(path-tiago  "C:\\Users\\pcts\\Desktop\\ProjIA\\Projeto\\"))
+			;(path-ricardo "C:/Users/Ricardo Morais/Documents/IA_Lisp_projeto/Projeto/")
+			(path-tiago  "C:\\Users\\pcts\\Desktop\\ProjIA\\Projeto\\"))
 			;(path-professor ""))
 			
-		;path-tiago
-		path-ricardo
+		path-tiago
+		;path-ricardo
 		;path-professor
 	)
 )

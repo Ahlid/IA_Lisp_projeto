@@ -396,80 +396,8 @@
 )
 
 
-(defun h-numero-partilhas-vertical (linha n1 n2)
- "função que recebe uma linha de caixas e calcula o numero de partilhas de arestar para as caixas onde falta n1's e n2's arestar por completar"
-
-	(cond
-		((null linha) 0) ;; se a linha não existe
-		((null (second linha)) 0) ;; se o segundo elemento da linha não existe
-		(	(and 	(= 0 (third (first linha)))  ;;se a aresta da direita do primeiro elemento  esta por completar
-					(= (third (first linha)) ;; se a aresta da direita do primeiro elemento esta por completar
-					(fourth (second linha)));; se a aresta da esquerda do segundo elemento esta por completar
-			)
-			(cond
-				( (and 	(= 1 (verificar-n-arcos-faltam (first linha) n1))  ;; verifica se a primeira caixa falta n1 arestar por completar
-						(= 1 (verificar-n-arcos-faltam (second linha) n2))) ;; verifica se a segunda caixa falta n2 arestar por completar
-						(+ 1 (h-numero-partilhas-vertical (cdr linha) n1 n2))  ;; soma 1 e faz a chamada recursiva retirando a primeira caixa
-				)
-				(T (h-numero-partilhas-vertical (cdr linha) n1 n2)) ;; faz a chamada recursiva retirando a primeira caixa
-			)
-		)
-		(T (h-numero-partilhas-vertical (cdr linha) n1 n2)) ;;faz a chamada recursiva retirando a primeira caixa
-	)
-)
 
 
-(defun aux-partilhas-vertical(caixas n1 n2)
- "Função auxiliar para a soma todas as partilhas de cada caixa verticalmente"
-	(cond
-		((null caixas) 0);; se não existir retorna 0
-		(T 	(+ ;;soma
-				(h-numero-partilhas-vertical (first caixas) n1 n2);;numero de partilhas da primeira linha
-				(aux-partilhas-vertical (rest caixas) n1 n2) ;; chamada recursiva do resto das linhas das caixas
-			)
-		)
-	)
-)
-
-(defun aux-partilhas-horizontal(caixas n1 n2)
- "Função auxiliar para a soma todas as partilhas de cada caixa horizontalmente"
-	(cond
-		((null caixas) 0) ;;se não existe caixas
-		((null (second caixas)) 0) ;;se não existe a segunda linha
-		(T 	(+
-				(h-numero-partilhas-horizonta-duas-linhas-quadrados (first caixas) (second caixas) n1 n2 ) ;;calcula o nuemro de partilhas horizontais entre a primeira linha e a sgunda para n1 e n2
-				(aux-partilhas-horizontal (rest caixas) n1 n2) ;;chamada recursiva descastando a primeira linha
-			)
-		)
-	)
-)
-
-;; a função que faz mesmo o calculo total
-(defun calcurar-n-partilhas-n1-n2 (caixas n1 n2)
-
- "função que calcula o numero de partilhas n1-n2 para as caixas recebidas"
-
-	(cond
-		((= n1 n2);; se n1 e n2 são iguas basta chamar uma vez por n2=n1
-			(+;;soma
-				(aux-partilhas-horizontal caixas n1 n2);; paritlhas horizontais
-				(aux-partilhas-vertical caixas n1 n2);; partilhas verticais
-			)
-		)
-		(T ;; caso contrar é preciso somar as partlhas n1-n2 e n2-n1
-			(+
-				(+
-					(aux-partilhas-horizontal caixas n1 n2);;partilhas horizontais n1-n2
-					(aux-partilhas-vertical caixas n1 n2);partilhas verticais n1-n2
-				)
-				(+
-					(aux-partilhas-horizontal caixas n2 n1);;partilhas horizontais n2-n1
-					(aux-partilhas-vertical caixas n2 n1);;partilhas verticais n2-n1
-				)
-			)
-		)
-	)
-)
 
 (defun convert-top-bottom(linha)
 	"Função que junta as arestar de baixo e cima de cada caixa conforme a linha"
@@ -511,16 +439,7 @@
 								n-caixas-faltar-2-arcos ;;caixas com 2 arco por acabar
 								n-caixas-faltar-3-arcos;;caixas com 3 arco por acabar
 								n-caixas-faltar-4-arcos;;caixas com 4 arco por acabar
-								n-partilhas-4-4 ;;numero de partilhas 4-4
-								n-partilhas-4-3;;numero de partilhas 4-3
-								n-partilhas-4-2;;numero de partilhas 4-2
-								n-partilhas-4-1;;numero de partilhas 4-1
-								n-partilhas-3-3;;numero de partilhas 3-3
-								n-partilhas-3-2;;numero de partilhas 3-2
-								n-partilhas-3-1;;numero de partilhas 3-1
-								n-partilhas-2-2;;numero de partilhas 2-2
-								n-partilhas-2-1;;numero de partilhas 2-1
-								n-partilhas-1-1;;numero de partilhas 1-1
+							
 							)
 
 	"função que calcula a segunda heuristica"
@@ -528,81 +447,19 @@
 		(
 			(n-caixas-faltam (- n-caixas-objetivo n-caixas-fechadas)) ;;constante para calcular numero de caixas em falta
 		)
-        ;;(+
-		;;	(heuristica2-aux-1-arco n-caixas-faltam n-caixas-faltar-1-arcos n-partilhas-1-1) ;; calcula arcos a usar para caixas onde falta 1 arco
-		;;	(heuristica2-aux-2-arco (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos)) n-caixas-faltar-2-arcos n-partilhas-2-1 n-partilhas-2-2) ;; calcula arcos a usar para caixas onde falta 2 arcos
-		;;	(heuristica2-aux-3-arco (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos n-caixas-faltar-2-arcos )) n-caixas-faltar-3-arcos n-partilhas-3-1 n-partilhas-3-2 n-partilhas-3-3) ;; calcula arcos a usar para caixas onde falta 3 arcos
-		;;;;	(heuristica2-aux-4-arco (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos n-caixas-faltar-2-arcos n-caixas-faltar-3-arcos )) n-caixas-faltar-4-arcos n-partilhas-4-1 n-partilhas-4-2 n-partilhas-4-3 n-partilhas-4-4) ;; calcula arcos a usar para caixas onde falta 4 arcos
-		;;)
+       
 		
 		
-		(+
+		(1- (+
 		(min n-caixas-faltam n-caixas-faltar-1-arcos)
-		(min (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos)) n-caixas-faltar-2-arcos)
-		(min (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos n-caixas-faltar-2-arcos )) n-caixas-faltar-3-arcos)
-		(min (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos n-caixas-faltar-2-arcos n-caixas-faltar-3-arcos )) n-caixas-faltar-4-arcos)
-		)
+		(*(min (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos)) n-caixas-faltar-2-arcos) 2)
+		(* (min (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos n-caixas-faltar-2-arcos )) n-caixas-faltar-3-arcos) 3)
+		(* (min (max 0 (- n-caixas-faltam n-caixas-faltar-1-arcos n-caixas-faltar-2-arcos n-caixas-faltar-3-arcos )) n-caixas-faltar-4-arcos) 4)
+		))
 	)
 )
 
-(defun heuristica2-aux-1-arco (n-caixas-faltam n-caixas-faltar-1-arco n-partilhas-1-1)
-	"função que calcula o numero de arestas a usar para caixas de 1 arco"
-	(let*
-		(
-			(n-caixas-a-usar (min n-caixas-faltam n-caixas-faltar-1-arco)) ;;numero de caixas a usar
-			(n-partilhas-a-usar (min n-partilhas-1-1 n-caixas-a-usar)) ;;numero de partilhas a aproveitar
-		)
-		(- n-caixas-a-usar (floor (/ n-partilhas-a-usar 2))) ;;calculo
-    )
- )
 
-(defun heuristica2-aux-2-arco (n-caixas-faltam n-caixas-faltar-2-arco n-partilhas-2-1 n-partilhas-2-2)
-	"função que calcula o numero de arestas a usar para caixas de 1 arco"
-	(cond
-	   ((= 0 n-caixas-faltam) 0)
-	   (t
-			(let*
-				(
-					(n-caixas-a-usar (min n-caixas-faltam n-caixas-faltar-2-arco))  ;;numero de caixas a usar
-					(n-partilhas-a-usar-2-2 (min n-partilhas-2-2 (- n-caixas-a-usar 1)))  ;;numero de partilhas a aproveitar
-				)
-				(- (* 2 n-caixas-a-usar) n-partilhas-2-1  n-partilhas-a-usar-2-2 ) ;;calculo
-			 )
-
-		)
-	)
-)
-
-(defun heuristica2-aux-3-arco (n-caixas-faltam n-caixas-faltar-3-arco n-partilhas-3-1 n-partilhas-3-2 n-partilhas-3-3)
-	"função que calcula o numero de arestas a usar para caixas de 1 arco"
-	(cond
-		( (= 0 n-caixas-faltam) 0 )
-		(t
-			(let*
-				(
-					(n-caixas-a-usar (min n-caixas-faltam n-caixas-faltar-3-arco))  ;;numero de caixas a usar
-					(n-partilhas-a-usar-3-3 (min n-partilhas-3-3 (- n-caixas-a-usar 1))) ;;numero de partilhas a aproveitar
-				)
-				(- (* 3 n-caixas-a-usar) n-partilhas-3-1  n-partilhas-3-2 n-partilhas-a-usar-3-3 ) ;;calculo
-			)
-		)
-	)
-)
-
-(defun heuristica2-aux-4-arco (n-caixas-faltam n-caixas-faltar-4-arco n-partilhas-4-1 n-partilhas-4-2 n-partilhas-4-3 n-partilhas-4-4)
-	"função que calcula o numero de arestas a usar para caixas de 1 arco"
-	(cond
-		( (= 0 n-caixas-faltam) 0 )
-		(t 	(let*
-				(
-					(n-caixas-a-usar (min n-caixas-faltam n-caixas-faltar-4-arco))  ;;numero de caixas a usar
-					(n-partilhas-a-usar-4-4 (min n-partilhas-4-4 (- n-caixas-a-usar 1)))  ;;numero de partilhas a aproveitar
-				)
-				(- (* 4 n-caixas-a-usar) n-partilhas-4-1  n-partilhas-4-2 n-partilhas-4-3 n-partilhas-a-usar-4-4) ;;calculo
-			)
-		)
-	)
-)
 
 (defun heuristica-2 (o)
 	"função que devolve o calculo da heuristica para um no"
@@ -618,16 +475,6 @@
 				(n-caixas-a-faltar-x-arcos tabuleiro-convertido 2);;numero de caixas onde falta 2 arcos
 				(n-caixas-a-faltar-x-arcos tabuleiro-convertido 3);;numero de caixas onde falta 3 arcos
 				(n-caixas-a-faltar-x-arcos tabuleiro-convertido 4);;numero de caixas onde falta 4 arcos
-				(calcurar-n-partilhas-n1-n2 tabuleiro-convertido 4 4) ;;numero de partilhas 4-4
-				(calcurar-n-partilhas-n1-n2 tabuleiro-convertido 4 3);;numero de partilhas 4-3
-				(calcurar-n-partilhas-n1-n2 tabuleiro-convertido 4 2);;numero de partilhas 4-2
-				(calcurar-n-partilhas-n1-n2 tabuleiro-convertido 4 1);;numero de partilhas 4-1
-				(calcurar-n-partilhas-n1-n2 tabuleiro-convertido 3 3);;numero de partilhas 3-3
-				(calcurar-n-partilhas-n1-n2 tabuleiro-convertido 3 2);;numero de partilhas 3-2
-				(calcurar-n-partilhas-n1-n2 tabuleiro-convertido 3 1);;numero de partilhas 3-1
-				(calcurar-n-partilhas-n1-n2 tabuleiro-convertido 2 2);;numero de partilhas 2-2
-				(calcurar-n-partilhas-n1-n2 tabuleiro-convertido 2 1);;numero de partilhas 2-1
-				(calcurar-n-partilhas-n1-n2 tabuleiro-convertido 1 1);;numero de partilhas 1-1
 			)
 		)
     )
