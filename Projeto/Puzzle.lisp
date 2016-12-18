@@ -373,8 +373,6 @@
 
 
 ;;parte das partilhas
-
-;; TODO: não há necessidade de 2 cond's
 (defun h-numero-partilhas-horizonta-duas-linhas-quadrados(linha1 linha2 n1 n2)
  "função que calcula o numero de partilhas na horizontal recebendo duas linhas e o numero de arcos que deve faltar em cada linha"
 	(apply '+
