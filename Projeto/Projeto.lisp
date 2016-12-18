@@ -123,10 +123,8 @@
 )
 
 (defun imprime-tabuleiro ()
-
 	"Imprime um tabuleiro escolhido pelo utilizador"
 	(desenhar-tabuleiro (escolher-tabuleiro) *standard-output*)
-
 )
 
 (defun criar-linha-horizontal (lista)
