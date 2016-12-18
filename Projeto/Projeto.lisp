@@ -12,8 +12,18 @@
 )
 
 (defun diretoria-atual () 
-"Função que define um caminho para leitura dos ficheiros."
+	"Função que define um caminho para leitura dos ficheiros."
 	(let (
+<<<<<<< HEAD
+			(path-ricardo "C:/Users/Ricardo Morais/Documents/IA_Lisp_projeto/Projeto/")
+			;(path-tiago  "C:\\Users\\pcts\\Desktop\\ProjIA\\Projeto\\"))
+			;(path-professor "")
+		)
+			
+		;path-tiago
+		path-ricardo
+		;path-professor
+=======
 			;(path-ricardo "C:/Users/Ricardo Morais/Documents/IA_Lisp_projeto/Projeto/") ;path do ricardo
 			;(path-tiago  "C:\\Users\\pcts\\Desktop\\ProjIA\\Projeto\\")) ;path do tiago
 			(path-professor (pedir-directoria))) ;path a pedir ao professor na altura da defesa
@@ -21,6 +31,7 @@
 		;path-tiago
 		;path-ricardo
 		path-professor
+>>>>>>> 99dbbe930300a25b968aafd672c2128adfbd134a
 	)
 )
 (let ((diretoria nil))
@@ -107,9 +118,18 @@
    (format t "
    -------------------------- Regras do Puzzle dos Pontos e das Caixas -------------------
   |                                                                                      |
+<<<<<<< HEAD
+  |     O objetivo do puzzle é fechar um determinado número de caixas a partir de        |
+  |     uma configuração inicial do tabuleiro. Para atingir este objetivo, é possível    |
+  |     desenhar um arco entre dois pontos adjacentes, na horizontal ou na vertical.     |
+  |     Quando o número de caixas por fechar é atingido, o puzzle está resolvido.        |
+  |     A resolução do puzzle consiste portanto em executar a sucessão de traços que     |
+  |     permite chegar a um estado onde o número de caixas por fechar é alcançado.       |                                                                             |
+=======
   |                                                                                      |
   |   O objetivo do puzzle consiste em fechar um determinado número de caixas            |
   |   metendo uma aresta de cada vez até possuir o numero  de caixas objetivo            |
+>>>>>>> 99dbbe930300a25b968aafd672c2128adfbd134a
   |                                                                                      |
   ----------------------------------------------------------------------------------------
   "
@@ -118,10 +138,15 @@
 )
 
 (defun imprime-tabuleiro ()
+<<<<<<< HEAD
+	"Imprime um tabuleiro escolhido pelo utilizador"
+	(desenhar-tabuleiro (escolher-tabuleiro) *standard-output*)
+=======
 	"função que imprime um tabuleiro"
 	
 	(desenhar-tabuleiro (escolher-tabuleiro) *standard-output*)
 	
+>>>>>>> 99dbbe930300a25b968aafd672c2128adfbd134a
 )
 
 (defun criar-linha-horizontal (lista)
@@ -211,7 +236,7 @@
 "função que pede ao jogador o tabuleiro a usar"
 	(progn
 		(format t "~%>")
-		(format t "~%> Escolha tabuleiro inicial do problema ")
+		(format t "~%> Escolha tabuleiro ")
 		(format t "~%> 	a) Tabuleiro A ")
 		(format t "~%> 	b) Tabuleiro B ")
 		(format t "~%> 	c) Tabuleiro C ")
@@ -219,7 +244,7 @@
 		(format t "~%> 	e) Tabuleiro E ")
 		(format t "~%> 	f) Tabuleiro F ")
 		(format t "~%> 	g) Tabuleiro G (por inserir)")
-		(format t "~%> Estado inicial: ")
+		(format t "~%> Tabuleiro: ")
 		(format t "~%> ")
 
 		(let* 	
@@ -234,8 +259,12 @@
 											(format t "~%  ")
 											(terpri)
 											(ler-tabuleiro)))
+<<<<<<< HEAD
+					((equal opcao 'a) (nth 0 (read ficheiro)))
+=======
 					((equal opcao 'a) (progn (format t "~%> Tabuleiro a") (format t "~%  ")
 											(terpri) (nth 0 (read ficheiro))))
+>>>>>>> 99dbbe930300a25b968aafd672c2128adfbd134a
 					((equal opcao 'b) (nth 1 (read ficheiro)))
 					((equal opcao 'c) (nth 2 (read ficheiro)))
 					((equal opcao 'd) (nth 3 (read ficheiro)))
@@ -260,21 +289,37 @@
 
 
 (defun resultado-simulacao(resultado)
+<<<<<<< HEAD
+	""
+	(progn
+		(imprimir-resultado *standard-output* resultado)
+		(with-open-file (ficheiro (concatenate 'string (diretoria-atual)"estatisticas.dat")
+								:direction :output
+								:if-exists :append
+								:if-does-not-exist :create)
+=======
 	" função que mostra e grava o resultado da imulação"
 	(with-open-file (ficheiro (concatenate 'string (diretoria-atual)"estatisticas.dat")
 							:direction :output
 							:if-exists :append
 							:if-does-not-exist :create)
+>>>>>>> 99dbbe930300a25b968aafd672c2128adfbd134a
 
-		;; Esta parte será escrita no ficheiro do tipo .DAT
-		(imprimir-resultado ficheiro resultado)
-		;(format ficheiro "~%> resultado ~a" resultado)
+			;; Esta parte será escrita no ficheiro do tipo .DAT
+			(imprimir-resultado ficheiro resultado)
+			;(format ficheiro "~%> resultado ~a" resultado)
 
+<<<<<<< HEAD
+			;(format ficheiro "Profundidade da Solução: ~s ~%" (second (car abertos)))
+			(format ficheiro "___________________________________________________~%")
+=======
 		;(format ficheiro "Profundidade da Solução: ~s ~%" (second (car abertos)))
 		(format ficheiro "___________________________________________________~%")
 		
 		(imprimir-resultado *standard-output* resultado)
+>>>>>>> 99dbbe930300a25b968aafd672c2128adfbd134a
 
+		)
 	)
 	
 )
@@ -375,17 +420,21 @@
 ) 
 
 
+<<<<<<< HEAD
+(defun teste-pai(no stream) 
+	""
+=======
 
 
 (defun imprime-pai(no stream) 
 	"função que imprime recursivamente todas as etapas do tabuleiro desde a raiz até ao estado atual"
+>>>>>>> 99dbbe930300a25b968aafd672c2128adfbd134a
 	(cond
 		((null no) nil)
 		(T	
 			(progn
 			(imprime-pai (no-pai no) stream)
 			(desenhar-tabuleiro (no-estado no) stream)
-			;(format stream "~%> ")
 			(terpri)
 			(format stream "___________________________________________________~%")
 			)
