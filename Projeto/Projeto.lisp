@@ -17,7 +17,7 @@
 
 			;(path-ricardo "C:/Users/Ricardo Morais/Documents/IA_Lisp_projeto/Projeto/")
 			;(path-tiago  "C:\\Users\\pcts\\Desktop\\ProjIA\\Projeto\\"))
-			(path-professor "")
+			(path-professor (pedir-directoria))
 		)
 			
 		;path-tiago
