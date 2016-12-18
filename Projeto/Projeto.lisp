@@ -3,10 +3,10 @@
 (defun iniciar ()	
 "Função que inicializa o programa, chamando a função que apresenta o menu inicial."
 	(progn
-		(compile-file (concatenate 'string (diretoria-atual)"procura.lisp"))  
-		(compile-file (concatenate 'string (diretoria-atual)"puzzle.lisp"))
-		(load (concatenate 'string (diretoria-atual)"procura.ofasl")) 
-		(load (concatenate 'string (diretoria-atual)"puzzle.ofasl"))
+		(compile-file (concatenate 'string (diretoria-atual)"procura.lisp"))  ;compila o ficheiro procura.lisp
+		(compile-file (concatenate 'string (diretoria-atual)"puzzle.lisp"))	;compila o ficheiro puzzle.lisp
+		(load (concatenate 'string (diretoria-atual)"procura.ofasl"))  ;faz load do ficheiro compilado da procura.lisp
+		(load (concatenate 'string (diretoria-atual)"puzzle.ofasl")) ;faz load do ficheiro compilado do puzzle.lisp
 		(menu-principal)
 	)
 )
@@ -14,24 +14,27 @@
 (defun diretoria-atual () 
 "Função que define um caminho para leitura dos ficheiros."
 	(let (
-			;(path-ricardo "C:/Users/Ricardo Morais/Documents/IA_Lisp_projeto/Projeto/")
-			(path-tiago  "C:\\Users\\pcts\\Desktop\\ProjIA\\Projeto\\"))
-			;(path-professor ""))
+			;(path-ricardo "C:/Users/Ricardo Morais/Documents/IA_Lisp_projeto/Projeto/") ;path do ricardo
+			;(path-tiago  "C:\\Users\\pcts\\Desktop\\ProjIA\\Projeto\\")) ;path do tiago
+			(path-professor (pedir-directoria))) ;path a pedir ao professor na altura da defesa
 			
-		path-tiago
+		;path-tiago
 		;path-ricardo
-		;path-professor
+		path-professor
 	)
 )
-
+(let ((diretoria nil))
 (defun pedir-directoria ()
 	"Pede a directoria dos ficheiros ao utilizador"
-	(progn
+	(cond
+	((null diretoria) (progn
 		(format t "Insira o diretório: ")
-		(read)
+		(setf diretoria (read))
+	))
+	(t diretoria)
 	)
 )
-
+)
 
 
 ;;; MENU PRINCIPAL
@@ -53,10 +56,10 @@
     (cond ((not (let ((escolha (read)))
                (cond 
                 ((and (< escolha 5) (> escolha 0)) (case escolha
-                                                    (1 (progn (menu-jogar) t))
-                                                    (2 (progn (regras) t))
-                                                    (3 (progn (imprime-tabuleiro) t))
-                                                    (4 (progn (format t "PROGRAMA TERMINADO") nil)))
+                                                    (1 (progn (menu-jogar) t)) ;vai para o menu jogar
+                                                    (2 (progn (regras) t)) ;ve as regras
+                                                    (3 (progn (imprime-tabuleiro) t)) ;imprime um tabuleiro
+                                                    (4 (progn (format t "PROGRAMA TERMINADO") nil))) ;acaba o programa
                 )
                 ( T (progn  (format t "~%ESCOLHA INVALIDA~%~%Escolha: ")
                             (setf escolha (read))
@@ -67,29 +70,29 @@
   )
 
 (defun menu-jogar()
-	
+	"função responsavel por fazer uma simulação onde se escolhe o tabuleiro, objetivo, algoritmo e se necessario profundidade e heuristica"
 	(let*
 		(
-			(tabuleiro (escolher-tabuleiro))
-			(objetivo (obter-objectivo tabuleiro))
-			(algoritmo (escolher-algoritmo))
-			(profundidade (cond ((eql algoritmo 'dfs) (obter-profundidade)) (T 9999)))
-			(heuristica (cond ((not (or (eql algoritmo 'dfs) (eql algoritmo 'bfs))) (escolher-heuristica)) (T nil)))
+			(tabuleiro (escolher-tabuleiro)) ;obtem o tabuleiro
+			(objetivo (obter-objectivo tabuleiro)) ;obtem o objetivos
+			(algoritmo (escolher-algoritmo)) ;obtem o algoritmo
+			(profundidade (cond ((eql algoritmo 'dfs) (obter-profundidade)) (T 9999))) ;se o algoritmo for dfs pede profundidade
+			(heuristica (cond ((not (or (eql algoritmo 'dfs) (eql algoritmo 'bfs))) (escolher-heuristica)) (T nil))) ; se necessitar heuristica pede
 			
 		)
 		(cond
-			((eql algoritmo 'dfs) (resultado-simulacao (teste-dfs objetivo profundidade tabuleiro)))
-			((eql algoritmo 'bfs) (resultado-simulacao (teste-bfs objetivo tabuleiro)))
-			((eql algoritmo 'a-asterisco)
+			((eql algoritmo 'dfs) (resultado-simulacao (teste-dfs objetivo profundidade tabuleiro))) ;se dfs
+			((eql algoritmo 'bfs) (resultado-simulacao (teste-bfs objetivo tabuleiro))) ;se bfs
+			((eql algoritmo 'a-asterisco) ; se a*
 				(cond
-					((eql heuristica 'heuristica)(resultado-simulacao (teste-a-asterisco objetivo tabuleiro)))
-					(t (resultado-simulacao (teste-a-asterisco-h2 objetivo tabuleiro)))
+					((eql heuristica 'heuristica)(resultado-simulacao (teste-a-asterisco objetivo tabuleiro))); se heuristica 1
+					(t (resultado-simulacao (teste-a-asterisco-h2 objetivo tabuleiro))) ; se heuristica 2
 				)
 			)
-			((eql algoritmo 'ida-asterisco)
+			((eql algoritmo 'ida-asterisco) ; se ida*
 				(cond
-					((eql heuristica 'heuristica)(resultado-simulacao (teste-ida-asterisco objetivo tabuleiro)))
-					(t (resultado-simulacao (teste-ida-asterisco-h2 objetivo tabuleiro)))
+					((eql heuristica 'heuristica)(resultado-simulacao (teste-ida-asterisco objetivo tabuleiro))) ; se heuristica 1
+					(t (resultado-simulacao (teste-ida-asterisco-h2 objetivo tabuleiro))) ; se heuristica 2
 				)
 			)
 			(T nil)
@@ -100,24 +103,24 @@
 
 ;;;Regras do puzzle
 (defun regras () 
-    (format t "
+"função que devolve as regras"
+   (format t "
    -------------------------- Regras do Puzzle dos Pontos e das Caixas -------------------
   |                                                                                      |
   |                                                                                      |
-  |                                                                                      |
-  |                                                                                      |
-  |                                                                                      |
-  |                                                                                      |
-  |                                                                                      |
+  |   O objetivo do puzzle consiste em fechar um determinado número de caixas            |
+  |   metendo uma aresta de cada vez até possuir o numero  de caixas objetivo            |
   |                                                                                      |
   ----------------------------------------------------------------------------------------
   "
   )
+  
 )
 
 (defun imprime-tabuleiro ()
+	"função que imprime um tabuleiro"
 	
-	
+	(desenhar-tabuleiro (escolher-tabuleiro) *standard-output*)
 	
 )
 
@@ -188,11 +191,12 @@
 
 
 (defun imprimir-resultado (stream resultado)
+"função que imprime o resultado de uma simulação"
 	(progn 
 		(write-line "Resultado:" stream)
 		
 		(write-line (format nil "Resolução:"  stream))
-		(teste-pai (first resultado) stream)
+		(imprime-pai (first resultado) stream)
 		(write-line (format nil "Tempo de resolução: ~a" (second resultado)) stream)
 		(write-line (format nil "Número de nós gerado: ~a" (third resultado)) stream)
 		(write-line (format nil "Número de nós expandidos: ~a" (fourth resultado)) stream)
@@ -204,7 +208,7 @@
 
 
 (defun escolher-tabuleiro() 
-
+"função que pede ao jogador o tabuleiro a usar"
 	(progn
 		(format t "~%>")
 		(format t "~%> Escolha tabuleiro inicial do problema ")
@@ -221,7 +225,7 @@
 		(let* 	
 			(
 				(opcao (read))
-				(opcao-valida (opcao-existe opcao '(a b c d e f)))
+				(opcao-valida (opcao-existe opcao '(a b c d e f g)))
 			)
 			(with-open-file (ficheiro (concatenate 'string (diretoria-atual)"problemas.dat") :direction :input :if-does-not-exist :error)
 				(cond
@@ -230,13 +234,14 @@
 											(format t "~%  ")
 											(terpri)
 											(ler-tabuleiro)))
-					((equal opcao 'a) (progn (format t "~%> Tabuleiro a") (nth 0 (read ficheiro))))
+					((equal opcao 'a) (progn (format t "~%> Tabuleiro a") (format t "~%  ")
+											(terpri) (nth 0 (read ficheiro))))
 					((equal opcao 'b) (nth 1 (read ficheiro)))
 					((equal opcao 'c) (nth 2 (read ficheiro)))
 					((equal opcao 'd) (nth 3 (read ficheiro)))
 					((equal opcao 'e) (nth 4 (read ficheiro)))
 					((equal opcao 'f) (nth 5 (read ficheiro)))
-					;((equal opcao 'g) (nth 6 (read ficheiro)))	; se for adicionado ao nosso ficheiro é o problema 6, se for adicionado num ficheiro novo é o problema 1
+					((equal opcao 'g) (nth 6 (read ficheiro)))	; se for adicionado ao nosso ficheiro é o problema 6, se for adicionado num ficheiro novo é o problema 1
 				)
 			)
 		)	
@@ -245,7 +250,7 @@
 
 
 (defun opcao-existe (elemento lista)
-	""
+	"função que verifica se a opção que o utilizador inserio está dentro das hipoteces"
 	(cond
 		((null lista) nil)
 		((eql elemento (car lista)) T)
@@ -255,7 +260,7 @@
 
 
 (defun resultado-simulacao(resultado)
-	""
+	" função que mostra e grava o resultado da imulação"
 	(with-open-file (ficheiro (concatenate 'string (diretoria-atual)"estatisticas.dat")
 							:direction :output
 							:if-exists :append
@@ -267,8 +272,11 @@
 
 		;(format ficheiro "Profundidade da Solução: ~s ~%" (second (car abertos)))
 		(format ficheiro "___________________________________________________~%")
+		
+		(imprimir-resultado *standard-output* resultado)
 
 	)
+	
 )
 
 
@@ -290,19 +298,21 @@
 
 
 (defun escolher-algoritmo()
-	""
+	"função que pede o algoritmo a usar ao utilizador"
 	(progn
 		(format t "~%> Qual o algoritmo que pretende usar?")
-		(format t "~%> 	bfs) Breadth-first Search")
-		(format t "~%> 	dfs) Depth-first Search")
-		(format t "~%> 	a-asterisco) A* Search")
-		(format t "~%> 	ida-asterisco) IDA* Search")
+		(format t "~%> 	a) Breadth-first Search")
+		(format t "~%> 	b) Depth-first Search")
+		(format t "~%> 	c) A* Search")
+		(format t "~%> 	d) IDA* Search")
 		(format t "~%>  ESCOLHA: ")
 
-		(let* ((resposta (read))
-				 (opcao-valida (opcao-existe resposta '(bfs dfs a-asterisco ida-asterisco))))
+		(let* ((opcao (read)))
 			(cond
-				(opcao-valida resposta)
+					((equal opcao 'a) 'bfs)
+					((equal opcao 'b) 'dfs)
+					((equal opcao 'c) 'a-asterisco)
+					((equal opcao 'd) 'ida-asterisco)
 				(T (progn
 						(format t "~%> Opcao Invalida!")
 						(format t "~%  ")
@@ -317,7 +327,7 @@
 
 
 (defun obter-profundidade()
-	""
+	"função que pede a profundidade ao utilizador"
 	(progn
 		(format t "~%> Qual a profundidade que pretende ?")
 		(format t "~%> ESCOLHA ")
@@ -367,13 +377,13 @@
 
 
 
-(defun teste-pai(no stream) 
-	""
+(defun imprime-pai(no stream) 
+	"função que imprime recursivamente todas as etapas do tabuleiro desde a raiz até ao estado atual"
 	(cond
 		((null no) nil)
 		(T	
 			(progn
-			(teste-pai (no-pai no) stream)
+			(imprime-pai (no-pai no) stream)
 			(desenhar-tabuleiro (no-estado no) stream)
 			;(format stream "~%> ")
 			(terpri)
