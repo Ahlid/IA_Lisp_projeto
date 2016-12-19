@@ -15,14 +15,14 @@
 	"Função que define um caminho para leitura dos ficheiros."
 	(let (
 
-			;(path-ricardo "C:/Users/Ricardo Morais/Documents/IA_Lisp_projeto/Projeto/")
+			(path-ricardo "C:/Users/Ricardo Morais/Documents/IA_Lisp_projeto/Projeto/")
 			;(path-tiago  "C:\\Users\\pcts\\Desktop\\ProjIA\\Projeto\\"))
-			(path-professor (pedir-directoria))
+			;(path-professor (pedir-directoria))
 		)
 			
 		;path-tiago
-		;path-ricardo
-		path-professor
+		path-ricardo
+		;path-professor
 	)
 )
 (let ((diretoria nil))
@@ -231,7 +231,7 @@
 				(opcao-valida (opcao-existe opcao '(a b c d e f g)))
 			)
 			(with-open-file (ficheiro (concatenate 'string (diretoria-atual)"problemas.dat") :direction :input :if-does-not-exist :error)
-				(cond
+				(converter-estado-novo-para-antigo (cond
 					((not opcao-valida) (progn
 											(format t "~%> Opcao Invalida!")
 											(format t "~%  ")
@@ -245,7 +245,7 @@
 					((equal opcao 'e) (nth 4 (read ficheiro)))
 					((equal opcao 'f) (nth 5 (read ficheiro)))
 					((equal opcao 'g) (nth 6 (read ficheiro)))	; se for adicionado ao nosso ficheiro é o problema 6, se for adicionado num ficheiro novo é o problema 1
-				)
+				))
 			)
 		)	
 	)

@@ -20,6 +20,234 @@
 	)
 )
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Adapter - nova-para-antiga
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defun tabuleiro-teste-novo ()
+	""
+	'(
+		(
+			((0 0) (0 1))
+			((0 1) (0 2))
+			((0 2) (0 3))
+			((0 3) (0 4))
+			((3 2) (3 3))
+		)
+		4
+		4
+	)
+)
+
+
+(defun get-arcos-nova-representacao (novo-estado)
+	"Devolve a componente dos arcos do tabuleiro"
+	(first novo-estado)
+)
+
+(defun get-coordenada-x-maxima-tabuleiro (novo-estado)
+	"Devolve a componente dos arcos do tabuleiro"
+	(second novo-estado)
+)
+
+(defun get-coordenada-y-maxima-tabuleiro (novo-estado)
+	"Devolve a componente dos arcos do tabuleiro"
+	(third novo-estado)
+)
+
+(defun adicionar-arco-coordenadas (coordenada1 coordenada2 estado-antigo)
+	"Adiciona um arco através de duas coordenadas a um estado com representacao antiga"
+	(let*
+		(
+			(sub1 (abs (- (first coordenada1) (first coordenada2))) )
+			(sub2 (abs (- (second coordenada1) (second coordenada2))) )
+			(min-x (min (first coordenada1) (first coordenada2)) )
+			(min-y (min (second coordenada1) (second coordenada2)) )
+			(horizontais (first estado-antigo))
+			(verticais (second estado-antigo))
+		)
+		(cond 
+			( (= sub1 1) 	(list 	horizontais
+									(substituir min-y ; substituir a linha
+												(substituir min-x 
+															T 
+															(elemento-por-indice min-y verticais)
+												)
+												verticais
+									)
+									
+							)
+			)
+						
+			( (= sub2 1) 	(list 	(substituir min-x
+												(substituir min-y 
+															T 
+															(elemento-por-indice min-x horizontais)
+												)
+												horizontais
+									)
+									verticais
+							
+							)
+							
+			)
+		)
+	)
+)
+
+(defun aplicar-arcos (arcos-nova-representacao estado-antigo)
+	"Aplica uma lista de arcos num estado com representação antiga"
+	(cond 
+		((null arcos-nova-representacao) estado-antigo)
+		(t 
+			(let
+				(
+					(coordenada1 (first (first arcos-nova-representacao)))
+					(coordenada2 (second (first arcos-nova-representacao)))
+				)
+				(aplicar-arcos (rest arcos-nova-representacao) (adicionar-arco-coordenadas coordenada1 coordenada2 estado-antigo))
+			)
+		)
+	)
+	
+)
+
+
+(defun converter-estado-novo-para-antigo (estado-nova-representacao)
+	"Transforma um conjunto de coordenadas de arcos para uma representação anterior"
+	(let
+		(
+			(tabuleiro-adaptado (criar-tabuleiro-vazio 
+										(get-coordenada-x-maxima-tabuleiro estado-nova-representacao)
+										(get-coordenada-y-maxima-tabuleiro estado-nova-representacao)
+								)
+			)
+			(arcos-nova-representacao  (get-arcos-nova-representacao estado-nova-representacao))
+		)
+		(aplicar-arcos arcos-nova-representacao tabuleiro-adaptado)
+	)
+)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Adapter - antiga-para-nova
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+(defun converter-arcos-horizontais-antigo-novo-aux-y (lista x y)
+	""
+	(cond
+		((null lista) nil)
+		( t 
+			(append
+				(converter-arcos-horizontais-antigo-novo-aux-y (rest lista) x (1- y))
+				(cond 
+					( (first lista) (list (list (list x y) (list x (1+ y))) ) )
+					( t nil )
+				)
+			)
+		)
+	)
+)
+
+(defun converter-arcos-horizontais-antigo-novo-aux (horizontais x y)
+	""
+	(cond
+		((null horizontais) nil)
+		( t (append (converter-arcos-horizontais-antigo-novo-aux (rest horizontais) (1- x) y) 
+					(converter-arcos-horizontais-antigo-novo-aux-y (reverse (first horizontais)) x y)
+			) 
+		)
+	)
+)
+
+(defun converter-arcos-horizontais-antigo-novo (horizontais x y)
+
+	(converter-arcos-horizontais-antigo-novo-aux (reverse horizontais) x y)
+)
+
+
+
+(defun converter-arcos-verticais-antigo-novo-aux-y (lista x y)
+	""
+	(cond
+		((null lista) nil)
+		( t 
+			(append
+				(converter-arcos-verticais-antigo-novo-aux-y (rest lista) x (1- y))
+				(cond 
+					( (first lista) (list (list (list y x) (list (1+ y) x)) ) )
+					( t nil )
+				)
+			)
+		)
+	)
+)
+
+(defun converter-arcos-verticais-antigo-novo-aux (verticais x y)
+	""
+	(cond
+		((null verticais) nil)
+		( t (append (converter-arcos-verticais-antigo-novo-aux (rest verticais) (1- x) y) 
+					(converter-arcos-verticais-antigo-novo-aux-y (reverse (first verticais)) x y)
+			) 
+		)
+	)
+)
+
+(defun converter-arcos-verticais-antigo-novo (verticais x y)
+
+	(converter-arcos-verticais-antigo-novo-aux (reverse verticais) x y)
+)
+
+
+(defun converter-estado-antigo-para-novo (estado-representacao-antiga)
+	"Transforma um estado na representação num estado na representação nova"
+	(let 
+		(
+			(numero-caixas-horizontal (length (first (first estado-representacao-antiga))))
+			(numero-caixas-vertical (length (first (second estado-representacao-antiga))))
+		)
+		(list
+			(append (converter-arcos-horizontais-antigo-novo (first estado-representacao-antiga) numero-caixas-vertical (1- numero-caixas-horizontal) )  
+					(converter-arcos-verticais-antigo-novo (second estado-representacao-antiga) numero-caixas-horizontal (1- numero-caixas-vertical))
+			)
+			numero-caixas-vertical
+			numero-caixas-horizontal
+		)
+		
+	)	
+)
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Adapter - Redefinição de funções
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Redefinição da função
+(defun no-estado (no)
+	"Devolve o estado do nó"
+	(converter-estado-novo-para-antigo (elemento-por-indice 0 no))
+)
+
+;; Redefinição da função
+(defun set-no-estado (no estado)
+	"Altera o estado de um nó"
+	(substituir 0 (converter-estado-antigo-para-novo estado) no)
+)
+
+;; Redefinição da função
+(defun no-criar (estado &optional (pai nil) (profundidade 0) (controlo nil))
+  "Cria um nó"
+  (list (converter-estado-antigo-para-novo estado) pai profundidade controlo)
+)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Manipulação de tabuleiros
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
