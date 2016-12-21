@@ -231,21 +231,21 @@
 				(opcao-valida (opcao-existe opcao '(a b c d e f g)))
 			)
 			(with-open-file (ficheiro (concatenate 'string (diretoria-atual)"problemas.dat") :direction :input :if-does-not-exist :error)
-				(converter-estado-novo-para-antigo (cond
+				 (cond
 					((not opcao-valida) (progn
 											(format t "~%> Opcao Invalida!")
 											(format t "~%  ")
 											(terpri)
 											(escolher-tabuleiro)))
 
-					((equal opcao 'a) (nth 0 (read ficheiro)))
-					((equal opcao 'b) (nth 1 (read ficheiro)))
-					((equal opcao 'c) (nth 2 (read ficheiro)))
-					((equal opcao 'd) (nth 3 (read ficheiro)))
-					((equal opcao 'e) (nth 4 (read ficheiro)))
-					((equal opcao 'f) (nth 5 (read ficheiro)))
-					((equal opcao 'g) (nth 6 (read ficheiro)))	; se for adicionado ao nosso ficheiro é o problema 6, se for adicionado num ficheiro novo é o problema 1
-				))
+					((equal opcao 'a) (converter-estado-novo-para-antigo (nth 0 (read ficheiro))))
+					((equal opcao 'b) (converter-estado-novo-para-antigo (nth 1 (read ficheiro))))
+					((equal opcao 'c) (converter-estado-novo-para-antigo (nth 2 (read ficheiro))))
+					((equal opcao 'd) (converter-estado-novo-para-antigo (nth 3 (read ficheiro))))
+					((equal opcao 'e) (converter-estado-novo-para-antigo (nth 4 (read ficheiro))))
+					((equal opcao 'f) (converter-estado-novo-para-antigo (nth 5 (read ficheiro))))
+					((equal opcao 'g) (converter-estado-novo-para-antigo (nth 6 (read ficheiro))))	; se for adicionado ao nosso ficheiro é o problema 6, se for adicionado num ficheiro novo é o problema 1
+				)
 			)
 		)	
 	)
