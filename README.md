@@ -1,4 +1,82 @@
-# IA_Lisp_projeto
+## IA_Lisp_projeto
+
+# Boards
+
+A)
+o   o   o   o
+                
+o   o   o---o
+    |       |
+o   o---o---o
+        |   |
+o   o   o---o
+
+B)
+o   o   o---o   o
+        |   |       
+o---o---o---o---o
+        |       |
+o   o   o---o---o
+|   |   |   |   |
+o   o   o---o---o
+|   |   |   |   |
+o   o   o---o---o
+
+C)
+o   o   o---o   o
+            |       
+o---o   o---o---o
+                |
+o   o   o---o---o
+|   |   |   |   |
+o   o   o---o---o
+|   |   |   |   |
+o   o   o---o---o
+
+D)
+o   o   o   o   o   o
+                        
+o   o   o   o   o   o
+                        
+o   o   o   o   o   o
+                        
+o   o   o   o   o   o
+                        
+o   o   o   o   o   o
+
+E)
+o   o   o   o---o   o   o
+                |           
+o   o   o   o---o---o---o
+    |   |               |
+o---o---o---o---o---o   o
+        |   |   |   |   |
+o   o   o   o---o---o   o
+|           |       |   |
+o   o   o   o---o---o   o
+|   |   |       |       |
+o   o   o---o---o---o---o
+|   |   |               |
+o   o   o---o---o---o---o
+
+F)
+
+o   o   o   o   o   o   o   o
+                                
+o   o   o   o   o   o   o   o
+                                
+o   o   o   o   o   o   o   o
+                                
+o   o   o   o   o   o   o   o
+                                
+o   o---o   o   o   o   o   o
+    |                           
+o   o---o   o   o   o   o   o
+                                
+o   o   o   o   o   o   o   o
+                                
+o   o   o   o   o   o   o   o
+
 
 # Algorithms
 
