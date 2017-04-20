@@ -139,11 +139,12 @@ This heuristic turns out to be permissible since h * <= h, however, it takes neg
 # Heuristic developed
 
 The developed heuristic took several paths, it began to be a heuristic that was thought admissible, but, after tests of the group was found a case where it was not admissible. Due to not bring great benefit was decided to create a new based on the old, this consists of:
+```
 (No boxes to use with 1 bow for missing +
 (No boxes to use with 2 bows for missing * 2) +
 (No boxes to use with 3 bows for missing * 3) +
 (No. of boxes to use with 4 bows for missing * 4)) - 1
-
+```
 This heuristic is not permissible, however this allows to verify the content learned in class. In class it was said that an inadmissible heuristic tends to find a solution more quickly, as can be seen in the statistics collected. In some cases it still takes admissibility due to the de-increment of 1 that arises due to two boxes with 1 bow for missing which is shareable. Thus, although this heuristic was not acceptable, it was a good study object having solved all the trays of the statement with A * and IDA *.
 
 # Limitations of the Program
