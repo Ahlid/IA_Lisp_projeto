@@ -1,7 +1,7 @@
 ## IA_Lisp_projeto
 
 # Boards
-
+```javascript
 A)
 o   o   o   o
                 
@@ -76,7 +76,7 @@ o   o---o   o   o   o   o   o
 o   o   o   o   o   o   o   o
                                 
 o   o   o   o   o   o   o   o
-
+```
 
 # Algorithms
 
